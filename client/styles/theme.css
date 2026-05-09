@@ -1,0 +1,11 @@
+@theme {
+  --font-sans: var(--font-sans);
+  --color-primary: var(--shannon-purple);
+  --color-lavender: var(--shannon-lavender);
+  --color-surface: var(--shannon-surface);
+  --color-surface-raised: var(--shannon-surface-raised);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-coral: var(--accent-coral);
+  --color-muted: var(--shannon-muted);
+}
+

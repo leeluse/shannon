@@ -1,2 +1,9 @@
 *.md
 .claude/
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+wiki
+raw
