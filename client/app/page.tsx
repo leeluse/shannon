@@ -7,7 +7,9 @@ export default function Home() {
   return (
     <main className="size-full flex gap-4">
       <SideBar />
-      <ChatBox />
+      <div className="flex-1">
+        {/* <ChatBox /> */}
+      </div>
     </main>
   );
 }
