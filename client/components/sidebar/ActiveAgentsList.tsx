@@ -1,11 +1,7 @@
+import { ACTIVE_AGENTS } from "@/mock/sidebar";
 
 export default function ActiveAgentsList() {
-    const ACTIVE_AGENTS = [
-        { color: 'bg-purple-300', name: 'Axus' },
-        { color: 'bg-blue-300', name: 'Nyx' },
-        { color: 'bg-red-300', name: 'Eos' },
-        { color: 'bg-yellow-300', name: 'Strix' }
-    ]
+
     return (
         <section className='px-2'>
             <header className='font-medium text-mauve-300'>Active Agents</header>
