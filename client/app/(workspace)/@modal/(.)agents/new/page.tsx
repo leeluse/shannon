@@ -3,6 +3,7 @@ import { StepButton, StepTemplate } from '@/components';
 import { useDeployStore } from '@/store/useDeployStore'
 import { useRouter } from 'next/navigation';
 import React from 'react'
+import { X } from 'lucide-react';
 
 export default function NewAgentModal() {
     return (
@@ -40,7 +41,10 @@ function StepHeader() {
             </div>
             <button
                 onClick={() => router.back()}
-                className='font-bold'>X</button>
+                className='text-modal-sub hover:text-white transition-colors duration-200'
+            >
+                <X size={24} strokeWidth={2.5} />
+            </button>
         </header>
     )
 }
