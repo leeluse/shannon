@@ -37,6 +37,14 @@ body {
   padding: 10px;
 }
 
+.glass-modal {
+  background: var(--glass-modal-bg);
+  backdrop-filter: var(--glass-blur);
+  /* 기존 블러 변수 재사용 */
+  border: 1px solid var(--glass-border);
+  color: var(--glass-modal-text);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
 
 .glow-primary {
   box-shadow: 0 0 20px var(--primary-glow);

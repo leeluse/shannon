@@ -13,10 +13,10 @@ export default function SideBarTab() {
             {TAB_ITEMS.map(({ icon, name }) =>
                 <button key={name} onClick={() => setActive(name as 'Neural Core' | 'Latency Map')}>
                     <li className={`py-1 px-3 rounded-lg flex items-center gap-3 ${active === name ? 'bg-amber-50/10' : 'bg-transparent'}`}>
-                        <div className={`${active === name ? 'text-pink-200' : 'text-mauve-500'}`}>
+                        <div className={`${active === name ? 'text-secondary' : 'text-secondary-sub'}`}>
                             {icon}
                         </div>
-                        <span className={`${active === name ? 'text-pink-200' : 'text-mauve-500'} font-bold text-lg`}>{name}</span>
+                        <span className={`${active === name ? 'text-secondary' : 'text-secondary-sub'} font-bold text-lg`}>{name}</span>
                     </li>
                 </button>
 

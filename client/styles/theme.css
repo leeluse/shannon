@@ -1,11 +1,18 @@
 @theme {
   --font-sans: var(--font-sans);
-  --color-primary: var(--shannon-purple);
-  --color-lavender: var(--shannon-lavender);
-  --color-surface: var(--shannon-surface);
-  --color-surface-raised: var(--shannon-surface-raised);
-  --color-accent-yellow: var(--accent-yellow);
-  --color-accent-coral: var(--accent-coral);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-secondary-sub: var(--secondary-sub);
+  --color-btn-primary: var(--btn-primary);
+  --color-yellow: var(--yellow);
+  --color-blue: var(--blue);
+  --color-red: var(--red);
+  --color-violet: var(--violet);
+  --color-green: var(--green);
+  --color-gray: var(--gray);
+  --color-pink: var(--pink);
   --color-muted: var(--shannon-muted);
+  --color-modal-bg: var(--glass-modal-bg);
+  --color-modal-text: var(--glass-modal-text);
+  --color-modal-sub: var(--glass-modal-sub-text);
 }
-
