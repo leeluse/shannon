@@ -5,11 +5,11 @@
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 
   /* Brand Palette from Image */
-  --shannon-purple: #A855F7;
-  --shannon-lavender: #E9D5FF;
-  --shannon-dark: #1E1E2E;
-  --shannon-surface: #2D2D3F;
-  --shannon-surface-raised: #36364D;
+  --primary: #564B60;
+  --text-primary: #EADFED;
+  --secondary: #8D77A2;
+  --secondary-sub: #CFC2D6;
+  --btn-primary: #490080;
 
   /* Accent Colors */
   --yellow: #FBBF24;
@@ -18,10 +18,10 @@
   --violet: #8B5CF6;
   --green: #10B981;
   --gray: #94A3B8;
+  --pink: #DDB7FF;
 
   /* Theme Mapping */
-  --primary: var(--shannon-purple);
-  --primary-light: var(--shannon-lavender);
+  /* --primary-light: var(--shannon-lavender); */
   /* Global Background from Image File */
   --bg-main: url('/main-bg.png');
 
@@ -29,6 +29,10 @@
   --glass-bg: rgba(20, 22, 36, 0.3);
   --glass-border: rgba(255, 255, 255, 0.08);
   --glass-blur: blur(16px);
+  /* Glass Model */
+  --glass-modal-bg: rgba(35, 30, 39, 0.6);
+  --glass-modal-text: #DDB7FF;
+  --glass-modal-sub-text: #CFC2D6;
 
   /* Animations */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
