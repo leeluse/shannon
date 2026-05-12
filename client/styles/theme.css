@@ -11,6 +11,7 @@
   --color-green: var(--green);
   --color-gray: var(--gray);
   --color-pink: var(--pink);
+  --color-text-primary: var(--text-primary);
   --color-muted: var(--shannon-muted);
   --color-modal-bg: var(--glass-modal-bg);
   --color-modal-text: var(--glass-modal-text);
