@@ -7,7 +7,7 @@ import { X } from 'lucide-react';
 
 export default function NewAgentModal() {
     return (
-        <div className='fixed inset-0 z-50 bg-gray-900/50 flex
+        <div className='fixed inset-0 z-50 bg-c-gray-900/50 flex
             items-center justify-center'>
             <section className='w-200 h-120 rounded-2xl glass-modal flex flex-col px-5'>
                 <StepHeader />
@@ -26,21 +26,21 @@ function StepHeader() {
     return (
         <header className='h-20 border-b-2 border-b-primary w-full flex items-center justify-between'>
             <div className='flex gap-3 items-center '>
-                <h1 className='text-xl font-bold text-modal-sub'>Deploy Agent</h1>
+                <h1 className='text-xl font-bold text-c-modal-sub'>Deploy Agent</h1>
                 <div className='flex gap-2'>
                     {steps.map((item) => (
-                        <div key={item} className={`rounded-full size-2 ${item === step.number ? 'bg-modal-sub' : 'bg-gray-600'}`
+                        <div key={item} className={`rounded-full size-2 ${item === step.number ? 'bg-c-modal-sub' : 'bg-c-gray-600'}`
                         }></div>
                     ))}
                 </div>
                 <div>
                     <span className='text-sm'>{step.number}</span>
-                    <span className='text-sm text-gray-600'> / 3 템플릿</span >
+                    <span className='text-sm text-c-gray-600'> / 3</span >
                 </div>
             </div>
             <button
                 onClick={() => router.back()}
-                className='text-modal-sub hover:text-white transition-colors duration-200'
+                className='text-c-modal-sub hover:text-white transition-colors duration-200'
             >
                 <X size={24} strokeWidth={2.5} />
             </button>

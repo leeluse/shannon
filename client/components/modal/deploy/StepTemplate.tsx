@@ -10,8 +10,8 @@ export default function StepTemplate() {
     return (
         <>
             <h3 className='py-3 text-white text-[14px]'>{STEP_INFO[step.number - 1].title}</h3>
-            <section className='h-full relative'>
-                <div className='absolute top-0 h-full overflow-y-scroll '>
+            <section className='size-full relative'>
+                <div className='absolute top-0 size-full overflow-y-scroll '>
                     <CurrentComponent />
                 </div>
             </section>

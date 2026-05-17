@@ -7,7 +7,7 @@ import React from 'react'
 export default function TemplateCard({ id, name, keyword, description }: ITemplateCard) {
     const { card, setCard } = useDeployStore();
     const style = {
-        active: 'ring ring-primary !bg-white/5',
+        active: 'ring ring-c-primary !bg-white/5',
         deactive: 'ring ring-transparent'
     }
     return (
@@ -33,7 +33,7 @@ export default function TemplateCard({ id, name, keyword, description }: ITempla
                     </div>
                 ))}
             </div>
-            <p className='font-medium text-xs text-secondary-sub'>{description}</p>
+            <p className='font-medium text-xs text-c-secondary-sub'>{description}</p>
         </div>
     )
 }
