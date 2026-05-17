@@ -8,7 +8,8 @@ interface IStepButton {
 export default function StepButton({ title, onClick }: IStepButton) {
     return (
         <button
-            className='py-2 px-3 w-22 border! border-white rounded-md text-white'
+            className='py-2 px-5 border! text-sm
+            border-c-secondary-sub rounded-md text-c-secondary-sub'
             onClick={onClick}>
             {title}
         </button>

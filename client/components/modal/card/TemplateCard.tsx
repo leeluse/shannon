@@ -7,8 +7,8 @@ import React from 'react'
 export default function TemplateCard({ id, name, keyword, description }: ITemplateCard) {
     const { card, setCard } = useDeployStore();
     const style = {
-        active: 'ring ring-c-primary !bg-white/5',
-        deactive: 'ring ring-transparent'
+        active: 'ring ring-c-modal-text/50',
+        deactive: 'ring ring-c-modal-text/20'
     }
     return (
         <div
@@ -18,9 +18,9 @@ export default function TemplateCard({ id, name, keyword, description }: ITempla
                 setCard(id)
                 return
             }}
-            className={`h-40 glass flex flex-col cursor-pointer 
+            className={`h-40 p-3 rounded-md text flex flex-col cursor-pointer 
             ${card == id ? style['active'] : style['deactive']}`}>
-            <h1 className='font-bold text-2xl py-2 '>{name}</h1>
+            <h1 className='font-bold text-2xl pb-2'>{name}</h1>
             <div className='flex pb-5 text-xs'>
                 {keyword.map((item, idx) => (
                     <div key={idx}>
