@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function StepThirdTemplate() {
+export function StepThirdTemplate() {
     return (
         <div>StepThirdTemplate</div>
     )

@@ -8,8 +8,7 @@ import { X } from 'lucide-react';
 export default function NewAgentModal() {
     return (
         <div className='fixed inset-0 z-50 bg-gray-900/50 flex
-            items-center justify-center
-        '>
+            items-center justify-center'>
             <section className='w-200 h-120 rounded-2xl glass-modal flex flex-col px-5'>
                 <StepHeader />
                 <StepTemplate />
@@ -25,7 +24,7 @@ function StepHeader() {
     const { step } = useDeployStore();
     const steps = [1, 2, 3];
     return (
-        <header className='h-16 border-b-2 border-b-primary w-full flex items-center justify-between'>
+        <header className='h-20 border-b-2 border-b-primary w-full flex items-center justify-between'>
             <div className='flex gap-3 items-center '>
                 <h1 className='text-xl font-bold text-modal-sub'>Deploy Agent</h1>
                 <div className='flex gap-2'>
@@ -53,7 +52,7 @@ function StepHeader() {
 function StepFooter() {
     const { step, nextStep, prevStep } = useDeployStore();
     return (
-        <footer className='pb-4 h-15 w-full flex justify-between items-center'>
+        <footer className='h-20 pb-2 w-full flex justify-between items-center'>
             {step.number !== 1 ? (
                 <StepButton title='이전' onClick={() => prevStep()} />
             ) : (<div />)}

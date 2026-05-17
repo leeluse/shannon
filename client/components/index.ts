@@ -14,9 +14,8 @@ export { default as InitPanelBtn } from "./common/btn/InitPanelBtn";
 
 // modal Deploy Components
 export { default as StepTemplate } from "./modal/deploy/StepTemplate";
-export { default as StepFirstTemplate } from "./modal/deploy/StepFirstTemplate";
-export { default as StepSecondTemplate } from "./modal/deploy/StepSecondTemplate";
-export { default as StepThirdTemplate } from "./modal/deploy/StepThirdTemplate";
+
+
 
 // Icon Components
 export { default as InitPanelIcon } from "./common/icon/InitPanelIcon";

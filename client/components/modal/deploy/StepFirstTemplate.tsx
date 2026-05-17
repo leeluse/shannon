@@ -1,7 +1,15 @@
 import React from 'react'
+import TemplateCard from '../card/TemplateCard'
+import { FIRST_STEP } from '@/mock/modal'
 
-export default function StepFirstTemplate() {
+export function StepFirstTemplate() {
     return (
-        <div>StepFirstTemplate</div>
+        <div className='grid grid-cols-4 gap-3 p-2'>
+            {FIRST_STEP.map(({ id, name, keyword, description }) => (
+                <div key={id}>
+                    <TemplateCard id={id} name={name} keyword={keyword} description={description} />
+                </div>
+            ))}
+        </div>
     )
 }
