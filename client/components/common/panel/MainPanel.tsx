@@ -15,8 +15,8 @@ export function InitPanel() {
     return (
         <div className='glass w-150 h-120 flex flex-col items-center justify-center gap-4'>
             <InitPanelIcon />
-            <span className='font-black text-5xl text-text-primary'>{INNERPANEL.TITLE}</span>
-            <p className='whitespace-pre text-center text-secondary-sub text-12'>{INNERPANEL.DESCRIPTION}</p>
+            <span className='font-black text-5xl text-c-text-primary'>{INNERPANEL.TITLE}</span>
+            <p className='whitespace-pre text-center text-c-secondary-sub text-12'>{INNERPANEL.DESCRIPTION}</p>
             <InitPanelBtn />
         </div>
     )

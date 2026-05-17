@@ -22,7 +22,9 @@ export default function page() {
             <SideBarTabList />
             <ActiveAgentsList />
             <div className='pt-10'>
-                <PrimaryButton text={'Deploy Agents'} onClick={() => router.push('/agents/new')} />
+                <PrimaryButton
+                    text={'Deploy Agents'}
+                    onClick={() => router.push('/agents/new')} />
             </div>
         </aside>
     );
