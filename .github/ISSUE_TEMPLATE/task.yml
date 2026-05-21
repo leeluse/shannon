@@ -1,0 +1,95 @@
+name: "🛠️ 작업 / 학습 태스크"
+description: 프로젝트에 적용할 작은 기능 구현이나 학습용 태스크를 등록합니다.
+title: "[TASK] "
+labels:
+  - task
+  - learning
+assignees: []
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 작업 등록
+
+        배운 개념을 실제 프로젝트 기능에 연결해서 작성합니다.
+        길게 쓰지 말고, 바로 구현할 수 있을 만큼만 적어 주세요.
+
+  - type: input
+    id: summary
+    attributes:
+      label: 📌 작업 요약
+      description: 어느 페이지에서 어떤 기능을 만들지 한 줄로 적어 주세요.
+      placeholder: "예: 검색 페이지에서 입력창 자동 포커스 기능 구현"
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: 📍 적용 위치
+      description: 적용할 페이지, 컴포넌트, 파일 경로를 적어 주세요.
+      placeholder: "예: /search 페이지, SearchInput 컴포넌트, app/search/page.tsx"
+    validations:
+      required: true
+
+  - type: textarea
+    id: user_feature
+    attributes:
+      label: 👤 사용자 기능
+      description: 사용자가 어떤 상황에서 무엇을 할 수 있게 되는지 적어 주세요.
+      placeholder: |
+        - 검색 페이지에 진입하면 바로 검색어를 입력할 수 있다
+        - 버튼 클릭 없이 입력 흐름을 시작할 수 있다
+    validations:
+      required: true
+
+  - type: input
+    id: concept
+    attributes:
+      label: 🧠 적용 개념 / 훅
+      description: 이번 작업에서 써 볼 개념이나 훅을 적어 주세요.
+      placeholder: "예: useRef, useDeferredValue, optimistic update, React Query prefetching"
+    validations:
+      required: true
+
+  - type: textarea
+    id: concept_reason
+    attributes:
+      label: 💡 이 개념을 쓰는 이유
+      description: 왜 이 기능에 해당 개념이 적합한지 적어 주세요.
+      placeholder: |
+        - useRef로 input DOM을 직접 참조할 수 있다
+        - state 변경 없이 focus를 제어할 수 있다
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: ✅ 세부 작업 목록
+      description: 실제로 구현할 것을 체크리스트로 적어 주세요.
+      placeholder: |
+        - [ ] 적용할 페이지/컴포넌트 확인
+        - [ ] useRef로 대상 요소 참조
+        - [ ] 포커스 동작 구현
+        - [ ] 모바일/접근성 확인
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: 🎯 완료 조건
+      description: 어디까지 되면 끝인지 적어 주세요.
+      placeholder: |
+        - 페이지 진입 시 입력창에 포커스가 적용된다
+        - 기존 UI/UX가 깨지지 않는다
+        - PR 본문에 적용 개념이 설명되어 있다
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 추가 메모
+      description: 제외 범위나 주의점이 있으면 짧게 적어 주세요.
+      placeholder: "예: 기존 검색 로직은 건드리지 않기"

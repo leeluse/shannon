@@ -1,0 +1,165 @@
+name: Codex PR Review
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+      - synchronize
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: codex-pr-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_REVIEW_MODEL: gpt-5.2
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Review pull request with Codex
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const marker = "<!-- codex-pr-review -->";
+            const openaiKey = process.env.OPENAI_API_KEY;
+
+            if (!openaiKey) {
+              core.setFailed("Missing OPENAI_API_KEY repository secret.");
+              return;
+            }
+
+            const { owner, repo } = context.repo;
+            const pull_number = context.payload.pull_request.number;
+            const pr = context.payload.pull_request;
+
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner,
+              repo,
+              pull_number,
+              per_page: 100,
+            });
+
+            const maxFiles = 25;
+            const maxPatchCharsPerFile = 4000;
+            const maxTotalPatchChars = 60000;
+
+            let totalPatchChars = 0;
+            const fileSummaries = [];
+
+            for (const file of files.slice(0, maxFiles)) {
+              const rawPatch = file.patch || "";
+              const remaining = Math.max(maxTotalPatchChars - totalPatchChars, 0);
+              const patchLimit = Math.min(maxPatchCharsPerFile, remaining);
+              const patch = rawPatch.slice(0, patchLimit);
+
+              totalPatchChars += patch.length;
+
+              fileSummaries.push([
+                `FILE: ${file.filename}`,
+                `STATUS: ${file.status}`,
+                `ADDITIONS: ${file.additions}`,
+                `DELETIONS: ${file.deletions}`,
+                patch ? `PATCH:\n${patch}` : "PATCH: (not available)",
+              ].join("\n"));
+
+              if (totalPatchChars >= maxTotalPatchChars) {
+                break;
+              }
+            }
+
+            const reviewPrompt = [
+              `Repository: ${owner}/${repo}`,
+              `PR #${pull_number}: ${pr.title}`,
+              "",
+              "PR description:",
+              pr.body || "(no description provided)",
+              "",
+              "Changed files:",
+              fileSummaries.join("\n\n---\n\n") || "(no changed files found)",
+              "",
+              "Review instructions:",
+              "- Focus on bugs, regressions, risky assumptions, and missing validation or tests.",
+              "- Keep the review concise and high signal.",
+              "- If there are issues, list them as bullets with file references when possible.",
+              "- If there are no meaningful concerns, say 'No major concerns found.'",
+              "- End with a short 'Residual risks' section only if needed.",
+            ].join("\n");
+
+            const response = await fetch("https://api.openai.com/v1/responses", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${openaiKey}`,
+              },
+              body: JSON.stringify({
+                model: process.env.OPENAI_REVIEW_MODEL || "gpt-5.2",
+                instructions: "You are Codex, an expert reviewer for pull requests. Prioritize concrete findings over praise. Only mention issues supported by the provided diff.",
+                input: reviewPrompt,
+                max_output_tokens: 1200,
+              }),
+            });
+
+            if (!response.ok) {
+              const errorText = await response.text();
+              core.setFailed(`OpenAI API request failed: ${response.status} ${errorText}`);
+              return;
+            }
+
+            const data = await response.json();
+
+            const outputText =
+              data.output_text ||
+              (data.output || [])
+                .flatMap((item) => item.content || [])
+                .filter((item) => item.type === "output_text")
+                .map((item) => item.text)
+                .join("\n")
+                .trim();
+
+            if (!outputText) {
+              core.setFailed("OpenAI API returned no review text.");
+              return;
+            }
+
+            const body = [
+              marker,
+              "## Codex Review",
+              "",
+              "_Auto-updated on each PR change._",
+              "",
+              outputText,
+            ].join("\n");
+
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner,
+              repo,
+              issue_number: pull_number,
+              per_page: 100,
+            });
+
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner,
+                repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pull_number,
+                body,
+              });
+            }
