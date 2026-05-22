@@ -23,10 +23,10 @@ jobs:
           cache-dependency-path: client/yarn.lock
 
       - name: Install dependencies
-        run: yarn --cwd client install --frozen-lockfile
+        run: bun install --cwd client --frozen-lockfile
 
       - name: Build app
-        run: yarn --cwd client build
+        run: bun run --cwd client build
 
       - name: Run Lighthouse CI
         run: npx @lhci/cli@0.15.x autorun --config=.github/lighthouse/lighthouserc.json
