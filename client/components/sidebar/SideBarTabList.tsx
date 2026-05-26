@@ -1,7 +1,6 @@
 'use client'
 
 import { TAB_ITEMS } from "@/mock/sidebar"
-import { Brain, Network } from "lucide-react"
 import { useState } from "react"
 
 export default function SideBarTab() {

@@ -2,7 +2,14 @@ import React from 'react'
 
 export default function InitPanelIcon({ width = 128, height = 128, className = "" }: { width?: number, height?: number, className?: string }) {
     return (
-        <svg width={width} height={height} viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            width={width}
+            height={height}
+            viewBox="0 0 128 128"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={className}
+        >
             <rect x="0.5" y="0.5" width="127" height="127" rx="11.5" stroke="#DDB7FF" strokeOpacity="0.3" />
             <rect x="8.5" y="8.5" width="111" height="111" rx="11.5" stroke="#DDB7FF" strokeOpacity="0.5" />
             <foreignObject x="2" y="2" width="124" height="124">
