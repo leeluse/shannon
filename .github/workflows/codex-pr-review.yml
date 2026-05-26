@@ -1,25 +1,15 @@
 name: Codex PR Review
 
 on:
-  pull_request_target:
-    types:
-      - opened
-      - reopened
-      - ready_for_review
-      - synchronize
+  workflow_dispatch:
 
 permissions:
   contents: read
   issues: write
   pull-requests: write
 
-concurrency:
-  group: codex-pr-review-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
-
 jobs:
   review:
-    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     env:
       OPENAI_REVIEW_MODEL: gpt-5.2
@@ -29,6 +19,11 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
+            if (!context.payload.pull_request) {
+              core.setFailed("This workflow is disabled for pull requests. Re-enable the pull_request_target trigger to run PR reviews.");
+              return;
+            }
+
             const marker = "<!-- codex-pr-review -->";
             const openaiKey = process.env.OPENAI_API_KEY;
 
