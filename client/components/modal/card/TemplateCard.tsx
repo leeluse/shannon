@@ -1,7 +1,5 @@
-import StepButton from '@/components/common/btn/StepButton'
 import { useDeployStore } from '@/store/useDeployStore';
 import { ITemplateCard } from '@/types/modal/card'
-import React from 'react'
 
 
 export default function TemplateCard({ id, name, keyword, descript }: ITemplateCard) {
