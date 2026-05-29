@@ -15,12 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          node-version: 22
-          cache: yarn
-          cache-dependency-path: client/yarn.lock
+          bun-version: latest
 
       - name: Install dependencies
         run: bun install --cwd client --frozen-lockfile
