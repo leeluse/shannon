@@ -8,7 +8,7 @@ export const STEP_INFO = [
         Component: StepFirstTemplate,
     },
     {
-        title: '시작할 모델을 선택해 보세요.',
+        title: '',
         Component: StepSecondTemplate,
     },
     {

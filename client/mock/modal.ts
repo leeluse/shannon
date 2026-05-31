@@ -18,3 +18,22 @@ export const FIRST_STEP = [
         descript: '빈 템플릿에서 시작하기'
     },
 ]
+
+export const MODEL_LIST = [
+    {
+        id: 1,
+        name: 'gpt-5.1',
+    },
+    {
+        id: 2,
+        name: 'gpt-4.1-mini',
+    },
+    {
+        id: 3,
+        name: 'gpt-4.1',
+    },
+    {
+        id: 4,
+        name: 'gpt-4.1-nano',
+    },
+]

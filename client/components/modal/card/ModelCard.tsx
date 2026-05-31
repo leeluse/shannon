@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function ModelCard() {
+export default function ModelCard({ name }: { name: string }) {
     return (
-        <div>ModelCard</div>
+        <div>
+            <div className="font-semibold">{name}</div>
+        </div>
     )
 }
