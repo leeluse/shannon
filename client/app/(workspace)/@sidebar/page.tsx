@@ -3,7 +3,7 @@ import { PrimaryButton, SideBarTabList } from "@/components";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export function SideBarHeader() {
+function SideBarHeader() {
     return (
         <header className='px-2 font-bold flex gap-4 items-center'>
             <Image src="/logo.svg" alt="Shannon Logo" width={48} height={48} className="size-12" />

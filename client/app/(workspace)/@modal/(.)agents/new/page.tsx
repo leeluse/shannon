@@ -21,7 +21,7 @@ export default function NewAgentModal() {
 }
 
 
-function StepHeader({ steps }: { steps: number[] }) {
+function StepHeader({ steps }: { steps: readonly number[] }) {
     const router = useRouter();
     const { step } = useDeployStore();
 
@@ -51,7 +51,7 @@ function StepHeader({ steps }: { steps: number[] }) {
 }
 
 
-function StepFooter({ steps }: { steps: number[] }) {
+function StepFooter({ steps }: { steps: readonly number[] }) {
     const { step, nextStep, prevStep, card } = useDeployStore();
     const router = useRouter();
     // 유효성 검사
