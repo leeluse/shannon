@@ -1,39 +1,20 @@
 export const FIRST_STEP = [
     {
         id: 1,
-        name: 'Research',
-        keyword: ['research', 'analysis', 'strategy'],
-        descript: '장기 자료 수집/교차 검증 요약',
+        name: 'Project Brief',
+        keyword: ['웹', '앱', '사이드 프로젝트'],
+        descript: '웹 / 앱 및 사이드 프로젝트 설계',
     },
     {
         id: 2,
-        name: 'Memory',
-        keyword: ['memory', 'insight', 'decisions'],
-        descript: '주요 의사결정의 근거가 된 핵심기억 및 인사이트 관리',
+        name: 'UI/UX Brief',
+        keyword: ['UI', 'UX', '디자인'],
+        descript: '웹페이지 / 앱 / 대시보드 디자인',
     },
     {
         id: 3,
-        name: '직접 정의',
-        keyword: ['custom'],
-        descript: '빈 템플릿에서 시작하기'
-    },
-]
-
-export const MODEL_LIST = [
-    {
-        id: 1,
-        name: 'gpt-5.1',
-    },
-    {
-        id: 2,
-        name: 'gpt-4.1-mini',
-    },
-    {
-        id: 3,
-        name: 'gpt-4.1',
-    },
-    {
-        id: 4,
-        name: 'gpt-4.1-nano',
+        name: 'PPT Brief',
+        keyword: ['발표', '강의', '보고서'],
+        descript: 'PPT 초안 작성 및 콘텐츠 기획',
     },
 ]

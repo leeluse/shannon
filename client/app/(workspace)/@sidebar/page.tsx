@@ -1,5 +1,5 @@
 'use client'
-import { ActiveAgentsList, PrimaryButton, SideBarTabList } from "@/components";
+import { PrimaryButton, SideBarTabList } from "@/components";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -18,13 +18,12 @@ export function SideBarHeader() {
 export default function SidebarPage() {
     const router = useRouter()
     return (
-        <aside className='glass h-full grid grid-rows-[1fr_7fr_1fr_1fr]'>
+        <aside className='glass h-full grid grid-rows-[1fr_7fr_1fr]'>
             <SideBarHeader />
             <SideBarTabList />
-            <ActiveAgentsList />
             <div className='pt-10'>
                 <PrimaryButton
-                    text={'Deploy Agents'}
+                    text={'Create AI Brief'}
                     onClick={() => router.push('/agents/new')} />
             </div>
         </aside>
