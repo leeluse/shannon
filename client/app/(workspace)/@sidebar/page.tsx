@@ -24,7 +24,7 @@ export default function SidebarPage() {
             <div className='pt-10'>
                 <PrimaryButton
                     text={'Create AI Brief'}
-                    onClick={() => router.push('/agents/new')} />
+                    onClick={() => router.push('/projects/new')} />
             </div>
         </aside>
     );

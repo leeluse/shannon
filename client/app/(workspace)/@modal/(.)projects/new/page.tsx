@@ -6,7 +6,7 @@ import React from 'react'
 import { X } from 'lucide-react';
 import { STEP } from '@/constants/step-template';
 
-export default function NewAgentModal() {
+export default function NewProjectModal() {
 
     return (
         <div className='fixed inset-0 z-50 bg-gray-900/50 flex

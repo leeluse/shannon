@@ -1,3 +1,3 @@
-export default function DefaultAgentsPage() {
+export default function DefaultModalPage() {
     return null;
 }
