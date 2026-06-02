@@ -1,19 +1,23 @@
 @theme {
   --font-sans: var(--font-sans);
-  --color-c-primary: var(--primary);
-  --color-c-secondary: var(--secondary);
-  --color-c-secondary-sub: var(--secondary-sub);
-  --color-c-btn-primary: var(--btn-primary);
-  --color-c-yellow: var(--yellow);
-  --color-c-blue: var(--blue);
-  --color-c-red: var(--red);
-  --color-c-violet: var(--violet);
-  --color-c-green: var(--green);
-  --color-c-gray: var(--gray);
-  --color-c-pink: var(--pink);
-  --color-c-text-primary: var(--text-primary);
-  --color-c-muted: var(--shannon-muted);
-  --color-c-modal-bg: var(--glass-modal-bg);
-  --color-c-modal-text: var(--glass-modal-text);
-  --color-c-modal-sub: var(--glass-modal-sub-text);
+
+  /* User Defined Color Tokens */
+  --color-c-glass: var(--c-glass);
+  --color-c-logo: var(--c-logo);
+  --color-c-white: var(--c-white);
+  --color-c-gray: var(--c-gray);
+  --color-c-pink: var(--c-pink);
+  --color-c-lav: var(--c-lav);
+  --color-c-modal: var(--c-modal);
+  --color-c-modal-sub: var(--c-modal-sub);
+  --color-c-purple: var(--c-purple);
+
+  /* Codebase Compatibility Mappings */
+  --color-c-primary: var(--c-logo);
+  --color-c-secondary: var(--c-lav);
+  --color-c-secondary-sub: var(--c-gray);
+  --color-c-btn-primary: var(--c-purple);
+  --color-c-text-primary: var(--c-white);
+  --color-c-modal-bg: var(--c-modal);
+  --color-c-modal-text: var(--c-lav);
 }

@@ -26,18 +26,18 @@ function StepHeader({ steps }: { steps: readonly number[] }) {
     const { step } = useDeployStore();
 
     return (
-        <header className='min-h-15 border-b border-b-c-primary w-full flex items-center justify-between'>
+        <header className='min-h-15 border-b border-b-c-logo w-full flex items-center justify-between'>
             <div className='flex gap-3 items-center '>
-                <h1 className='text-xl font-bold text-c-secondary'>Create AI Brief</h1>
+                <h1 className='text-xl font-bold text-c-lav'>Create AI Brief</h1>
                 <div className='flex gap-2'>
                     {steps.map((item) => (
-                        <div key={item} className={`rounded-full size-2 ${item === step.number ? 'bg-c-modal-sub' : 'bg-c-secondary-sub/50'}`
+                        <div key={item} className={`rounded-full size-2 ${item === step.number ? 'bg-c-modal-sub' : 'bg-c-gray/50'}`
                         }></div>
                     ))}
                 </div>
                 <div>
                     <span className='text-sm'>{step.number}</span>
-                    <span className='text-sm text-c-secondary-sub/50'> / {steps.length} </span >
+                    <span className='text-sm text-c-gray/50'> / {steps.length} </span >
                 </div>
             </div>
             <button

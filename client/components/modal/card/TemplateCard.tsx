@@ -5,8 +5,8 @@ import { ITemplateCard } from '@/types/modal/card'
 export default function TemplateCard({ id, name, keyword, descript }: ITemplateCard) {
     const { card, setCard } = useDeployStore();
     const style = {
-        active: 'ring ring-c-modal-text/50',
-        deactive: 'ring ring-c-modal-text/20'
+        active: 'ring ring-c-lav/50',
+        deactive: 'ring ring-c-lav/20'
     }
     return (
         <div
@@ -27,7 +27,7 @@ export default function TemplateCard({ id, name, keyword, descript }: ITemplateC
                     </div>
                 ))}
             </div>
-            <p className='font-medium text-xs text-c-secondary-sub'>{descript}</p>
+            <p className='font-medium text-xs text-c-gray'>{descript}</p>
         </div>
     )
 }

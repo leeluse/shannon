@@ -18,3 +18,4 @@ export { default as StepTemplate } from "./modal/deploy/StepTemplate";
 
 // Icon Components
 export { default as InitPanelIcon } from "./common/icon/InitPanelIcon";
+export { default as Logo } from "./common/Logo";
