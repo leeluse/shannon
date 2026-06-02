@@ -1,33 +1,23 @@
 import { useDeployStore } from '@/store/useDeployStore';
-import { ITemplateCard } from '@/types/modal/card'
+import { ITemplateCard } from '@/types/modal/card';
 
-
-export default function TemplateCard({ id, name, keyword, descript }: ITemplateCard) {
+export default function TemplateCard({ id, name, descript, icon: Icon }: ITemplateCard) {
     const { card, setCard } = useDeployStore();
     const style = {
         active: 'ring ring-c-lav/50',
-        deactive: 'ring ring-c-lav/20'
+        deactive: 'ring ring-c-gray/30'
     }
     return (
         <div
             role='button'
             onClick={() => setCard(id, name, descript)}
-            className={`h-40 p-3 rounded-md text flex flex-col cursor-pointer 
+            className={`h-full p-5 rounded-md text-white flex flex-col cursor-pointer 
             ${card.id == id ? style['active'] : style['deactive']}`}>
-            <h1 className='font-bold text-2xl pb-2'>{name}</h1>
-            <div className='flex pb-5 text-xs'>
-                {keyword.map((item, idx) => (
-                    <div key={idx}>
-                        <span
-                            key={item} className='text-zinc-400'>{item}
-                        </span>
-                        <span className='px-1'>
-                            {idx !== keyword.length - 1 ? '/' : ''}
-                        </span>
-                    </div>
-                ))}
+            <div className="mb-2">
+                <Icon size={30} className="text-c-gray" />
             </div>
-            <p className='font-medium text-xs text-c-gray'>{descript}</p>
+            <h1 className='font-medium text-xl pb-2'>{name}</h1>
+            <p className='text-xs text-c-gray'>{descript}</p>
         </div>
     )
 }

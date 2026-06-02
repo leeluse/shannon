@@ -1,16 +1,34 @@
 import { StepFirstTemplate } from '@/components/modal/deploy/StepFirstTemplate';
 import { StepSecondTemplate } from '@/components/modal/deploy/StepSecondTemplate';
+import { Rocket, LayoutDashboard, Presentation, FileText, Map, MoreHorizontal } from 'lucide-react';
 
 
-export const STEP = [1, 2];
+export const STEP = [1, 2, 3, 4, 5];
 
 export const STEP_INFO = [
     {
-        title: '시작점이 될 템플릿을 골라 보세요',
+        title: '어떤 걸 만들고 싶어요?',
+        des: '가장 가까운 유형을 골라주세요',
         Component: StepFirstTemplate,
     },
     {
-        title: 'AI에게 바로 시키기 전에, 요청서를 구체화해요.',
+        title: '한 줄로 설명해 주세요',
+        des: '완벽하지 않아도 괜찮아요. 방향만 잡으면 돼요',
+        Component: StepSecondTemplate,
+    },
+    {
+        title: '누구를 위한 결과물인가요?',
+        des: '대상이 명확할수록 결과가 정교해져요',
+        Component: StepSecondTemplate,
+    },
+    {
+        title: '어떤 분위기를 원해요?',
+        des: '여러 개 골라도 돼요',
+        Component: StepSecondTemplate,
+    },
+    {
+        title: '확인하고 생성할게요',
+        des: '잘못된 내용이 있으면 뒤로 돌아가 수정하세요',
         Component: StepSecondTemplate,
     },
 ]
@@ -18,21 +36,39 @@ export const STEP_INFO = [
 export const TEMPLATES = [
     {
         id: 1,
-        name: 'Project Brief',
-        keyword: ['웹', '앱', '사이드 프로젝트'],
-        descript: '웹 / 앱 및 사이드 프로젝트 설계',
+        name: '사이드 프로젝트',
+        descript: '앱, 웹서비스, 도구',
+        icon: Rocket,
     },
     {
         id: 2,
-        name: 'UI/UX Brief',
-        keyword: ['UI', 'UX', '디자인'],
-        descript: '웹페이지 / 앱 / 대시보드 디자인',
+        name: 'UI / 대시보드',
+        descript: '화면 설계, 컴포넌트',
+        icon: LayoutDashboard,
     },
     {
         id: 3,
-        name: 'PPT Brief',
-        keyword: ['발표', '강의', '보고서'],
-        descript: 'PPT 초안 작성 및 콘텐츠 기획',
+        name: '발표 자료',
+        descript: 'PPT, 강의안, 제안서',
+        icon: Presentation,
+    },
+    {
+        id: 4,
+        name: '기술 문서',
+        descript: '가이드, 명세서, README',
+        icon: FileText,
+    },
+    {
+        id: 5,
+        name: '기획 / 전략',
+        descript: '로드맵, 제품 계획',
+        icon: Map,
+    },
+    {
+        id: 6,
+        name: '기타',
+        descript: '직접 입력',
+        icon: MoreHorizontal,
     },
 ]
 

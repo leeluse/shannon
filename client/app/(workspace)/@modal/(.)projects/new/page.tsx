@@ -1,9 +1,8 @@
 'use client'
-import { StepButton, StepTemplate } from '@/components';
+import { CloseBtn, ProgressDots, StepButton, StepTemplate } from '@/components';
 import { useDeployStore } from '@/store/useDeployStore'
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import { X } from 'lucide-react';
 import { STEP } from '@/constants/step-template';
 
 export default function NewProjectModal() {
@@ -11,7 +10,7 @@ export default function NewProjectModal() {
     return (
         <div className='fixed inset-0 z-50 bg-gray-900/50 flex
             items-center justify-center'>
-            <section className='w-200 h-120 rounded-2xl glass-modal flex flex-col px-5'>
+            <section className='w-210 h-150 rounded-2xl glass-modal flex flex-col'>
                 <StepHeader steps={STEP} />
                 <StepTemplate />
                 <StepFooter steps={STEP} />
@@ -26,26 +25,14 @@ function StepHeader({ steps }: { steps: readonly number[] }) {
     const { step } = useDeployStore();
 
     return (
-        <header className='min-h-15 border-b border-b-c-logo w-full flex items-center justify-between'>
-            <div className='flex gap-3 items-center '>
-                <h1 className='text-xl font-bold text-c-lav'>Create AI Brief</h1>
-                <div className='flex gap-2'>
-                    {steps.map((item) => (
-                        <div key={item} className={`rounded-full size-2 ${item === step.number ? 'bg-c-modal-sub' : 'bg-c-gray/50'}`
-                        }></div>
-                    ))}
-                </div>
-                <div>
-                    <span className='text-sm'>{step.number}</span>
-                    <span className='text-sm text-c-gray/50'> / {steps.length} </span >
-                </div>
+        <header className='p-4 flex items-center justify-between border-b border-b-white/10'>
+            <h1 className='text-white'>프로젝트 생성</h1>
+            <div className='flex items-center gap-4'>
+                {/* step bar */}
+                <ProgressDots steps={steps} currStep={step.number} />
+                {/* close btn */}
+                <CloseBtn onClick={() => router.back()} />
             </div>
-            <button
-                onClick={() => router.back()}
-                className='text-c-modal-sub hover:text-white transition-colors duration-200'
-            >
-                <X size={24} strokeWidth={2.5} />
-            </button>
         </header>
     )
 }
@@ -68,7 +55,7 @@ function StepFooter({ steps }: { steps: readonly number[] }) {
     }
 
     return (
-        <footer className='min-h-15 pb-2 w-full flex justify-between items-center'>
+        <footer className='p-4 w-full flex justify-between items-center'>
             {step.number !== 1 ? (
                 <StepButton title='이전' onClick={() => { prevStep(); }} />
             ) : (<div />)}
@@ -80,3 +67,4 @@ function StepFooter({ steps }: { steps: readonly number[] }) {
         </footer>
     )
 }
+

@@ -9,6 +9,10 @@ export { default as SideBarTabList } from "./sidebar/SideBarTabList";
 export { default as PrimaryButton } from "./common/btn/PrimaryButton";
 export { default as StepButton } from "./common/btn/StepButton";
 export { default as InitPanelBtn } from "./common/btn/InitPanelBtn";
+export { default as CloseBtn } from "./common/btn/CloaseBtn";
+
+//  Indicator Components
+export { default as ProgressDots } from "./common/indicator/ProgressDots";
 
 
 // modal Deploy Components
