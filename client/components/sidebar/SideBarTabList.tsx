@@ -17,12 +17,12 @@ export default function SideBarTabList({ title, list }: ISideBarTabList) {
                 <li key={name} className={`py-2 px-3 text-[14px] w-full ${currTab === name && 'rounded-md bg-white/10 ring-1 ring-inset ring-c-white/10'}`}>
                     <button
                         onClick={() => setTab(name)}
-                        className={`flex items-center gap-3 `}
+                        className="flex items-center gap-3 w-full min-w-0 text-left"
                     >
-                        <div className={`${currTab === name && 'text-white'}`}>
+                        <div className={`shrink-0 ${currTab === name && 'text-white'}`}>
                             {icon}
                         </div>
-                        <span className={`${currTab === name && 'text-white'}`}>{name}</span>
+                        <span className={`truncate ${currTab === name ? 'text-white' : ''}`} title={name}>{name}</span>
                     </button>
                 </li>
 
