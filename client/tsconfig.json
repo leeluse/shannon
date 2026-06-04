@@ -33,7 +33,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "components/common/panel/MainPanel.tsx"
+    "components/common/panel/MainPanel.tsx",
+    "components/common/btn/InitPanelBadgetsx"
   ],
   "exclude": [
     "node_modules"

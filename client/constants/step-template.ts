@@ -52,24 +52,24 @@ export const TEMPLATES = [
         descript: 'PPT, 강의안, 제안서',
         icon: Presentation,
     },
-    {
-        id: 4,
-        name: '기술 문서',
-        descript: '가이드, 명세서, README',
-        icon: FileText,
-    },
-    {
-        id: 5,
-        name: '기획 / 전략',
-        descript: '로드맵, 제품 계획',
-        icon: Map,
-    },
-    {
-        id: 6,
-        name: '기타',
-        descript: '직접 입력',
-        icon: MoreHorizontal,
-    },
+    // {
+    //     id: 4,
+    //     name: '기술 문서',
+    //     descript: '가이드, 명세서, README',
+    //     icon: FileText,
+    // },
+    // {
+    //     id: 5,
+    //     name: '기획 / 전략',
+    //     descript: '로드맵, 제품 계획',
+    //     icon: Map,
+    // },
+    // {
+    //     id: 6,
+    //     name: '기타',
+    //     descript: '직접 입력',
+    //     icon: MoreHorizontal,
+    // },
 ]
 
 

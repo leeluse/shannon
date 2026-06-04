@@ -9,12 +9,12 @@ export default function StepTemplate() {
 
 
     return (
-        <section className='w-full h-full flex flex-col p-7 gap-4 justify-center'>
+        <section className='w-full h-full flex flex-col p-8 gap-4 justify-center text-c-gray'>
             {/* 헤더 */}
             <div className='flex flex-col gap-2'>
-                <span className='text-c-gray text-[14px] font-bold'>STEP {step.number}</span>
+                <span className='text-[14px]'>STEP {step.number}</span>
                 <h2 className='font-bold text-[30px] text-white'>{currTitle}</h2>
-                <p className='text-c-gray text-[16px]'>{currDes}</p>
+                <p className='text-[16px]'>{currDes}</p>
             </div>
             {/* 컨텐츠 */}
             <div className='size-full relative'>

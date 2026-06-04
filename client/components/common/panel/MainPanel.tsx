@@ -1,5 +1,5 @@
 import React from 'react'
-import { InitPanelIcon, InitPanelBtn } from '@/components'
+import { InitPanelIcon, InitPanelBadge } from '@/components'
 import { INNERPANEL } from '@/constants/inner-panel'
 
 export default function MainPanel() {
@@ -17,7 +17,7 @@ export function InitPanel() {
             <InitPanelIcon />
             <span className='font-bold text-5xl text-c-white'>{INNERPANEL.TITLE}</span>
             <p className='whitespace-pre text-center text-c-gray text-[12px] font-medium'>{INNERPANEL.DESCRIPTION}</p>
-            <InitPanelBtn />
+            <InitPanelBadge />
         </div>
     )
 }
