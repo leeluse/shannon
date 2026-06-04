@@ -12,7 +12,6 @@ export { default as InitPanelBadge } from "./common/btn/badge/InitPanelBadge";
 export { default as CloseBtn } from "./common/btn/CloseBtn";
 
 // Badge Components
-export { default as ModalBadge } from "./common/btn/badge/ModalBadge";
 
 //  Indicator Components
 export { default as ProgressDots } from "./common/indicator/ProgressDots";

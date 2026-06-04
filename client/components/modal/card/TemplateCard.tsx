@@ -10,7 +10,7 @@ export default function TemplateCard({ id, name, descript, icon: Icon }: ITempla
     return (
         <div
             role='button'
-            onClick={() => setCard(id, name, descript)}
+            onClick={() => setCard({ id: id, name: name, descript: descript })}
             className={`h-full p-5 rounded-md text-white flex flex-col cursor-pointer 
             ${card.id == id ? style['active'] : style['deactive']}`}>
             <div className="mb-2">
