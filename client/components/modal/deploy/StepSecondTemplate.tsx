@@ -2,11 +2,10 @@
 import { TEMPLATES } from '@/constants/step-template';
 import { useDeployStore } from '@/store/useDeployStore';
 import { ITemplateCard } from '@/types/modal/card';
-import React, { ReactEventHandler } from 'react'
+import React from 'react'
 
 export function StepSecondTemplate() {
     const { card, setCard } = useDeployStore();
-
 
     function OnChangeTextarea(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setCard({ [e.target.name]: e.target.value })

@@ -8,7 +8,7 @@ export { default as SideBarTabList } from "./sidebar/SideBarTabList";
 // Button Components
 export { default as PrimaryButton } from "./common/btn/PrimaryButton";
 export { default as StepButton } from "./common/btn/StepButton";
-export { default as InitPanelBadge } from "./common/btn/badge/InitPanelBadge";
+export { default as InitPanelBadge } from "./common/badge/InitPanelBadge";
 export { default as CloseBtn } from "./common/btn/CloseBtn";
 
 // Badge Components

@@ -1,6 +1,8 @@
 import { StepFirstTemplate } from '@/components/modal/deploy/StepFirstTemplate';
+import { StepFourthTemplate } from '@/components/modal/deploy/StepFourthTemplate';
 import { StepSecondTemplate } from '@/components/modal/deploy/StepSecondTemplate';
-import { Rocket, LayoutDashboard, Presentation } from 'lucide-react';
+import { StepThirdTemplate } from '@/components/modal/deploy/StepThirdTemplate';
+import { Rocket, LayoutDashboard, Presentation, UserCog, Users, BriefcaseBusiness, UsersRound, UserRoundPen, UserRoundCog } from 'lucide-react';
 
 
 export const STEP = [1, 2, 3, 4, 5];
@@ -19,12 +21,12 @@ export const STEP_INFO = [
     {
         title: '누구를 위한 결과물인가요?',
         des: '대상이 명확할수록 결과가 정교해져요.',
-        Component: StepSecondTemplate,
+        Component: StepThirdTemplate,
     },
     {
         title: '어떤 분위기를 원해요?',
         des: '여러 개 골라도 돼요.',
-        Component: StepSecondTemplate,
+        Component: StepFourthTemplate,
     },
     {
         title: '확인하고 생성할게요',
@@ -157,3 +159,64 @@ export const TEMPLATES = [
 
 
 
+
+export const TEMPLATES_FOR = [
+    {
+        id: 1,
+        name: '클라이언트 / 고객',
+        descript: '외부 설득, 제안 목표',
+        icon: BriefcaseBusiness
+    },
+    {
+        id: 2,
+        name: '동료 / 팀 내부',
+        descript: '협업, 논의, 업무 정리',
+        icon: UsersRound
+    },
+    {
+        id: 3,
+        name: '주니어 / 학습자',
+        descript: '교육, 온보딩, 지식 공유',
+        icon: UserRoundPen
+    },
+    {
+        id: 4,
+        name: '나 자신',
+        descript: '개인 사용, 사이드 프로젝트',
+        icon: UserRoundCog
+    },
+]
+
+
+export const TEMPLATES_STYLE = [
+    {
+        id: 1,
+        name: '미니멀',
+        descript: '불필요한 요소 없이 깔끔하게',
+    },
+    {
+        id: 2,
+        name: '실무적',
+        descript: '바로 쓸 수 있게 구체적으로',
+    },
+    {
+        id: 3,
+        name: '시각적',
+        descript: '다이어그램, 차트, 이미지 적극 활용',
+    },
+    {
+        id: 4,
+        name: '친근함',
+        descript: '쉬운 말로, 처음 보는 사람도 이해 가능',
+    },
+    {
+        id: 5,
+        name: '전문적',
+        descript: '데이터와 논리를 바탕으로 신뢰감 있게',
+    },
+    {
+        id: 6,
+        name: '창의적',
+        descript: '예상치 못한 아이디어와 표현을 사용',
+    }
+]
