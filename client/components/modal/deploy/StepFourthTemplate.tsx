@@ -4,7 +4,7 @@ import OptionCard from '../card/OptionCard'
 
 export function StepFourthTemplate() {
     return (
-        <div className='grid grid-cols-2 gap-3 p-2'>
+        <div className='px-10 flex flex-col gap-2'>
             {TEMPLATES_STYLE.map((template) => (
                 <div key={template.id}>
                     <OptionCard {...template} />
