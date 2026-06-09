@@ -59,11 +59,9 @@ function StepFooter({ steps }: { steps: readonly number[] }) {
             {step.number !== 1 ? (
                 <StepButton title='이전' onClick={() => { prevStep(); }} />
             ) : (<div />)}
-            {step.number !== steps.length ? (
+            {step.number !== steps.length &&
                 <StepButton title='다음' onClick={() => { validStep(step.number); }} />
-            ) : (
-                <StepButton title='배포하기' onClick={() => { validStep(step.number); }} />
-            )}
+            }
         </footer>
     )
 }

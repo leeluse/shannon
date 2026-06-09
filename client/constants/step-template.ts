@@ -1,3 +1,4 @@
+import { StepFifthTemplate } from '@/components/modal/deploy/StepFifthTemplate';
 import { StepFirstTemplate } from '@/components/modal/deploy/StepFirstTemplate';
 import { StepFourthTemplate } from '@/components/modal/deploy/StepFourthTemplate';
 import { StepSecondTemplate } from '@/components/modal/deploy/StepSecondTemplate';
@@ -31,7 +32,7 @@ export const STEP_INFO = [
     {
         title: '확인하고 생성할게요',
         des: '잘못된 내용이 있으면 뒤로 돌아가 수정하세요',
-        Component: StepSecondTemplate,
+        Component: StepFifthTemplate,
     },
 ]
 
@@ -196,26 +197,21 @@ export const TEMPLATES_STYLE = [
     },
     {
         id: 2,
-        name: '실무적',
-        descript: '바로 쓸 수 있게 구체적으로',
-    },
-    {
-        id: 3,
         name: '시각적',
         descript: '다이어그램, 차트, 이미지 적극 활용',
     },
     {
-        id: 4,
+        id: 3,
         name: '친근함',
         descript: '쉬운 말로, 처음 보는 사람도 이해 가능',
     },
     {
-        id: 5,
+        id: 4,
         name: '전문적',
         descript: '데이터와 논리를 바탕으로 신뢰감 있게',
     },
     {
-        id: 6,
+        id: 5,
         name: '창의적',
         descript: '예상치 못한 아이디어와 표현을 사용',
     }
