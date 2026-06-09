@@ -10,9 +10,11 @@ interface DeployState {
     card: {
         id: number,
         name: string,
-        descript: string
+        descript: string,
+        detailTemplates: string
     };
-    setCard: (id: number, name: string, descript: string) => void;
+    setCard: (fields: Partial<DeployState['card']>) => void;
+
 }
 
 export const useDeployStore = create<DeployState>((set) => ({
@@ -23,9 +25,10 @@ export const useDeployStore = create<DeployState>((set) => ({
     card: {
         id: 0,
         name: '',
-        descript: ''
+        descript: '',
+        detailTemplates: ''
     },
     nextStep: () => set((state) => ({ step: { number: state.step.number + 1, active: true } })),
     prevStep: () => set((state) => ({ step: { number: state.step.number - 1, active: true } })),
-    setCard: (id: number, name: string, descript: string) => set((state) => ({ card: { id, name, descript } }))
+    setCard: (fields) => set((state) => ({ card: { ...state.card, ...fields } }))
 }));

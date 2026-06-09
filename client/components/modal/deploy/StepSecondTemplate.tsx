@@ -1,45 +1,44 @@
-import { MODEL_LIST } from '@/mock/modal'
+'use client'
+import { TEMPLATES } from '@/constants/step-template';
+import { useDeployStore } from '@/store/useDeployStore';
+import { ITemplateCard } from '@/types/modal/card';
 import React from 'react'
-import ModelCard from '../card/ModelCard'
 
 export function StepSecondTemplate() {
+    const { card, setCard } = useDeployStore();
+
+    function OnChangeTextarea(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        setCard({ [e.target.name]: e.target.value })
+    }
+
     return (
-        <div className='grid grid-cols-2 size-full'>
-            <TemplateCardDetail />
-            <ModelSelector />
+        <div className='flex flex-col gap-1 py-5'>
+            <textarea
+                name='detailTemplates'
+                value={card.detailTemplates}
+                onChange={(e) => OnChangeTextarea(e)}
+                placeholder={TEMPLATES[card.id - 1].placeholder}
+                className='bg-white/5 border border-white/15 rounded-sm 
+                focus:outline-none py-3 scrollbar-none resize-none px-3 text-sm text-c-modal-sub/70' rows={5} />
+            <ButtonList list={TEMPLATES[card.id - 1].detailTemplates} />
         </div>
     )
 }
 
 
-export function TemplateCardDetail() {
+
+export function ButtonList({ list }: { list: ITemplateCard['detailTemplates'] }) {
+    const { setCard } = useDeployStore();
     return (
-        <div>
-            <h1 className='text-sm font-medium text-c-secondary-sub/50'>에이전트</h1>
-            <div className=''>
-                <div className='flex flex-col gap-1 py-2'>
-                    <span className='text-xs'>이름</span>
-                    <input className='bg-amber-50/5 rounded-sm focus:outline-none py-1 px-2' type="text" />
-                </div>
-                <div className='flex flex-col gap-1 py-2'>
-                    <span className='text-xs'>에이전트 상세 설명</span>
-                    <input className='bg-amber-50/5 rounded-sm focus:outline-none py-1 px-2' type="text" />
-                </div>
+        (
+            <div className='flex flex-wrap gap-2 py-3'>
+                {list?.map(({ fill_text, label }) => (
+                    <span
+                        onClick={() => setCard({ detailTemplates: fill_text })}
+                        key={label}
+                        className='bg-white/5 border border-white/15 text-white text-[14px] px-5 py-2 rounded-full cursor-pointer'>{label}</span>
+                ))}
             </div>
-        </div>
-    )
-}
-
-
-export function ModelSelector() {
-    return (
-        <div>
-            <h1 className='text-sm font-medium text-c-secondary-sub/50'>모델</h1>
-            {MODEL_LIST.map(({ id, name }) => (
-                <div key={id}>
-                    <ModelCard name={name} />
-                </div>
-            ))}
-        </div>
+        )
     )
 }

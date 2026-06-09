@@ -10,11 +10,11 @@ export default function WorkspaceLayout({
 }>) {
   return (
     <>
-      <main className="h-full flex gap-2">
-        <div className="w-1/4">
+      <main className="h-full flex gap-4 text-white">
+        <div className="w-64 shrink-0">
           {sidebar}
         </div>
-        <div className="w-3/4">
+        <div className="flex-1 min-w-0">
           {children}
         </div>
       </main>

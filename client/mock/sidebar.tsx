@@ -1,14 +1,12 @@
-import { Brain, Network } from "lucide-react";
+import { FolderHeart, LayoutDashboard, Presentation, Rocket, Store } from "lucide-react";
 
-export const TAB_ITEMS = [
-    { icon: <Brain size={20} strokeWidth={2.5} />, name: 'Neural Core' },
-    { icon: <Network size={20} strokeWidth={2.5} />, name: 'Latency Map' },
+export const CUR_PROJ_MOCK_ITEMS = [
+    { icon: <FolderHeart size={20} strokeWidth={2.5} />, name: '포트폴리오 사이트 만들기' },
+    { icon: <LayoutDashboard size={20} strokeWidth={2.5} />, name: '관리자 대시보드 리팩토링' },
+    { icon: <Presentation size={20} strokeWidth={2.5} />, name: '웹 기초 강의 PPT' },
 ]
 
-
-export const ACTIVE_AGENTS = [
-    { color: 'bg-purple-300', name: 'Axus' },
-    { color: 'bg-blue-300', name: 'Nyx' },
-    { color: 'bg-red-300', name: 'Eos' },
-    { color: 'bg-yellow-300', name: 'Strix' }
+export const RECENTLY_PROJ_MOCK_ITEMS = [
+    { icon: <Rocket size={20} strokeWidth={2.5} />, name: 'SaaS 랜딩 페이지' },
+    { icon: <Store size={20} strokeWidth={2.5} />, name: '이커머스 백오피스' },
 ]

@@ -1,23 +1,30 @@
 'use client'
 
-import { TAB_ITEMS } from "@/mock/sidebar"
-import { useState } from "react"
+import { useTabStore } from "@/store/useTabStore.";
 
-export default function SideBarTab() {
-    const [active, setActive] = useState<'Neural Core' | 'Latency Map'>('Neural Core')
+interface ISideBarTabList {
+    title: string;
+    list: { icon: React.ReactNode, name: string }[];
+}
 
+export default function SideBarTabList({ title, list }: ISideBarTabList) {
+    const { currTab, setTab } = useTabStore();
 
     return (
-        <ul className='w-full px-4 flex flex-col gap-1.5'>
-            {TAB_ITEMS.map(({ icon, name }) =>
-                <button key={name} onClick={() => setActive(name as 'Neural Core' | 'Latency Map')}>
-                    <li className={`py-1 px-3 rounded-lg flex items-center gap-3 ${active === name ? 'bg-amber-50/10' : 'bg-transparent'}`}>
-                        <div className={`${active === name ? 'text-c-secondary' : 'text-c-secondary-sub'}`}>
+        <ul className='w-full flex flex-col gap-1.5 text-white/60'>
+            <h3 className='text-[11px] '>{title}</h3>
+            {list?.map(({ icon, name }) =>
+                <li key={name} className={`py-2 px-3 text-[14px] w-full ${currTab === name && 'rounded-md bg-white/10 ring-1 ring-inset ring-c-white/10'}`}>
+                    <button
+                        onClick={() => setTab(name)}
+                        className="flex items-center gap-3 w-full min-w-0 text-left"
+                    >
+                        <div className={`shrink-0 ${currTab === name && 'text-white'}`}>
                             {icon}
                         </div>
-                        <span className={`${active === name ? 'text-c-secondary' : 'text-c-secondary-sub'} font-bold text-lg`}>{name}</span>
-                    </li>
-                </button>
+                        <span className={`truncate ${currTab === name ? 'text-white' : ''}`} title={name}>{name}</span>
+                    </button>
+                </li>
 
             )}
         </ul>
