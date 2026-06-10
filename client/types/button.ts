@@ -1,5 +1,5 @@
 export interface IButton {
-    type: "button" | "reset" | "submit" | undefined;
+    type?: "button" | "reset" | "submit";
     label: string;
     onClick: () => void;
 }
