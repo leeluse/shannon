@@ -1,12 +1,10 @@
-'use client'
 import React from 'react'
 import { useDeployStore } from '@/store/useDeployStore'
 import { STEP_INFO } from '@/constants/step-template';
 
-export default function StepTemplate() {
+export default function ProjectForm() {
     const { step } = useDeployStore();
     const [currTitle, currDes, CurrentComponent] = [STEP_INFO[step.number - 1].title, STEP_INFO[step.number - 1].des, STEP_INFO[step.number - 1].Component];
-
 
     return (
         <section className='w-full h-full flex flex-col p-8 gap-4 justify-center text-c-gray'>

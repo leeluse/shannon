@@ -18,7 +18,7 @@ export { default as ProgressDots } from "./common/indicator/ProgressDots";
 
 
 // modal Deploy Components
-export { default as StepTemplate } from "./modal/deploy/StepTemplate";
+export { default as ProjectForm } from "./modal/form/ProjectForm";
 
 
 

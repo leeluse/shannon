@@ -28,7 +28,7 @@ export default function SidebarPage() {
             </div>
             <div className="flex items-end border-t border-white/10 pt-4 w-full">
                 <PrimaryButton
-                    text={'Create Project'}
+                    label={'Create Project'}
                     onClick={() => router.push('/projects/new')} />
             </div>
         </aside>
