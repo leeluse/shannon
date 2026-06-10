@@ -5,7 +5,9 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
   lighthouse:
@@ -27,4 +29,141 @@ jobs:
         run: bun run --cwd client build
 
       - name: Run Lighthouse CI
-        run: npx @lhci/cli@0.15.x autorun --config=.github/lighthouse/lighthouserc.json
+        id: lighthouse_audit
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./.github/lighthouse/lighthouserc.json
+          temporaryPublicStorage: true
+
+      - name: Post or Update Lighthouse Comment
+        if: always()
+        uses: actions/github-script@v8
+        env:
+          LIGHTHOUSE_MANIFEST: ${{ steps.lighthouse_audit.outputs.manifest }}
+          LIGHTHOUSE_LINKS: ${{ steps.lighthouse_audit.outputs.links }}
+        with:
+          script: |
+            const manifest = JSON.parse(process.env.LIGHTHOUSE_MANIFEST || '[]');
+            const links = JSON.parse(process.env.LIGHTHOUSE_LINKS || '{}');
+
+            if (manifest.length === 0) {
+              core.setFailed('Lighthouse manifest output is empty.');
+              return;
+            }
+
+            const run = manifest.find((entry) => entry.isRepresentativeRun) || manifest[0];
+            const score = (value) => Math.round((value ?? 0) * 100);
+
+            const scores = {
+              performance: score(run.summary?.performance),
+              accessibility: score(run.summary?.accessibility),
+              bestPractices: score(run.summary?.['best-practices']),
+              seo: score(run.summary?.seo)
+            };
+
+            const reportUrl = links[run.url] || Object.values(links)[0] || '';
+
+            const getEmoji = (score) => {
+              if (score >= 90) return '🟢';
+              if (score >= 50) return '🟡';
+              return '🔴';
+            };
+
+            const getStatus = (score) => {
+              if (score >= 90) return 'Good';
+              if (score >= 50) return 'Needs Improvement';
+              return 'Poor';
+            };
+
+            const getProgressBar = (score) => {
+              const totalBlocks = 10;
+              const filledBlocks = Math.round(score / 10);
+              const emptyBlocks = totalBlocks - filledBlocks;
+              return '█'.repeat(filledBlocks) + '░'.repeat(emptyBlocks);
+            };
+
+            const marker = '<!-- lighthouse-ci-report -->';
+            const commentBody = [
+              marker,
+              '## 📊 Lighthouse 성능 리포트',
+              '_새 커밋이 푸시될 때마다 성능이 자동으로 재측정되어 업데이트됩니다._',
+              '',
+              '| 카테고리 | 점수 | 진행바 | 상태 |',
+              '| --- | --- | --- | --- |',
+              `| ⚡ **Performance** | **${scores.performance} / 100** | \`${getProgressBar(scores.performance)}\` | ${getEmoji(scores.performance)} ${getStatus(scores.performance)} |`,
+              `| ♿ **Accessibility** | **${scores.accessibility} / 100** | \`${getProgressBar(scores.accessibility)}\` | ${getEmoji(scores.accessibility)} ${getStatus(scores.accessibility)} |`,
+              `| 🛡️ **Best Practices** | **${scores.bestPractices} / 100** | \`${getProgressBar(scores.bestPractices)}\` | ${getEmoji(scores.bestPractices)} ${getStatus(scores.bestPractices)} |`,
+              `| 🔍 **SEO** | **${scores.seo} / 100** | \`${getProgressBar(scores.seo)}\` | ${getEmoji(scores.seo)} ${getStatus(scores.seo)} |`,
+              '',
+              reportUrl ? `🔗 **[상세 리포트 보기](${reportUrl})**` : '⚠️ *상세 리포트 링크를 생성할 수 없습니다.*',
+              '',
+              `*최종 측정 시간: ${new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' })}*`
+            ].join('\n');
+
+            const { owner, repo } = context.repo;
+            
+            if (context.eventName === 'pull_request') {
+              const pull_number = context.payload.pull_request.number;
+              const comments = await github.paginate(github.rest.issues.listComments, {
+                owner,
+                repo,
+                issue_number: pull_number,
+                per_page: 100,
+              });
+
+              const existingComment = comments.find((comment) => comment.body && comment.body.includes(marker));
+
+              if (existingComment) {
+                await github.rest.issues.updateComment({
+                  owner,
+                  repo,
+                  comment_id: existingComment.id,
+                  body: commentBody,
+                });
+                console.log('Successfully updated the existing Lighthouse PR comment.');
+                return;
+              }
+
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pull_number,
+                body: commentBody,
+              });
+              console.log('Successfully created a new Lighthouse PR comment.');
+              return;
+            }
+
+            if (context.eventName === 'push') {
+              const commit_sha = context.sha;
+              const comments = await github.paginate('GET /repos/{owner}/{repo}/commits/{commit_sha}/comments', {
+                owner,
+                repo,
+                commit_sha,
+                per_page: 100,
+              });
+
+              const existingComment = comments.find((comment) => comment.body && comment.body.includes(marker));
+
+              if (existingComment) {
+                await github.request('PATCH /repos/{owner}/{repo}/comments/{comment_id}', {
+                  owner,
+                  repo,
+                  comment_id: existingComment.id,
+                  body: commentBody,
+                });
+                console.log(`Successfully updated the Lighthouse commit comment for ${commit_sha}.`);
+                return;
+              }
+
+              await github.request('POST /repos/{owner}/{repo}/commits/{commit_sha}/comments', {
+                owner,
+                repo,
+                commit_sha,
+                body: commentBody,
+              });
+              console.log(`Successfully created a new Lighthouse commit comment for ${commit_sha}.`);
+              return;
+            }
+
+            console.log(`Skipping Lighthouse comment for unsupported event: ${context.eventName}`);
