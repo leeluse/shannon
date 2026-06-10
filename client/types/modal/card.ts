@@ -1,22 +1,31 @@
 import React from 'react'
 
 export type ITemplateCard = {
-    id: number
+    id?: number
     name: string
-    descript: string
+    description: string
     placeholder?: string
-    icon: React.ComponentType<any>
-    detailTemplates?: IDetailTemplates[]
+    curId?: number,
+    icon: React.ComponentType<{ size?: number; className?: string }>
+    onClick?: () => void
+    templates?: IDetailTemplates[]
+}
+export interface ICard {
+    templateId: number;
+    targetId: number;
+    styleId: number[];
+    details: string;
 }
 
 export type IDetailTemplates = {
     label: string;
     description: string;
-    fill_text: string;
+    fillText: string;
 }
 
 export type IOptionCard = {
-    id: number
+    checked: boolean,
     name: string
-    descript: string
+    description: string
+    onChecked: () => void
 }
