@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shannon — UI Design Spec v1.0</title>
+<style>
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  /* ── Existing Tokens ── */
+  --c-glass:      rgba(20, 22, 36, 0.3);
+  --c-logo:       #564B60;
+  --c-white:      #F1F5F9;
+  --c-gray:       #94A3B8;
+  --c-pink:       rgba(233, 213, 255, 0.8);
+  --c-lav:        #DDB7FF;
+  --c-modal:      rgba(31, 26, 35, 0.6);
+  --c-modal-sub:  #E5E7EB;
+  --c-purple:     #490080;
+  /* ── New Tokens (this spec) ── */
+  --c-success:    #86EFAC;
+  --c-bg:         #0d0b14;
+  --c-surface:    #13111e;
+  --c-border:     rgba(255,255,255,0.08);
+  --c-muted:      #475569;
+  --c-subtle:     #334155;
+  /* ── Doc chrome ── */
+  --doc-sidebar:  220px;
+  --doc-max:      1100px;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--c-bg);
+  color: var(--c-white);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════
+   DOC LAYOUT
+═══════════════════════════════════════════ */
+.doc-layout { display: flex; min-height: 100vh; }
+
+/* Left nav */
+.doc-nav {
+  width: var(--doc-sidebar);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: rgba(13,11,20,0.95);
+  border-right: 1px solid var(--c-border);
+  padding: 28px 0;
+  display: flex;
+  flex-direction: column;
+}
+.nav-brand {
+  padding: 0 20px 24px;
+  border-bottom: 1px solid var(--c-border);
+  margin-bottom: 20px;
+}
+.nav-brand-name { font-size: 16px; font-weight: 800; color: var(--c-lav); }
+.nav-brand-tag { font-size: 10px; color: var(--c-muted); margin-top: 2px; }
+.nav-section { padding: 0 20px; margin-bottom: 6px; }
+.nav-section-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--c-subtle);
+  margin-bottom: 6px; margin-top: 16px;
+}
+.nav-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border-radius: 6px;
+  font-size: 12px; color: var(--c-muted);
+  text-decoration: none; margin-bottom: 2px;
+  transition: color 0.15s, background 0.15s;
+}
+.nav-link:hover { color: var(--c-white); background: rgba(255,255,255,0.04); }
+.nav-link.active { color: var(--c-lav); background: rgba(221,183,255,0.08); }
+.nav-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.nav-new {
+  font-size: 8px; font-weight: 700; padding: 1px 5px;
+  border-radius: 10px; background: rgba(221,183,255,0.15);
+  color: var(--c-lav); margin-left: auto;
+}
+
+/* Main content */
+.doc-content {
+  flex: 1;
+  min-width: 0;
+  padding: 48px 56px;
+  max-width: calc(var(--doc-max) + 112px);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION STRUCTURE
+═══════════════════════════════════════════ */
+.doc-section { margin-bottom: 80px; }
+.section-eyebrow {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--c-lav);
+  margin-bottom: 8px;
+}
+.section-title { font-size: 26px; font-weight: 800; color: var(--c-white); margin-bottom: 8px; }
+.section-desc { font-size: 14px; color: var(--c-gray); line-height: 1.7; max-width: 680px; }
+.section-divider { height: 1px; background: var(--c-border); margin: 32px 0; }
+
+/* ═══════════════════════════════════════════
+   COVER
+═══════════════════════════════════════════ */
+.cover {
+  background: linear-gradient(135deg, rgba(221,183,255,0.06) 0%, rgba(73,0,128,0.08) 100%);
+  border: 1px solid rgba(221,183,255,0.12);
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 56px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  background: radial-gradient(circle, rgba(221,183,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-title { font-size: 36px; font-weight: 900; color: var(--c-white); margin-bottom: 6px; }
+.cover-sub { font-size: 16px; color: var(--c-lav); margin-bottom: 24px; font-weight: 500; }
+.cover-meta { display: flex; gap: 32px; flex-wrap: wrap; }
+.cover-meta-item { }
+.cmi-label { font-size: 10px; font-weight: 600; color: var(--c-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 3px; }
+.cmi-value { font-size: 13px; color: var(--c-white); font-weight: 600; }
+
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+.token-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 20px; }
+.token-card {
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+}
+.token-swatch { height: 52px; }
+.token-info { padding: 10px 12px; }
+.token-name { font-size: 11px; font-weight: 700; color: var(--c-white); margin-bottom: 2px; }
+.token-var { font-size: 10px; color: var(--c-muted); font-family: monospace; margin-bottom: 1px; }
+.token-hex { font-size: 10px; color: var(--c-subtle); font-family: monospace; }
+.token-new-tag {
+  display: inline-block; font-size: 8px; font-weight: 700;
+  padding: 1px 5px; border-radius: 4px;
+  background: rgba(221,183,255,0.15); color: var(--c-lav);
+  margin-left: 5px; vertical-align: middle;
+}
+
+.type-row { display: flex; align-items: baseline; gap: 20px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.type-preview { flex-shrink: 0; min-width: 220px; }
+.type-spec { font-size: 11px; color: var(--c-muted); }
+.type-spec strong { color: var(--c-gray); }
+
+/* ═══════════════════════════════════════════
+   SCREEN MAP
+═══════════════════════════════════════════ */
+.screen-map {
+  background: rgba(20,22,36,0.5);
+  border: 1px solid var(--c-border);
+  border-radius: 14px;
+  padding: 32px;
+  margin-top: 24px;
+}
+.map-row { display: flex; align-items: center; gap: 0; margin-bottom: 0; }
+.map-box {
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.03);
+  min-width: 130px;
+  flex-shrink: 0;
+}
+.map-box.new-screen {
+  border-color: rgba(221,183,255,0.35);
+  background: rgba(221,183,255,0.05);
+  position: relative;
+}
+.map-box.existing-screen { opacity: 0.55; }
+.map-eyebrow { font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-muted); margin-bottom: 4px; }
+.map-eyebrow.new { color: var(--c-lav); }
+.map-name { font-size: 13px; font-weight: 700; color: var(--c-white); }
+.map-detail { font-size: 10px; color: var(--c-muted); margin-top: 2px; line-height: 1.4; }
+.map-new-badge {
+  position: absolute; top: -8px; right: 8px;
+  background: var(--c-lav); color: #0d0b14;
+  font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 20px;
+}
+.map-arrow {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 4px; gap: 2px; flex-shrink: 0;
+}
+.map-arrow-line { width: 28px; height: 1px; background: rgba(255,255,255,0.15); }
+.map-arrow-tip {
+  border-left: 5px solid rgba(255,255,255,0.18);
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  margin-left: -1px;
+}
+.map-arrow-label { font-size: 8px; color: var(--c-subtle); white-space: nowrap; text-align: center; }
+.map-section-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--c-subtle);
+  margin-bottom: 12px; margin-top: 24px;
+}
+.map-v-connector { width: 1px; height: 20px; background: rgba(255,255,255,0.1); margin: 8px 0 8px 65px; }
+
+/* ═══════════════════════════════════════════
+   SCREEN SPEC
+═══════════════════════════════════════════ */
+.screen-spec { margin-top: 32px; }
+.spec-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--c-muted);
+  margin-bottom: 14px;
+}
+.spec-label-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--c-lav); }
+.spec-title { font-size: 20px; font-weight: 800; color: var(--c-white); margin-bottom: 6px; }
+.spec-desc { font-size: 13px; color: var(--c-gray); margin-bottom: 24px; line-height: 1.6; }
+
+/* Frame (screen mockup) */
+.frame {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  display: flex;
+}
+.frame-tall { height: 540px; }
+.frame-medium { height: 460px; }
+
+/* Frame elements */
+.f-sidebar {
+  width: 192px; flex-shrink: 0;
+  background: rgba(20,22,36,0.7);
+  border-right: 1px solid rgba(255,255,255,0.06);
+  padding: 14px 10px;
+  display: flex; flex-direction: column;
+}
+.f-logo-row { display: flex; align-items: center; gap: 7px; margin-bottom: 16px; }
+.f-logo { width: 26px; height: 26px; background: var(--c-logo); border-radius: 6px; flex-shrink: 0; }
+.f-logo-text { font-size: 13px; font-weight: 700; color: #c084fc; }
+.f-sec-label { font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-subtle); margin-bottom: 5px; margin-top: 12px; }
+.f-item { display: flex; align-items: center; gap: 7px; padding: 5px 7px; border-radius: 5px; margin-bottom: 2px; }
+.f-item.active { background: rgba(221,183,255,0.1); border: 1px solid rgba(221,183,255,0.15); }
+.f-icon { width: 12px; height: 12px; border-radius: 3px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+.f-icon.lav { background: rgba(221,183,255,0.3); }
+.f-name { font-size: 10px; color: var(--c-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.f-name.active { color: var(--c-lav); }
+.f-footer { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 8px; }
+.f-create-btn { width: 100%; padding: 6px; border-radius: 6px; background: var(--c-purple); color: var(--c-white); font-size: 10px; font-weight: 600; text-align: center; }
+
+.f-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.f-proj-header {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 9px 16px;
+  display: flex; align-items: center; gap: 9px;
+  flex-shrink: 0;
+  background: rgba(20,22,36,0.3);
+  height: 40px;
+}
+.f-back { font-size: 10px; color: var(--c-muted); }
+.f-divider { width: 1px; height: 13px; background: rgba(255,255,255,0.08); }
+.f-type-chip {
+  font-size: 9px; font-weight: 600;
+  padding: 2px 7px; border-radius: 20px;
+  background: rgba(221,183,255,0.1); color: var(--c-lav);
+  border: 1px solid rgba(221,183,255,0.2);
+}
+.f-proj-title { font-size: 12px; font-weight: 700; color: #E2E8F0; }
+.f-step-count { font-size: 10px; color: var(--c-muted); margin-left: auto; }
+
+/* ── Dashboard main ── */
+.f-dashboard { flex: 1; padding: 20px 24px; overflow: hidden; display: flex; flex-direction: column; gap: 18px; }
+.f-greeting { font-size: 17px; font-weight: 800; }
+.f-greeting-sub { font-size: 11px; color: var(--c-muted); margin-top: 2px; }
+.f-stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
+.f-stat {
+  background: rgba(20,22,36,0.5); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 9px; padding: 12px 14px;
+}
+.f-stat.hi { border-color: rgba(221,183,255,0.25); background: rgba(221,183,255,0.04); }
+.f-stat-label { font-size: 9px; color: var(--c-muted); margin-bottom: 5px; }
+.f-stat-val { font-size: 22px; font-weight: 800; }
+.f-stat-val.lav { color: var(--c-lav); }
+.f-stat-change { font-size: 9px; color: var(--c-subtle); margin-top: 2px; }
+.f-stat-change .up { color: var(--c-success); }
+
+.f-proj-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 7px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.02);
+  margin-bottom: 5px;
+}
+.f-proj-icon { width: 26px; height: 26px; border-radius: 6px; background: rgba(221,183,255,0.1); border: 1px solid rgba(221,183,255,0.15); flex-shrink: 0; }
+.f-proj-meta { flex: 1; min-width: 0; }
+.f-proj-name { font-size: 11px; font-weight: 600; color: #E2E8F0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.f-proj-type { font-size: 9px; color: var(--c-muted); }
+.f-badge { font-size: 8px; font-weight: 700; padding: 2px 7px; border-radius: 20px; flex-shrink: 0; }
+.f-badge.done { background: rgba(134,239,172,0.1); color: var(--c-success); border: 1px solid rgba(134,239,172,0.2); }
+.f-badge.wip { background: rgba(221,183,255,0.1); color: var(--c-lav); border: 1px solid rgba(221,183,255,0.2); }
+.f-quick-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.f-quick { border: 1px dashed rgba(255,255,255,0.1); border-radius: 7px; padding: 10px 12px; font-size: 10px; color: var(--c-muted); }
+.f-sec-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.f-sec-title { font-size: 11px; font-weight: 700; color: var(--c-gray); }
+.f-sec-link { font-size: 10px; color: var(--c-muted); }
+
+/* ── Workspace body ── */
+.f-workspace-body { flex: 1; display: flex; min-height: 0; }
+.f-flow-panel { width: 240px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.06); padding: 14px 12px; display: flex; flex-direction: column; gap: 0; overflow: hidden; }
+.f-flow-label { font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-subtle); margin-bottom: 12px; }
+
+.f-step { display: flex; align-items: flex-start; gap: 9px; }
+.f-step-connector { display: flex; flex-direction: column; align-items: center; width: 18px; flex-shrink: 0; padding-top: 2px; }
+.f-step-num { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.04); color: var(--c-muted); }
+.f-step-num.done { background: rgba(134,239,172,0.1); border-color: rgba(134,239,172,0.3); color: var(--c-success); }
+.f-step-num.active { background: rgba(221,183,255,0.15); border-color: var(--c-lav); color: var(--c-lav); }
+.f-vline { width: 1px; flex: 1; background: rgba(255,255,255,0.06); min-height: 14px; margin: 3px 0; }
+.f-vline.active { background: rgba(221,183,255,0.15); }
+.f-step-card { flex: 1; padding: 7px 9px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.02); margin-bottom: 4px; cursor: pointer; }
+.f-step-card.active { border-color: rgba(221,183,255,0.4); background: rgba(221,183,255,0.07); }
+.f-step-title { font-size: 10px; font-weight: 700; color: #E2E8F0; margin-bottom: 2px; }
+.f-step-title.active { color: var(--c-lav); }
+.f-step-sub { font-size: 9px; color: var(--c-muted); }
+.f-step-badge { display: inline-block; font-size: 8px; font-weight: 600; padding: 1px 5px; border-radius: 20px; margin-top: 4px; }
+.sb-done { background: rgba(134,239,172,0.1); color: var(--c-success); border: 1px solid rgba(134,239,172,0.2); }
+.sb-active { background: rgba(221,183,255,0.1); color: var(--c-lav); border: 1px solid rgba(221,183,255,0.2); }
+.sb-pending { background: rgba(255,255,255,0.04); color: var(--c-subtle); border: 1px solid rgba(255,255,255,0.08); }
+
+.f-detail-panel { flex: 1; padding: 16px 18px; overflow: hidden; display: flex; flex-direction: column; gap: 11px; }
+.f-detail-eyebrow { font-size: 9px; font-weight: 700; color: var(--c-lav); text-transform: uppercase; letter-spacing: 0.08em; }
+.f-detail-title { font-size: 14px; font-weight: 800; color: var(--c-white); margin-bottom: 3px; }
+.f-detail-desc { font-size: 10px; color: var(--c-muted); line-height: 1.6; }
+.f-hr { height: 1px; background: rgba(255,255,255,0.06); }
+.f-sec-card { border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; background: rgba(255,255,255,0.02); }
+.f-sec-card.hi { border-color: rgba(221,183,255,0.2); background: rgba(221,183,255,0.03); }
+.f-sc-label { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--c-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+.f-sc-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(221,183,255,0.5); flex-shrink: 0; }
+.f-sc-body { font-size: 10px; color: var(--c-gray); line-height: 1.6; }
+.f-sc-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+.f-sc-tag { font-size: 9px; padding: 1px 7px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.07); color: var(--c-muted); }
+.f-sc-tag.lav { color: var(--c-lav); border-color: rgba(221,183,255,0.2); background: rgba(221,183,255,0.06); }
+
+/* Generation view */
+.f-gen-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 32px; }
+.f-gen-icon { width: 50px; height: 50px; border-radius: 14px; background: rgba(221,183,255,0.1); border: 1px solid rgba(221,183,255,0.2); display: flex; align-items: center; justify-content: center; }
+.f-gen-icon-inner { width: 22px; height: 22px; border-radius: 5px; background: rgba(221,183,255,0.4); }
+.f-gen-title { font-size: 16px; font-weight: 800; text-align: center; }
+.f-gen-sub { font-size: 11px; color: var(--c-muted); text-align: center; line-height: 1.6; max-width: 240px; }
+.f-gen-steps { width: 100%; max-width: 280px; display: flex; flex-direction: column; gap: 6px; }
+.f-gen-step { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 7px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); }
+.f-gen-step.done { background: rgba(134,239,172,0.04); border-color: rgba(134,239,172,0.15); }
+.f-gen-step.running { background: rgba(221,183,255,0.05); border-color: rgba(221,183,255,0.2); }
+.f-gen-step-icon { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); font-size: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.f-gen-step-icon.done { background: rgba(134,239,172,0.15); border-color: rgba(134,239,172,0.3); color: var(--c-success); }
+.f-gen-step-icon.running { border-color: var(--c-lav); border-top-color: transparent; }
+.f-gen-step-text { font-size: 10px; flex: 1; }
+.f-gen-step-text.done { color: var(--c-success); }
+.f-gen-step-text.running { color: var(--c-lav); }
+.f-gen-step-text.pending { color: var(--c-subtle); }
+
+/* Shimmer skeleton */
+@keyframes shimmer { 0% { background-position: -300px 0; } 100% { background-position: 300px 0; } }
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 4px;
+}
+.shimmer-lav {
+  background: linear-gradient(90deg, rgba(221,183,255,0.05) 25%, rgba(221,183,255,0.13) 50%, rgba(221,183,255,0.05) 75%);
+  background-size: 600px 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   ANNOTATION TABLE
+═══════════════════════════════════════════ */
+.anno-block { margin-top: 24px; }
+.anno-title { font-size: 12px; font-weight: 700; color: var(--c-gray); margin-bottom: 12px; }
+.anno-table { width: 100%; border-collapse: collapse; }
+.anno-table th {
+  text-align: left; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--c-subtle); padding: 0 0 8px;
+}
+.anno-table td {
+  font-size: 12px; color: var(--c-gray);
+  padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.04);
+  vertical-align: top; line-height: 1.6;
+}
+.anno-table td:first-child { color: var(--c-lav); font-weight: 600; width: 170px; }
+.anno-table td:nth-child(2) { color: #E2E8F0; width: 220px; padding-right: 20px; }
+
+/* ═══════════════════════════════════════════
+   COMPONENT LIBRARY
+═══════════════════════════════════════════ */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+.comp-card {
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 20px;
+  background: rgba(255,255,255,0.02);
+}
+.comp-card-title { font-size: 13px; font-weight: 700; color: var(--c-white); margin-bottom: 4px; }
+.comp-card-desc { font-size: 11px; color: var(--c-muted); margin-bottom: 16px; line-height: 1.5; }
+.comp-preview {
+  background: rgba(13,11,20,0.6);
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255,255,255,0.04);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.comp-props { display: flex; flex-direction: column; gap: 5px; }
+.comp-prop { display: flex; gap: 8px; font-size: 11px; }
+.prop-name { color: var(--c-lav); font-family: monospace; min-width: 100px; flex-shrink: 0; }
+.prop-type { color: #f9a8d4; font-family: monospace; min-width: 70px; }
+.prop-desc { color: var(--c-muted); }
+
+/* ═══════════════════════════════════════════
+   INTERACTION SPECS
+═══════════════════════════════════════════ */
+.interaction-row {
+  display: grid; grid-template-columns: 160px 1fr 1fr;
+  gap: 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+  padding: 12px 0;
+}
+.interaction-row:first-of-type { border-top: 1px solid rgba(255,255,255,0.04); }
+.ir-trigger { font-size: 12px; font-weight: 600; color: var(--c-white); }
+.ir-action { font-size: 12px; color: var(--c-gray); padding-right: 16px; }
+.ir-spec { font-size: 12px; color: var(--c-muted); font-family: monospace; }
+
+.state-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.state-chip {
+  display: flex; align-items: center; gap: 7px;
+  padding: 7px 12px; border-radius: 8px;
+  border: 1px solid var(--c-border);
+  font-size: 11px;
+}
+.state-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════
+   IMPL CHECKLIST
+═══════════════════════════════════════════ */
+.impl-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+.impl-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 12px 16px; border-radius: 9px;
+  border: 1px solid var(--c-border);
+  background: rgba(255,255,255,0.02);
+}
+.impl-num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(221,183,255,0.1); border: 1px solid rgba(221,183,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--c-lav); flex-shrink: 0;
+}
+.impl-body { flex: 1; }
+.impl-title { font-size: 13px; font-weight: 700; color: var(--c-white); margin-bottom: 3px; }
+.impl-desc { font-size: 11px; color: var(--c-muted); line-height: 1.5; }
+.impl-tags { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+.impl-tag { font-size: 9px; padding: 1px 7px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.07); color: var(--c-muted); font-family: monospace; }
+
+/* code block */
+.code-block {
+  background: rgba(13,11,20,0.8); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; padding: 16px; font-family: monospace;
+  font-size: 11px; color: #94A3B8; line-height: 1.8; margin-top: 12px;
+  overflow-x: auto; white-space: pre;
+}
+.code-key { color: var(--c-lav); }
+.code-val { color: #86efac; }
+.code-comment { color: var(--c-subtle); }
+</style>
+</head>
+<body>
+<div class="doc-layout">
+
+<!-- ═════════════════════════════
+     NAV
+═════════════════════════════ -->
+<nav class="doc-nav">
+  <div class="nav-brand">
+    <div class="nav-brand-name">Shannon</div>
+    <div class="nav-brand-tag">UI Design Spec v1.0 · 2026-06-11</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">개요</div>
+    <a class="nav-link" href="#overview"><div class="nav-dot"></div>문서 소개</a>
+    <a class="nav-link" href="#tokens"><div class="nav-dot"></div>디자인 토큰</a>
+    <a class="nav-link" href="#screen-map"><div class="nav-dot"></div>화면 흐름도</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">신규 화면</div>
+    <a class="nav-link" href="#screen-dashboard"><div class="nav-dot"></div>Dashboard Home <span class="nav-new">NEW</span></a>
+    <a class="nav-link" href="#screen-generation"><div class="nav-dot"></div>Generation View <span class="nav-new">NEW</span></a>
+    <a class="nav-link" href="#screen-workspace"><div class="nav-dot"></div>Project Workspace <span class="nav-new">NEW</span></a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-label">스펙</div>
+    <a class="nav-link" href="#components"><div class="nav-dot"></div>컴포넌트 라이브러리</a>
+    <a class="nav-link" href="#interactions"><div class="nav-dot"></div>인터랙션 명세</a>
+    <a class="nav-link" href="#impl"><div class="nav-dot"></div>구현 가이드</a>
+  </div>
+</nav>
+
+<!-- ═════════════════════════════
+     CONTENT
+═════════════════════════════ -->
+<main class="doc-content">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-title">Shannon UI Design Spec</div>
+    <div class="cover-sub">Dashboard · Generation View · Project Workspace</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <div class="cmi-label">버전</div>
+        <div class="cmi-value">v1.0</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">작성일</div>
+        <div class="cmi-value">2026-06-11</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">브랜치</div>
+        <div class="cmi-value">v1-scope/dashboard</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">스택</div>
+        <div class="cmi-value">Next.js 15 · Tailwind v4 · Zustand</div>
+      </div>
+      <div class="cover-meta-item">
+        <div class="cmi-label">신규 화면</div>
+        <div class="cmi-value">3개 (Dashboard · Generation · Workspace)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─────────────────────────────
+       SECTION: OVERVIEW
+  ───────────────────────────── -->
+  <section class="doc-section" id="overview">
+    <div class="section-eyebrow">01 · 문서 소개</div>
+    <div class="section-title">이 문서에 대해</div>
+    <div class="section-desc">Shannon v1-scope/dashboard 브랜치에서 추가 설계가 필요한 화면 3종의 UI/UX 명세입니다. 기존 구현된 레이아웃 (Sidebar, 5-Step Modal)은 다루지 않으며, 배포 이후 사용자에게 보여지는 결과 화면 전체를 다룹니다.</div>
+    <div class="section-divider"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div style="border:1px solid var(--c-border);border-radius:10px;padding:18px 20px;background:rgba(255,255,255,0.02)">
+        <div style="font-size:11px;font-weight:700;color:var(--c-lav);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em">설계 범위</div>
+        <ul style="font-size:12px;color:var(--c-gray);line-height:2;list-style:none">
+          <li>✦ Dashboard Home (InitPanel 대체)</li>
+          <li>✦ Generation View (배포 → 결과 전환)</li>
+          <li>✦ Project Workspace (워크플로우 + 상세)</li>
+          <li>✦ 신규 컴포넌트 5종</li>
+          <li>✦ 신규 디자인 토큰 2종</li>
+        </ul>
+      </div>
+      <div style="border:1px solid var(--c-border);border-radius:10px;padding:18px 20px;background:rgba(255,255,255,0.02)">
+        <div style="font-size:11px;font-weight:700;color:var(--c-lav);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.08em">설계 원칙</div>
+        <ul style="font-size:12px;color:var(--c-gray);line-height:2;list-style:none">
+          <li>✦ Progressive Disclosure — 필요한 만큼만 표시</li>
+          <li>✦ 기존 glassmorphism 패턴 유지</li>
+          <li>✦ c-lav(#DDB7FF) 중심 강조 체계 일관 적용</li>
+          <li>✦ 폭포수 단계 구조로 AI 결과물 시각화</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       SECTION: TOKENS
+  ───────────────────────────── -->
+  <section class="doc-section" id="tokens">
+    <div class="section-eyebrow">02 · 디자인 토큰</div>
+    <div class="section-title">색상 & 타이포그래피</div>
+    <div class="section-desc">기존 tokens.css에 정의된 토큰을 기반으로 하며, 이 스펙에서 신규 추가가 필요한 토큰은 <strong style="color:var(--c-lav)">NEW</strong> 로 표시합니다.</div>
+    <div class="section-divider"></div>
+
+    <div class="token-grid">
+      <div class="token-card">
+        <div class="token-swatch" style="background:var(--c-lav)"></div>
+        <div class="token-info">
+          <div class="token-name">Lavender</div>
+          <div class="token-var">--c-lav</div>
+          <div class="token-hex">#DDB7FF · 주 강조색</div>
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="token-swatch" style="background:var(--c-purple)"></div>
+        <div class="token-info">
+          <div class="token-name">Purple</div>
+          <div class="token-var">--c-purple</div>
+          <div class="token-hex">#490080 · 버튼 배경</div>
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="token-swatch" style="background:var(--c-white)"></div>
+        <div class="token-info">
+          <div class="token-name">White</div>
+          <div class="token-var">--c-white</div>
+          <div class="token-hex">#F1F5F9 · 본문 텍스트</div>
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="token-swatch" style="background:var(--c-gray)"></div>
+        <div class="token-info">
+          <div class="token-name">Gray</div>
+          <div class="token-var">--c-gray</div>
+          <div class="token-hex">#94A3B8 · 보조 텍스트</div>
+        </div>
+      </div>
+      <div class="token-card">
+        <div class="token-swatch" style="background:rgba(20,22,36,1)"></div>
+        <div class="token-info">
+          <div class="token-name">Surface</div>
+          <div class="token-var">--c-glass</div>
+          <div class="token-hex">rgba(20,22,36,0.3) · 카드 배경</div>
+        </div>
+      </div>
+      <div class="token-card" style="border-color:rgba(221,183,255,0.25)">
+        <div class="token-swatch" style="background:var(--c-success)"></div>
+        <div class="token-info">
+          <div class="token-name">Success <span class="token-new-tag">NEW</span></div>
+          <div class="token-var">--c-success</div>
+          <div class="token-hex">#86EFAC · 완료 상태 색</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:32px">
+      <div class="anno-title">타이포그래피 스케일</div>
+      <div class="type-row"><div class="type-preview"><span style="font-size:26px;font-weight:800">페이지 타이틀</span></div><div class="type-spec"><strong>26px</strong> · weight 800 · c-white</div></div>
+      <div class="type-row"><div class="type-preview"><span style="font-size:20px;font-weight:800">섹션 제목</span></div><div class="type-spec"><strong>20px</strong> · weight 800 · c-white</div></div>
+      <div class="type-row"><div class="type-preview"><span style="font-size:16px;font-weight:700">카드 타이틀</span></div><div class="type-spec"><strong>16px</strong> · weight 700 · c-white</div></div>
+      <div class="type-row"><div class="type-preview"><span style="font-size:13px;font-weight:600;color:#94A3B8">본문 텍스트</span></div><div class="type-spec"><strong>13px</strong> · weight 400-600 · c-gray</div></div>
+      <div class="type-row"><div class="type-preview"><span style="font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#475569">LABEL</span></div><div class="type-spec"><strong>10px</strong> · weight 700 · uppercase · letter-spacing 0.08em</div></div>
+      <div class="type-row"><div class="type-preview"><span style="font-size:9px;color:#475569">보조 캡션</span></div><div class="type-spec"><strong>9-10px</strong> · weight 400 · c-muted(#475569)</div></div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="anno-title">추가할 CSS 변수 (tokens.css)</div>
+      <div class="code-block"><span class="code-comment">/* 신규 추가 필요 — tokens.css */</span>
+<span class="code-key">--c-success</span>: <span class="code-val">#86EFAC</span>;          <span class="code-comment">/* 완료 상태 텍스트/아이콘 */</span>
+<span class="code-key">--c-success-bg</span>: <span class="code-val">rgba(134,239,172,0.08)</span>; <span class="code-comment">/* 완료 상태 배경 */</span>
+<span class="code-key">--c-success-border</span>: <span class="code-val">rgba(134,239,172,0.2)</span>; <span class="code-comment">/* 완료 상태 테두리 */</span>
+<span class="code-key">--c-muted</span>: <span class="code-val">#475569</span>;            <span class="code-comment">/* 비활성 텍스트 (기존 c-gray보다 낮은 강조) */</span></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       SECTION: SCREEN MAP
+  ───────────────────────────── -->
+  <section class="doc-section" id="screen-map">
+    <div class="section-eyebrow">03 · 화면 흐름도</div>
+    <div class="section-title">전체 사용자 여정</div>
+    <div class="section-desc">두 진입 경로로 구분됩니다. 신규 사용자는 생성 흐름을, 재방문 사용자는 대시보드를 통해 워크스페이스로 진입합니다.</div>
+
+    <div class="screen-map">
+      <div class="map-section-label">① 신규 사용자 — 최초 프로젝트 생성</div>
+      <div class="map-row">
+        <div class="map-box existing-screen">
+          <div class="map-eyebrow">현재 구현</div>
+          <div class="map-name">Init Panel</div>
+          <div class="map-detail">빈 시작 화면</div>
+        </div>
+        <div class="map-arrow">
+          <div style="display:flex;align-items:center">
+            <div class="map-arrow-line"></div>
+            <div class="map-arrow-tip"></div>
+          </div>
+          <div class="map-arrow-label">Create Project</div>
+        </div>
+        <div class="map-box existing-screen">
+          <div class="map-eyebrow">현재 구현</div>
+          <div class="map-name">5-Step Modal</div>
+          <div class="map-detail">템플릿 → 확인</div>
+        </div>
+        <div class="map-arrow">
+          <div style="display:flex;align-items:center">
+            <div class="map-arrow-line"></div>
+            <div class="map-arrow-tip"></div>
+          </div>
+          <div class="map-arrow-label">배포하기</div>
+        </div>
+        <div class="map-box new-screen">
+          <div class="map-new-badge">NEW</div>
+          <div class="map-eyebrow new">신규</div>
+          <div class="map-name">Generation View</div>
+          <div class="map-detail">AI 생성 전환</div>
+        </div>
+        <div class="map-arrow">
+          <div style="display:flex;align-items:center">
+            <div class="map-arrow-line"></div>
+            <div class="map-arrow-tip"></div>
+          </div>
+          <div class="map-arrow-label">생성 완료</div>
+        </div>
+        <div class="map-box new-screen">
+          <div class="map-eyebrow new">신규</div>
+          <div class="map-name">Workspace</div>
+          <div class="map-detail">워크플로우 + 상세</div>
+        </div>
+      </div>
+
+      <div class="map-v-connector"></div>
+
+      <div class="map-section-label">② 재방문 사용자 — 기존 프로젝트 보유</div>
+      <div class="map-row">
+        <div class="map-box new-screen">
+          <div class="map-new-badge">NEW</div>
+          <div class="map-eyebrow new">신규 (InitPanel 대체)</div>
+          <div class="map-name">Dashboard Home</div>
+          <div class="map-detail">요약 지표 + 바로가기</div>
+        </div>
+        <div class="map-arrow">
+          <div style="display:flex;align-items:center">
+            <div class="map-arrow-line"></div>
+            <div class="map-arrow-tip"></div>
+          </div>
+          <div class="map-arrow-label">사이드바 클릭</div>
+        </div>
+        <div class="map-box new-screen">
+          <div class="map-eyebrow new">신규</div>
+          <div class="map-name">Workspace</div>
+          <div class="map-detail">워크플로우 + 상세</div>
+        </div>
+        <div class="map-arrow">
+          <div style="display:flex;align-items:center">
+            <div class="map-arrow-line"></div>
+            <div class="map-arrow-tip"></div>
+          </div>
+          <div class="map-arrow-label">단계 카드 클릭</div>
+        </div>
+        <div class="map-box new-screen">
+          <div class="map-eyebrow new">신규</div>
+          <div class="map-name">Detail Panel</div>
+          <div class="map-detail">섹션 카드 상세</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       SCREEN 1: DASHBOARD HOME
+  ───────────────────────────── -->
+  <section class="doc-section" id="screen-dashboard">
+    <div class="section-eyebrow">04 · 신규 화면</div>
+    <div class="section-title">Dashboard Home</div>
+    <div class="section-desc">프로젝트가 1개 이상 존재할 때 InitPanel을 대체하는 메인 화면. 요약 지표와 최근 프로젝트 바로가기를 제공해 재방문 사용자의 이탈을 줄입니다.</div>
+    <div class="section-divider"></div>
+
+    <!-- Mockup -->
+    <div class="spec-label"><div class="spec-label-dot"></div>화면 목업</div>
+    <div class="frame frame-tall">
+      <div class="f-sidebar">
+        <div class="f-logo-row"><div class="f-logo"></div><div class="f-logo-text">Shannon</div></div>
+        <div class="f-sec-label">프로젝트</div>
+        <div class="f-item active"><div class="f-icon lav"></div><div class="f-name active">포트폴리오 사이트 만들기</div></div>
+        <div class="f-item"><div class="f-icon"></div><div class="f-name">관리자 대시보드 리팩토링</div></div>
+        <div class="f-item"><div class="f-icon"></div><div class="f-name">웹 기초 강의 PPT</div></div>
+        <div class="f-sec-label">최근</div>
+        <div class="f-item"><div class="f-icon"></div><div class="f-name">SaaS 랜딩 페이지</div></div>
+        <div class="f-footer"><div class="f-create-btn">+ Create Project</div></div>
+      </div>
+      <div class="f-main">
+        <div class="f-dashboard">
+          <div>
+            <div class="f-greeting">안녕하세요 👋</div>
+            <div class="f-greeting-sub">오늘도 Shannon과 함께 만들어볼까요?</div>
+          </div>
+          <div class="f-stat-row">
+            <div class="f-stat hi">
+              <div class="f-stat-label">전체 프로젝트</div>
+              <div class="f-stat-val lav">5</div>
+              <div class="f-stat-change"><span class="up">+1</span> 이번 주</div>
+            </div>
+            <div class="f-stat">
+              <div class="f-stat-label">완료된 워크플로우</div>
+              <div class="f-stat-val">12</div>
+              <div class="f-stat-change">총 단계 수</div>
+            </div>
+            <div class="f-stat">
+              <div class="f-stat-label">최근 생성일</div>
+              <div class="f-stat-val" style="font-size:14px;margin-top:4px">6월 11일</div>
+              <div class="f-stat-change">포트폴리오 사이트</div>
+            </div>
+          </div>
+          <div>
+            <div class="f-sec-head">
+              <div class="f-sec-title">최근 프로젝트</div>
+              <div class="f-sec-link">전체 보기 →</div>
+            </div>
+            <div class="f-proj-row">
+              <div class="f-proj-icon"></div>
+              <div class="f-proj-meta">
+                <div class="f-proj-name">포트폴리오 사이트 만들기</div>
+                <div class="f-proj-type">사이드 프로젝트 · 4단계</div>
+              </div>
+              <div class="f-badge done">완료</div>
+              <span style="font-size:12px;color:var(--c-subtle);margin-left:6px">›</span>
+            </div>
+            <div class="f-proj-row">
+              <div class="f-proj-icon"></div>
+              <div class="f-proj-meta">
+                <div class="f-proj-name">관리자 대시보드 리팩토링</div>
+                <div class="f-proj-type">UI / UX 설계 · 6단계</div>
+              </div>
+              <div class="f-badge wip">진행 중</div>
+              <span style="font-size:12px;color:var(--c-subtle);margin-left:6px">›</span>
+            </div>
+            <div class="f-proj-row">
+              <div class="f-proj-icon"></div>
+              <div class="f-proj-meta">
+                <div class="f-proj-name">웹 기초 강의 PPT</div>
+                <div class="f-proj-type">발표 자료 · 5단계</div>
+              </div>
+              <div class="f-badge done">완료</div>
+              <span style="font-size:12px;color:var(--c-subtle);margin-left:6px">›</span>
+            </div>
+          </div>
+          <div>
+            <div class="f-sec-title" style="margin-bottom:8px">빠른 시작</div>
+            <div class="f-quick-row">
+              <div class="f-quick">+ 새 사이드 프로젝트 만들기</div>
+              <div class="f-quick">+ UI / UX 설계 시작하기</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Annotations -->
+    <div class="anno-block">
+      <div class="anno-title">컴포넌트 명세</div>
+      <table class="anno-table">
+        <thead><tr><th style="width:170px">구성 요소</th><th style="width:220px">내용</th><th>상태 / 동작</th></tr></thead>
+        <tbody>
+          <tr><td>인사 헤더</td><td>인사 문구 + 날짜 칩</td><td>날짜는 new Date()로 한국 로케일 포맷. 문구는 고정 문자열</td></tr>
+          <tr><td>StatCard (강조)</td><td>전체 프로젝트 수</td><td>border-color: c-lav/25, background: c-lav/4. 값은 projects.length</td></tr>
+          <tr><td>StatCard (일반)</td><td>완료 워크플로우 수, 최근 생성일</td><td>border: white/8. 값은 API 또는 Zustand에서 파생</td></tr>
+          <tr><td>ProjectRow</td><td>아이콘 + 프로젝트명 + 유형·단계수 + 배지 + 화살표</td><td>hover: border c-lav/20, bg c-lav/3. 클릭 → router.push('/workspace/[id]')</td></tr>
+          <tr><td>StatusBadge</td><td>완료(success green) / 진행 중(c-lav) 2종</td><td>완료: step.completed === step.total. 진행 중: 그 외</td></tr>
+          <tr><td>QuickCard</td><td>자주 쓰는 템플릿 유형 2가지 (사이드 프로젝트 id:1, UI/UX 설계 id:2)</td><td>클릭 → useDeployStore.setCard({ templateId: 1 or 2 }) 후 router.push('/projects/new'). v1에서는 2개 고정, 향후 사용 이력 기반 동적화 가능</td></tr>
+          <tr><td>"전체 보기 →" 링크</td><td>최근 프로젝트 섹션 우측 링크</td><td>v1 MVP에서는 숨김(hidden) 처리. 추후 /projects 전체 목록 페이지 구현 시 활성화</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Conditional rendering -->
+    <div style="margin-top:20px;background:rgba(221,183,255,0.05);border:1px solid rgba(221,183,255,0.15);border-radius:10px;padding:16px 20px">
+      <div style="font-size:11px;font-weight:700;color:var(--c-lav);margin-bottom:8px">조건부 렌더링 로직 (MainPanel.tsx)</div>
+      <div class="code-block"><span class="code-comment">// MainPanel.tsx — projects 유무에 따라 화면 분기</span>
+<span class="code-key">const</span> projects = useProjectStore(s => s.projects);
+
+<span class="code-key">if</span> (projects.length === <span class="code-val">0</span>) <span class="code-key">return</span> &lt;InitPanel /&gt;;     <span class="code-comment">// 기존 유지</span>
+<span class="code-key">return</span> &lt;DashboardHome projects={projects} /&gt;;          <span class="code-comment">// 신규</span></div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       SCREEN 2: GENERATION VIEW
+  ───────────────────────────── -->
+  <section class="doc-section" id="screen-generation">
+    <div class="section-eyebrow">05 · 신규 화면</div>
+    <div class="section-title">Generation View</div>
+    <div class="section-desc">배포하기 버튼 클릭 이후 AI 결과물이 완전히 로드되기까지의 전환 화면. 두 페이즈로 구성됩니다.</div>
+    <div class="section-divider"></div>
+
+    <!-- Phase A -->
+    <div class="spec-label"><div class="spec-label-dot"></div>Phase A — AI 생성 중 (0~2초)</div>
+    <div class="frame frame-medium">
+      <div class="f-sidebar" style="opacity:0.4">
+        <div class="f-logo-row"><div class="f-logo"></div><div class="f-logo-text">Shannon</div></div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+          <div class="shimmer" style="height:8px;width:70%"></div>
+          <div class="shimmer" style="height:8px;width:90%"></div>
+          <div class="shimmer" style="height:8px;width:55%"></div>
+        </div>
+      </div>
+      <div class="f-gen-center">
+        <div class="f-gen-icon"><div class="f-gen-icon-inner"></div></div>
+        <div>
+          <div class="f-gen-title">Shannon이 만들고 있어요</div>
+          <div class="f-gen-sub" style="margin-top:5px">포트폴리오 사이트 만들기를 위한<br>워크플로우를 설계하는 중입니다</div>
+        </div>
+        <div class="f-gen-steps">
+          <div class="f-gen-step done">
+            <div class="f-gen-step-icon done">✓</div>
+            <div class="f-gen-step-text done">입력 정보 분석 완료</div>
+          </div>
+          <div class="f-gen-step running">
+            <div class="f-gen-step-icon running"></div>
+            <div class="f-gen-step-text running">워크플로우 단계 설계 중...</div>
+          </div>
+          <div class="f-gen-step">
+            <div class="f-gen-step-icon"></div>
+            <div class="f-gen-step-text pending">각 단계별 콘텐츠 생성</div>
+          </div>
+          <div class="f-gen-step">
+            <div class="f-gen-step-icon"></div>
+            <div class="f-gen-step-text pending">최종 검토 및 구성</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase B -->
+    <div class="spec-label" style="margin-top:24px"><div class="spec-label-dot"></div>Phase B — 스켈레톤 reveal (2~4초)</div>
+    <div class="frame frame-medium">
+      <div class="f-sidebar" style="opacity:0.5">
+        <div class="f-logo-row"><div class="f-logo"></div><div class="f-logo-text">Shannon</div></div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:8px">
+          <div class="shimmer" style="height:8px;width:70%"></div>
+          <div class="shimmer" style="height:8px;width:90%"></div>
+        </div>
+      </div>
+      <div class="f-main">
+        <div class="f-proj-header">
+          <div class="shimmer" style="width:60px;height:9px"></div>
+          <div class="f-divider"></div>
+          <div class="shimmer-lav" style="width:70px;height:16px;border-radius:20px"></div>
+          <div class="shimmer" style="width:130px;height:10px"></div>
+          <div class="shimmer" style="width:60px;height:9px;margin-left:auto"></div>
+        </div>
+        <div class="f-workspace-body">
+          <div class="f-flow-panel">
+            <div class="shimmer" style="height:7px;width:70px;margin-bottom:14px"></div>
+            <div class="f-step" style="margin-bottom:6px">
+              <div class="f-step-connector">
+                <div class="f-step-num" style="background:rgba(221,183,255,0.08);border-color:rgba(221,183,255,0.2)"></div>
+                <div class="f-vline"></div>
+              </div>
+              <div class="f-step-card" style="display:flex;flex-direction:column;gap:5px;flex:1">
+                <div class="shimmer-lav" style="height:8px;width:65%"></div>
+                <div class="shimmer" style="height:7px;width:85%"></div>
+                <div class="shimmer-lav" style="height:13px;width:32px;border-radius:20px;margin-top:3px"></div>
+              </div>
+            </div>
+            <div class="f-step" style="margin-bottom:6px">
+              <div class="f-step-connector">
+                <div class="f-step-num"></div>
+                <div class="f-vline"></div>
+              </div>
+              <div class="f-step-card" style="display:flex;flex-direction:column;gap:5px;flex:1">
+                <div class="shimmer" style="height:8px;width:55%"></div>
+                <div class="shimmer" style="height:7px;width:80%"></div>
+              </div>
+            </div>
+            <div class="f-step">
+              <div class="f-step-connector"><div class="f-step-num"></div></div>
+              <div class="f-step-card" style="display:flex;flex-direction:column;gap:5px;flex:1">
+                <div class="shimmer" style="height:8px;width:70%"></div>
+                <div class="shimmer" style="height:7px;width:90%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="f-detail-panel">
+            <div>
+              <div class="shimmer-lav" style="height:8px;width:90px;margin-bottom:8px"></div>
+              <div class="shimmer" style="height:13px;width:55%;margin-bottom:6px"></div>
+              <div class="shimmer" style="height:7px;width:90%;margin-bottom:4px"></div>
+              <div class="shimmer" style="height:7px;width:75%"></div>
+            </div>
+            <div class="f-hr"></div>
+            <div class="f-sec-card hi" style="display:flex;flex-direction:column;gap:6px">
+              <div class="shimmer-lav" style="height:7px;width:70px"></div>
+              <div class="shimmer" style="height:7px;width:100%"></div>
+              <div class="shimmer" style="height:7px;width:85%"></div>
+              <div class="shimmer" style="height:7px;width:95%"></div>
+              <div style="display:flex;gap:5px;margin-top:3px">
+                <div class="shimmer-lav" style="height:16px;width:55px;border-radius:4px"></div>
+                <div class="shimmer-lav" style="height:16px;width:45px;border-radius:4px"></div>
+              </div>
+            </div>
+            <div class="f-sec-card" style="display:flex;flex-direction:column;gap:6px">
+              <div class="shimmer" style="height:7px;width:50px"></div>
+              <div class="shimmer" style="height:7px;width:100%"></div>
+              <div class="shimmer" style="height:7px;width:70%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interaction table -->
+    <div class="anno-block">
+      <div class="anno-title">페이즈 전환 명세</div>
+      <table class="anno-table">
+        <thead><tr><th style="width:170px">페이즈</th><th style="width:220px">트리거</th><th>동작</th></tr></thead>
+        <tbody>
+          <tr><td>모달 → Phase A</td><td>배포하기 클릭</td><td>모달 fade-out 200ms → /workspace/[id] 라우트 이동 → Phase A 표시. 사이드바 dimmed(opacity 0.4)</td></tr>
+          <tr><td>Phase A 진행</td><td>API 스트리밍 시작</td><td>생성 단계 아이템 순차적으로 done 처리. 스피너는 CSS border-top 회전 애니메이션</td></tr>
+          <tr><td>Phase A → Phase B</td><td>워크플로우 구조 수신 완료</td><td>cross-fade 300ms. 좌측 스켈레톤부터 표시 후 우측 스켈레톤 나타남</td></tr>
+          <tr><td>Phase B → 완성</td><td>전체 콘텐츠 수신 완료</td><td>shimmer 사라지고 실제 콘텐츠 stagger 100ms per card로 fade-in reveal</td></tr>
+          <tr><td>에러 핸들링</td><td>API 실패 / 타임아웃 5초</td><td>Phase A 아이콘 → 에러 아이콘. "다시 생성하기" 버튼 표시. 라우트 유지</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       SCREEN 3: WORKSPACE
+  ───────────────────────────── -->
+  <section class="doc-section" id="screen-workspace">
+    <div class="section-eyebrow">06 · 신규 화면</div>
+    <div class="section-title">Project Workspace</div>
+    <div class="section-desc">AI가 생성한 프로젝트 워크플로우를 탐색하는 핵심 화면. 좌측에 폭포수형 단계 목록, 우측에 선택된 단계의 상세 섹션 카드가 표시됩니다.</div>
+    <div class="section-divider"></div>
+
+    <div class="spec-label"><div class="spec-label-dot"></div>화면 목업 (Step 2 선택 상태)</div>
+    <div class="frame frame-tall">
+      <div class="f-sidebar">
+        <div class="f-logo-row"><div class="f-logo"></div><div class="f-logo-text">Shannon</div></div>
+        <div class="f-sec-label">프로젝트</div>
+        <div class="f-item active"><div class="f-icon lav"></div><div class="f-name active">포트폴리오 사이트 만들기</div></div>
+        <div class="f-item"><div class="f-icon"></div><div class="f-name">관리자 대시보드 리팩토링</div></div>
+        <div class="f-item"><div class="f-icon"></div><div class="f-name">웹 기초 강의 PPT</div></div>
+        <div class="f-sec-label">최근</div>
+        <div class="f-item"><div class="f-icon"></div><div class="f-name">SaaS 랜딩 페이지</div></div>
+        <div class="f-footer"><div class="f-create-btn">+ Create Project</div></div>
+      </div>
+      <div class="f-main">
+        <div class="f-proj-header">
+          <div class="f-back">← 대시보드</div>
+          <div class="f-divider"></div>
+          <div class="f-type-chip">사이드 프로젝트</div>
+          <div class="f-proj-title">포트폴리오 사이트 만들기</div>
+          <div class="f-step-count">5단계 워크플로우</div>
+        </div>
+        <div class="f-workspace-body">
+          <!-- Left -->
+          <div class="f-flow-panel">
+            <div class="f-flow-label">워크플로우</div>
+            <div class="f-step">
+              <div class="f-step-connector">
+                <div class="f-step-num done">✓</div>
+                <div class="f-vline"></div>
+              </div>
+              <div class="f-step-card">
+                <div class="f-step-title">요구사항 정의</div>
+                <div class="f-step-sub">프로젝트 목표 및 핵심 기능</div>
+                <div class="f-step-badge sb-done">완료</div>
+              </div>
+            </div>
+            <div class="f-step">
+              <div class="f-step-connector">
+                <div class="f-step-num active">2</div>
+                <div class="f-vline active"></div>
+              </div>
+              <div class="f-step-card active">
+                <div class="f-step-title active">기술 스택 선정</div>
+                <div class="f-step-sub">프레임워크, 배포 환경</div>
+                <div class="f-step-badge sb-active">보는 중</div>
+              </div>
+            </div>
+            <div class="f-step">
+              <div class="f-step-connector">
+                <div class="f-step-num">3</div>
+                <div class="f-vline"></div>
+              </div>
+              <div class="f-step-card">
+                <div class="f-step-title">화면 구조 설계</div>
+                <div class="f-step-sub">페이지 목록, 라우팅</div>
+                <div class="f-step-badge sb-pending">대기</div>
+              </div>
+            </div>
+            <div class="f-step">
+              <div class="f-step-connector">
+                <div class="f-step-num">4</div>
+                <div class="f-vline"></div>
+              </div>
+              <div class="f-step-card">
+                <div class="f-step-title">컴포넌트 명세</div>
+                <div class="f-step-sub">재사용 컴포넌트 & Props</div>
+                <div class="f-step-badge sb-pending">대기</div>
+              </div>
+            </div>
+            <div class="f-step">
+              <div class="f-step-connector"><div class="f-step-num">5</div></div>
+              <div class="f-step-card">
+                <div class="f-step-title">개발 우선순위</div>
+                <div class="f-step-sub">MVP 범위 및 구현 순서</div>
+                <div class="f-step-badge sb-pending">대기</div>
+              </div>
+            </div>
+          </div>
+          <!-- Right -->
+          <div class="f-detail-panel">
+            <div>
+              <div class="f-detail-eyebrow">Step 2 · 기술 스택 선정</div>
+              <div class="f-detail-title">프레임워크 및 배포 환경 추천</div>
+              <div class="f-detail-desc">취업용 포트폴리오 사이트를 위한 최적 기술 스택입니다.</div>
+            </div>
+            <div class="f-hr"></div>
+            <div class="f-sec-card hi">
+              <div class="f-sc-label"><div class="f-sc-dot"></div>프론트엔드 프레임워크</div>
+              <div class="f-sc-body">Next.js 15 (App Router)를 추천합니다. SSG로 빌드하면 정적 배포가 가능하고 SEO에 유리합니다.</div>
+              <div class="f-sc-tags">
+                <div class="f-sc-tag lav">Next.js 15</div>
+                <div class="f-sc-tag lav">TypeScript</div>
+                <div class="f-sc-tag lav">App Router</div>
+              </div>
+            </div>
+            <div class="f-sec-card">
+              <div class="f-sc-label"><div class="f-sc-dot"></div>스타일링</div>
+              <div class="f-sc-body">Tailwind CSS v4를 사용하세요. 유틸리티 클래스로 빠른 스타일 작성이 가능합니다.</div>
+              <div class="f-sc-tags">
+                <div class="f-sc-tag lav">Tailwind CSS v4</div>
+                <div class="f-sc-tag">shadcn/ui</div>
+              </div>
+            </div>
+            <div class="f-sec-card">
+              <div class="f-sc-label"><div class="f-sc-dot" style="background:rgba(134,239,172,0.5)"></div>배포 환경</div>
+              <div class="f-sc-body">Vercel 배포를 권장합니다. GitHub 연동으로 자동 배포, 무료 플랜에서 커스텀 도메인 가능합니다.</div>
+              <div class="f-sc-tags">
+                <div class="f-sc-tag lav">Vercel</div>
+                <div class="f-sc-tag">GitHub Actions</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="anno-block">
+      <div class="anno-title">컴포넌트 명세</div>
+      <table class="anno-table">
+        <thead><tr><th style="width:170px">구성 요소</th><th style="width:220px">내용</th><th>상태 / 동작</th></tr></thead>
+        <tbody>
+          <tr><td>프로젝트 헤더 바</td><td>← 뒤로가기 / 타입 칩 / 프로젝트명 / 단계 수</td><td>높이 고정 40px. ← 클릭 → router.back() or /dashboard</td></tr>
+          <tr><td>WorkflowStepCard</td><td>번호 원형 + 세로선 + 카드(제목·설명·배지)</td><td>상태 3종: done(success) / active(c-lav) / pending(muted). 클릭 → 우측 패널 전환</td></tr>
+          <tr><td>세로 연결선</td><td>단계 원형 사이 1px 수직선</td><td>active 단계 위 선: c-lav/15. 나머지: white/6</td></tr>
+          <tr><td>SectionCard</td><td>라벨 + 본문 텍스트 + 키워드 태그</td><td>첫 번째 카드: highlight(c-lav 테두리). AI 응답 마크다운 파싱 후 렌더링</td></tr>
+          <tr><td>키워드 태그 칩</td><td>기술·키워드 라벨 2종</td><td>핵심(c-lav) / 보조(muted). AI 응답에서 자동 추출</td></tr>
+          <tr><td>좌측 패널 너비</td><td>260px 고정, flex-shrink: 0</td><td>작은 화면에서 축소 없음. 스크롤 내부에서 처리</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       COMPONENTS
+  ───────────────────────────── -->
+  <section class="doc-section" id="components">
+    <div class="section-eyebrow">07 · 컴포넌트 라이브러리</div>
+    <div class="section-title">신규 컴포넌트 5종</div>
+    <div class="section-desc">이 스펙에서 새로 추가될 컴포넌트입니다. 기존 컴포넌트 패턴을 따르되, Zustand store 및 Next.js App Router 구조에 맞게 설계합니다.</div>
+    <div class="section-divider"></div>
+
+    <div class="comp-grid">
+
+      <!-- StatCard -->
+      <div class="comp-card">
+        <div class="comp-card-title">StatCard</div>
+        <div class="comp-card-desc">대시보드 요약 지표 카드. highlight 여부로 강조 스타일 분기.</div>
+        <div class="comp-preview">
+          <div style="background:rgba(221,183,255,0.04);border:1px solid rgba(221,183,255,0.25);border-radius:8px;padding:10px 12px">
+            <div style="font-size:9px;color:var(--c-muted);margin-bottom:5px">전체 프로젝트</div>
+            <div style="font-size:20px;font-weight:800;color:var(--c-lav)">5</div>
+            <div style="font-size:9px;color:var(--c-subtle);margin-top:2px"><span style="color:var(--c-success)">+1</span> 이번 주</div>
+          </div>
+        </div>
+        <div class="comp-props">
+          <div class="comp-prop"><span class="prop-name">label</span><span class="prop-type">string</span><span class="prop-desc">카드 상단 레이블</span></div>
+          <div class="comp-prop"><span class="prop-name">value</span><span class="prop-type">string | number</span><span class="prop-desc">강조 표시될 핵심 수치</span></div>
+          <div class="comp-prop"><span class="prop-name">sub</span><span class="prop-type">string?</span><span class="prop-desc">하단 보조 텍스트</span></div>
+          <div class="comp-prop"><span class="prop-name">highlight</span><span class="prop-type">boolean?</span><span class="prop-desc">c-lav 강조 스타일 여부</span></div>
+        </div>
+      </div>
+
+      <!-- ProjectRow -->
+      <div class="comp-card">
+        <div class="comp-card-title">ProjectRow</div>
+        <div class="comp-card-desc">대시보드 최근 프로젝트 목록의 행 컴포넌트.</div>
+        <div class="comp-preview">
+          <div style="display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02)">
+            <div style="width:24px;height:24px;border-radius:5px;background:rgba(221,183,255,0.1);border:1px solid rgba(221,183,255,0.15);flex-shrink:0"></div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:11px;font-weight:600;color:#E2E8F0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">포트폴리오 사이트 만들기</div>
+              <div style="font-size:9px;color:var(--c-muted)">사이드 프로젝트 · 4단계</div>
+            </div>
+            <div style="font-size:8px;font-weight:700;padding:2px 6px;border-radius:20px;background:rgba(134,239,172,0.1);color:var(--c-success);border:1px solid rgba(134,239,172,0.2);flex-shrink:0">완료</div>
+            <span style="font-size:11px;color:var(--c-subtle)">›</span>
+          </div>
+        </div>
+        <div class="comp-props">
+          <div class="comp-prop"><span class="prop-name">project</span><span class="prop-type">Project</span><span class="prop-desc">id, name, templateId, stepCount</span></div>
+          <div class="comp-prop"><span class="prop-name">status</span><span class="prop-type">'done' | 'wip'</span><span class="prop-desc">완료/진행 중 배지 결정</span></div>
+          <div class="comp-prop"><span class="prop-name">onClick</span><span class="prop-type">() => void</span><span class="prop-desc">Workspace 화면으로 이동</span></div>
+        </div>
+      </div>
+
+      <!-- WorkflowStepCard -->
+      <div class="comp-card">
+        <div class="comp-card-title">WorkflowStepCard</div>
+        <div class="comp-card-desc">폭포수형 워크플로우의 각 단계 카드. 세로 연결선 포함.</div>
+        <div class="comp-preview">
+          <div style="display:flex;align-items:flex-start;gap:8px">
+            <div style="display:flex;flex-direction:column;align-items:center;width:16px;flex-shrink:0">
+              <div style="width:16px;height:16px;border-radius:50%;background:rgba(221,183,255,0.15);border:1px solid var(--c-lav);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--c-lav)">2</div>
+              <div style="width:1px;height:18px;background:rgba(221,183,255,0.15);margin:3px 0"></div>
+            </div>
+            <div style="flex:1;padding:7px 9px;border-radius:6px;border:1px solid rgba(221,183,255,0.4);background:rgba(221,183,255,0.07)">
+              <div style="font-size:10px;font-weight:700;color:var(--c-lav);margin-bottom:2px">기술 스택 선정</div>
+              <div style="font-size:9px;color:var(--c-muted)">프레임워크, 배포 환경</div>
+              <div style="font-size:8px;font-weight:600;display:inline-block;margin-top:4px;padding:1px 5px;border-radius:20px;background:rgba(221,183,255,0.1);color:var(--c-lav);border:1px solid rgba(221,183,255,0.2)">보는 중</div>
+            </div>
+          </div>
+        </div>
+        <div class="comp-props">
+          <div class="comp-prop"><span class="prop-name">step</span><span class="prop-type">WorkflowStep</span><span class="prop-desc">number, title, description</span></div>
+          <div class="comp-prop"><span class="prop-name">status</span><span class="prop-type">'done' | 'active' | 'pending'</span><span class="prop-desc">배지 및 색상 결정</span></div>
+          <div class="comp-prop"><span class="prop-name">isLast</span><span class="prop-type">boolean</span><span class="prop-desc">true면 세로 연결선 숨김</span></div>
+          <div class="comp-prop"><span class="prop-name">onClick</span><span class="prop-type">() => void</span><span class="prop-desc">우측 Detail Panel 전환</span></div>
+        </div>
+      </div>
+
+      <!-- SectionCard -->
+      <div class="comp-card">
+        <div class="comp-card-title">SectionCard</div>
+        <div class="comp-card-desc">우측 Detail Panel의 섹션별 콘텐츠 카드. AI 응답을 파싱해 렌더링.</div>
+        <div class="comp-preview">
+          <div style="border:1px solid rgba(221,183,255,0.2);border-radius:7px;padding:10px 12px;background:rgba(221,183,255,0.03)">
+            <div style="font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--c-muted);margin-bottom:6px;display:flex;align-items:center;gap:4px"><div style="width:5px;height:5px;border-radius:50%;background:rgba(221,183,255,0.5)"></div>프론트엔드 프레임워크</div>
+            <div style="font-size:10px;color:var(--c-gray);line-height:1.6"><strong style="color:#E2E8F0">Next.js 15</strong>를 추천합니다. SSG 정적 배포로 SEO에 유리합니다.</div>
+            <div style="display:flex;gap:4px;margin-top:6px">
+              <div style="font-size:9px;padding:1px 7px;border-radius:4px;color:var(--c-lav);border:1px solid rgba(221,183,255,0.2);background:rgba(221,183,255,0.06)">Next.js 15</div>
+              <div style="font-size:9px;padding:1px 7px;border-radius:4px;color:var(--c-lav);border:1px solid rgba(221,183,255,0.2);background:rgba(221,183,255,0.06)">TypeScript</div>
+            </div>
+          </div>
+        </div>
+        <div class="comp-props">
+          <div class="comp-prop"><span class="prop-name">label</span><span class="prop-type">string</span><span class="prop-desc">섹션 카테고리 레이블</span></div>
+          <div class="comp-prop"><span class="prop-name">content</span><span class="prop-type">string</span><span class="prop-desc">마크다운 본문 (파싱 후 렌더)</span></div>
+          <div class="comp-prop"><span class="prop-name">tags</span><span class="prop-type">string[]?</span><span class="prop-desc">키워드 태그 칩 목록</span></div>
+          <div class="comp-prop"><span class="prop-name">highlight</span><span class="prop-type">boolean?</span><span class="prop-desc">첫 카드에 c-lav 테두리 강조</span></div>
+          <div class="comp-prop"><span class="prop-name">dotColor</span><span class="prop-type">'lav' | 'green'?</span><span class="prop-desc">레이블 앞 dot 색상</span></div>
+        </div>
+      </div>
+
+      <!-- StatusBadge (full width) -->
+      <div class="comp-card" style="grid-column:1/-1">
+        <div class="comp-card-title">StatusBadge</div>
+        <div class="comp-card-desc">프로젝트 및 워크플로우 단계의 상태를 나타내는 뱃지 컴포넌트. 3가지 variant 존재.</div>
+        <div class="comp-preview" style="flex-direction:row;gap:12px">
+          <div style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:rgba(134,239,172,0.1);border:1px solid rgba(134,239,172,0.2)"><div style="width:5px;height:5px;border-radius:50%;background:var(--c-success)"></div><span style="font-size:9px;font-weight:700;color:var(--c-success)">완료</span></div>
+          <div style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:rgba(221,183,255,0.1);border:1px solid rgba(221,183,255,0.2)"><div style="width:5px;height:5px;border-radius:50%;background:var(--c-lav)"></div><span style="font-size:9px;font-weight:700;color:var(--c-lav)">보는 중</span></div>
+          <div style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08)"><div style="width:5px;height:5px;border-radius:50%;background:var(--c-subtle)"></div><span style="font-size:9px;font-weight:700;color:var(--c-subtle)">대기</span></div>
+        </div>
+        <div class="comp-props">
+          <div class="comp-prop"><span class="prop-name">variant</span><span class="prop-type">'done' | 'active' | 'pending'</span><span class="prop-desc">색상 및 레이블 자동 결정</span></div>
+          <div class="comp-prop"><span class="prop-name">label</span><span class="prop-type">string?</span><span class="prop-desc">variant 기본값 대신 커스텀 텍스트 (예: "진행 중")</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       INTERACTIONS
+  ───────────────────────────── -->
+  <section class="doc-section" id="interactions">
+    <div class="section-eyebrow">08 · 인터랙션 명세</div>
+    <div class="section-title">트랜지션 & 상태 정의</div>
+    <div class="section-desc">모든 전환은 Shannon의 기존 transition 토큰을 기반으로 합니다.</div>
+    <div class="section-divider"></div>
+
+    <div style="margin-bottom:28px">
+      <div class="anno-title">화면 전환 트리거 & 동작</div>
+      <div class="interaction-row" style="font-size:11px;font-weight:700;color:var(--c-muted);border:none;padding-bottom:8px">
+        <div>트리거</div><div>동작</div><div>애니메이션 스펙</div>
+      </div>
+      <div class="interaction-row">
+        <div class="ir-trigger">배포하기 클릭</div>
+        <div class="ir-action">모달 닫힘 → Generation View Phase A</div>
+        <div class="ir-spec">fade-out 200ms · ease-out</div>
+      </div>
+      <div class="interaction-row">
+        <div class="ir-trigger">API 구조 수신</div>
+        <div class="ir-action">Phase A → Phase B (스켈레톤)</div>
+        <div class="ir-spec">cross-fade 300ms · ease-in-out</div>
+      </div>
+      <div class="interaction-row">
+        <div class="ir-trigger">콘텐츠 수신 완료</div>
+        <div class="ir-action">스켈레톤 → 실제 카드 reveal</div>
+        <div class="ir-spec">stagger 100ms per card · fade-in · translateY(6px→0)</div>
+      </div>
+      <div class="interaction-row">
+        <div class="ir-trigger">WorkflowStepCard 클릭</div>
+        <div class="ir-action">우측 Detail Panel 콘텐츠 교체</div>
+        <div class="ir-spec">fade-out 100ms → fade-in 150ms · no layout shift</div>
+      </div>
+      <div class="interaction-row">
+        <div class="ir-trigger">← 대시보드 클릭</div>
+        <div class="ir-action">Workspace → Dashboard Home</div>
+        <div class="ir-spec">router.back() · 브라우저 기본 전환</div>
+      </div>
+      <div class="interaction-row">
+        <div class="ir-trigger">사이드바 프로젝트 클릭</div>
+        <div class="ir-action">해당 프로젝트 Workspace로 이동</div>
+        <div class="ir-spec">router.push('/workspace/[id]') · 스켈레톤 선표시</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="anno-title">hover / focus 상태</div>
+      <div class="state-row">
+        <div class="state-chip"><div class="state-dot" style="background:rgba(221,183,255,0.5)"></div><div><div style="font-size:11px;font-weight:600;color:var(--c-white)">ProjectRow hover</div><div style="font-size:10px;color:var(--c-muted)">border: c-lav/20 · bg: c-lav/3 · 150ms ease</div></div></div>
+        <div class="state-chip"><div class="state-dot" style="background:rgba(221,183,255,0.5)"></div><div><div style="font-size:11px;font-weight:600;color:var(--c-white)">WorkflowStepCard hover</div><div style="font-size:10px;color:var(--c-muted)">border: c-lav/20 · bg: c-lav/3 · 150ms ease</div></div></div>
+        <div class="state-chip"><div class="state-dot" style="background:rgba(134,239,172,0.5)"></div><div><div style="font-size:11px;font-weight:600;color:var(--c-white)">WorkflowStepCard active</div><div style="font-size:10px;color:var(--c-muted)">border: c-lav/40 · bg: c-lav/7 · 즉시</div></div></div>
+        <div class="state-chip"><div class="state-dot" style="background:rgba(255,255,255,0.2)"></div><div><div style="font-size:11px;font-weight:600;color:var(--c-white)">QuickCard hover</div><div style="font-size:10px;color:var(--c-muted)">border-color: c-lav/30 · 150ms ease</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─────────────────────────────
+       IMPLEMENTATION GUIDE
+  ───────────────────────────── -->
+  <section class="doc-section" id="impl">
+    <div class="section-eyebrow">09 · 구현 가이드</div>
+    <div class="section-title">구현 순서 & 체크리스트</div>
+    <div class="section-desc">의존성이 낮은 순서로 나열했습니다. 각 항목은 독립적으로 PR을 분리할 수 있습니다.</div>
+    <div class="section-divider"></div>
+
+    <div class="impl-list">
+      <div class="impl-item">
+        <div class="impl-num">1</div>
+        <div class="impl-body">
+          <div class="impl-title">토큰 추가 (tokens.css · theme.css)</div>
+          <div class="impl-desc">--c-success, --c-success-bg, --c-success-border, --c-muted 4개 추가. theme.css에 Tailwind 매핑 추가.</div>
+          <div class="impl-tags"><span class="impl-tag">tokens.css</span><span class="impl-tag">theme.css</span></div>
+        </div>
+      </div>
+      <div class="impl-item">
+        <div class="impl-num">2</div>
+        <div class="impl-body">
+          <div class="impl-title">StatusBadge 컴포넌트</div>
+          <div class="impl-desc">components/common/badge/StatusBadge.tsx 생성. variant: 'done' | 'active' | 'pending'. 토큰 추가 완료 후 작업.</div>
+          <div class="impl-tags"><span class="impl-tag">components/common/badge/</span></div>
+        </div>
+      </div>
+      <div class="impl-item">
+        <div class="impl-num">3</div>
+        <div class="impl-body">
+          <div class="impl-title">StatCard · ProjectRow · SectionCard 컴포넌트</div>
+          <div class="impl-desc">components/common/card/ 디렉터리 생성 후 추가. StatCard와 ProjectRow는 DashboardHome에서만 사용, SectionCard는 Workspace에서만 사용.</div>
+          <div class="impl-tags"><span class="impl-tag">components/common/card/</span><span class="impl-tag">components/workspace/</span></div>
+        </div>
+      </div>
+      <div class="impl-item">
+        <div class="impl-num">4</div>
+        <div class="impl-body">
+          <div class="impl-title">WorkflowStepCard 컴포넌트</div>
+          <div class="impl-desc">components/workspace/WorkflowStepCard.tsx. 세로 연결선(isLast 분기 포함) + StatusBadge 사용. onClick으로 선택 상태 전달.</div>
+          <div class="impl-tags"><span class="impl-tag">components/workspace/</span><span class="impl-tag">StatusBadge</span></div>
+        </div>
+      </div>
+      <div class="impl-item">
+        <div class="impl-num">5</div>
+        <div class="impl-body">
+          <div class="impl-title">Zustand store 확장 (useProjectStore)</div>
+          <div class="impl-desc">store/useProjectStore.ts 신규 생성. projects[], selectedProjectId, selectedStepNumber 관리. useDeployStore와 통합해 배포 시 프로젝트 추가.</div>
+          <div class="impl-tags"><span class="impl-tag">store/useProjectStore.ts</span><span class="impl-tag">store/useDeployStore.ts</span></div>
+        </div>
+      </div>
+      <div class="impl-item">
+        <div class="impl-num">6</div>
+        <div class="impl-body">
+          <div class="impl-title">DashboardHome 화면</div>
+          <div class="impl-desc">components/common/panel/DashboardHome.tsx. MainPanel.tsx에서 projects.length 분기로 InitPanel 대체. StatCard 3종, ProjectRow 최근 3개, QuickCard 2종.</div>
+          <div class="impl-tags"><span class="impl-tag">components/common/panel/DashboardHome.tsx</span><span class="impl-tag">components/common/panel/MainPanel.tsx</span></div>
+        </div>
+      </div>
+      <div class="impl-item">
+        <div class="impl-num">7</div>
+        <div class="impl-body">
+          <div class="impl-title">Generation View + Workspace 라우트</div>
+          <div class="impl-desc">app/(workspace)/projects/[id]/page.tsx 생성. Phase A → Phase B → 완성 전환 로직 구현. WorkflowStepCard 목록 + SectionCard 디테일 패널 렌더링.</div>
+          <div class="impl-tags"><span class="impl-tag">app/(workspace)/projects/[id]/</span><span class="impl-tag">components/workspace/</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:28px;background:rgba(221,183,255,0.05);border:1px solid rgba(221,183,255,0.12);border-radius:12px;padding:20px 24px">
+      <div style="font-size:12px;font-weight:700;color:var(--c-lav);margin-bottom:10px">신규 파일 목록 (예상)</div>
+      <div class="code-block">client/
+├─ components/
+│  ├─ common/
+│  │  ├─ badge/
+│  │  │  └─ <span class="code-key">StatusBadge.tsx</span>          <span class="code-comment"># NEW</span>
+│  │  ├─ card/
+│  │  │  ├─ <span class="code-key">StatCard.tsx</span>             <span class="code-comment"># NEW</span>
+│  │  │  └─ <span class="code-key">ProjectRow.tsx</span>           <span class="code-comment"># NEW</span>
+│  │  └─ panel/
+│  │     ├─ MainPanel.tsx              <span class="code-comment"># 수정: 분기 로직 추가</span>
+│  │     └─ <span class="code-key">DashboardHome.tsx</span>        <span class="code-comment"># NEW</span>
+│  └─ workspace/
+│     ├─ <span class="code-key">WorkflowStepCard.tsx</span>         <span class="code-comment"># NEW</span>
+│     └─ <span class="code-key">SectionCard.tsx</span>              <span class="code-comment"># NEW</span>
+├─ store/
+│  └─ <span class="code-key">useProjectStore.ts</span>           <span class="code-comment"># NEW</span>
+├─ app/(workspace)/projects/
+│  └─ <span class="code-key">[id]/page.tsx</span>                <span class="code-comment"># NEW</span>
+└─ styles/
+   └─ tokens.css                       <span class="code-comment"># 수정: 토큰 4개 추가</span></div>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
