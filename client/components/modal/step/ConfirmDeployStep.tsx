@@ -1,5 +1,6 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner';
 import DeployButton from '@/components/common/btn/DeployButton';
 import { useDeployStore } from '@/store/useDeployStore';
 import { TEMPLATES, TEMPLATES_FOR, TEMPLATES_STYLE } from '@/constants/step-template';
@@ -12,7 +13,7 @@ export function ConfirmDeployStep() {
     const RESULT_TITLE = getResultSummary(card);
 
     const DeployHandler = () => {
-        alert('배포되었습니다');
+        toast.success('배포되었습니다');
         resetCard()
         router.back();
     }

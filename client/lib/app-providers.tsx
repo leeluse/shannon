@@ -20,7 +20,13 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       {children}
-      <Toaster richColors theme="dark" closeButton />
+      <Toaster
+        theme="dark"
+        toastOptions={{
+          className: "!bg-black/70 !text-c-gray !border !border-black/20",
+        }}
+        closeButton
+      />
     </QueryClientProvider>
   );
 }
