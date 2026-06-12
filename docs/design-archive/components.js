@@ -470,6 +470,72 @@ Archive.add({
 });
 
 
+Archive.add({
+    type: "component",
+    id: "cmp-workspace-sidebar",
+    name: "Workspace Sidebar",
+    category: "Layout",
+    status: "draft",
+    css: `
+    .workspace-sidebar {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-purple: #490080;
+      --glass-border: rgba(255, 255, 255, 0.08);
+      width: 256px;
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+      min-width: 0;
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      background: var(--c-glass);
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .workspace-sidebar--compact {
+      width: 256px;
+    }
+    .workspace-sidebar-header { display: flex; align-items: center; gap: 16px; min-width: 0; flex-shrink: 0; }
+    .workspace-sidebar-logo { width: 48px; height: 48px; border-radius: 12px; background: var(--c-logo); box-shadow: 0 10px 24px rgba(0,0,0,0.25); flex-shrink: 0; }
+    .workspace-sidebar-brand { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .workspace-sidebar-brand-name { font-size: 20px; font-weight: 800; color: var(--c-lav); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .workspace-sidebar-brand-version { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .workspace-sidebar-content { display: flex; flex-direction: column; gap: 20px; min-width: 0; overflow-y: auto; scrollbar-width: none; }
+    .workspace-sidebar-content::-webkit-scrollbar { display: none; }
+    .workspace-sidebar-group { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .workspace-sidebar-group-title { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin: 0; }
+    .workspace-sidebar-item { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 10px 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: rgba(255,255,255,0.72); text-align: left; }
+    .workspace-sidebar-item.active { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.1); box-shadow: inset 0 0 0 1px rgba(241,245,249,0.1); color: var(--c-white); }
+    .workspace-sidebar-item-icon { width: 20px; height: 20px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); flex-shrink: 0; }
+    .workspace-sidebar-item.active .workspace-sidebar-item-icon { border-color: rgba(233,213,255,0.42); background: rgba(233,213,255,0.18); }
+    .workspace-sidebar-item-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; font-weight: 400; }
+    .workspace-sidebar-footer { border-top: 1px solid var(--glass-border); padding-top: 16px; align-self: end; }
+    .workspace-sidebar-action { width: 100%; height: 48px; border: 0; border-radius: 16px; background: var(--c-pink); color: var(--c-purple); font-size: 14px; font-weight: 900; }
+  `,
+    html: `
+    <aside class="workspace-sidebar">
+      <header class="workspace-sidebar-header"><div class="workspace-sidebar-logo"></div><div class="workspace-sidebar-brand"><div class="workspace-sidebar-brand-name">Shannon</div><div class="workspace-sidebar-brand-version">v0.0.1</div></div></header>
+      <div class="workspace-sidebar-content"><section class="workspace-sidebar-group"><h3 class="workspace-sidebar-group-title">Current Projects</h3><button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Dashboard Home</span></button></section></div>
+      <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+    </aside>
+  `,
+    spec: {
+        colors: { panel: "var(--c-glass)", text: "var(--c-white)", accent: "var(--c-lav)", action: "var(--c-pink)" },
+        size: { width: "256px", compactWidth: "192px", logo: "48px", actionHeight: "48px" },
+        spacing: { padding: "24px", gap: "16px", itemPadding: "10px 12px" }
+    },
+    note: "Shared workspace sidebar shell used by all routed workspace screens."
+});
+
 /* ── Shannon Workspaces ── */
 
 Archive.add({
@@ -478,99 +544,34 @@ Archive.add({
     name: "Dashboard Home",
     route: "/dashboard",
     status: "draft",
-    uses: ["btn-shannon-primary", "status-badge", "stat-card", "project-row"],
+    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge", "stat-card", "project-row"],
     css: `
     .ws-dashboard-root {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-modal: rgba(31, 26, 35, 0.6);
+      --c-modal-sub: #E5E7EB;
+      --c-purple: #490080;
+      --bg-main: url("../../client/public/main-bg.png");
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: blur(16px);
       display: flex;
       width: 100%;
-      height: 540px;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(73, 0, 128, 0.25) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(88, 28, 135, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 80%, rgba(49, 10, 100, 0.3) 0%, transparent 55%),
-        linear-gradient(135deg, #0c0a18 0%, #12082a 50%, #0a0a1a 100%);
-      color: #F1F5F9;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      height: 900px;
+      padding: 20px;
+      gap: 16px;
+      box-sizing: border-box;
+      background: var(--bg-main) no-repeat center center;
+      background-size: cover;
+      color: var(--c-white);
+      font-family: var(--font-sans);
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    }
-    .ws-dashboard-sidebar {
-      width: 192px;
-      flex-shrink: 0;
-      background: rgba(20, 22, 36, 0.3);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 20px 14px;
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-    }
-    .ws-dashboard-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      flex-shrink: 0;
-    }
-    .ws-dashboard-logo-box {
-      width: 28px;
-      height: 28px;
-      background: #564B60;
-      border-radius: 7px;
-      flex-shrink: 0;
-    }
-    .ws-dashboard-logo-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: #c084fc;
-    }
-    .ws-dashboard-logo-ver {
-      font-size: 9px;
-      color: #a855f7;
-      opacity: 0.6;
-    }
-    .ws-dashboard-sec-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      color: rgba(255, 255, 255, 0.3);
-      margin: 12px 0 5px;
-    }
-    .ws-dashboard-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 9px;
-      border-radius: 7px;
-      margin-bottom: 2px;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .ws-dashboard-nav-item.active {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #F1F5F9;
-    }
-    .ws-dashboard-nav-icon {
-      width: 14px;
-      height: 14px;
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 0.12);
-      flex-shrink: 0;
-    }
-    .ws-dashboard-nav-icon.lav {
-      background: rgba(221, 183, 255, 0.35);
-    }
-    .ws-dashboard-nav-name {
-      font-size: 10.5px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .ws-dashboard-sidebar-footer {
-      margin-top: auto;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 12px;
     }
     .ws-dashboard-main {
       flex: 1;
@@ -583,12 +584,12 @@ Archive.add({
     .ws-dashboard-greeting {
       font-size: 18px;
       font-weight: 800;
-      color: #F1F5F9;
+      color: var(--c-white);
       text-align: left;
     }
     .ws-dashboard-greeting-sub {
       font-size: 11px;
-      color: #475569;
+      color: var(--c-gray);
       margin-top: 2px;
       text-align: left;
     }
@@ -606,11 +607,11 @@ Archive.add({
     .ws-dashboard-sh-title {
       font-size: 11px;
       font-weight: 700;
-      color: #94A3B8;
+      color: var(--c-gray);
     }
     .ws-dashboard-sh-link {
       font-size: 10px;
-      color: #475569;
+      color: var(--c-gray);
       cursor: pointer;
     }
     .ws-dashboard-quick-row {
@@ -641,41 +642,29 @@ Archive.add({
   `,
     html: `
     <div class="ws-dashboard-root">
-      <!-- Sidebar -->
-      <div class="ws-dashboard-sidebar">
-        <div class="ws-dashboard-logo-row">
-          <div class="ws-dashboard-logo-box"></div>
-          <div>
-            <div class="ws-dashboard-logo-name">Shannon</div>
-            <div class="ws-dashboard-logo-ver">v0.0.1</div>
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header">
+          <div class="workspace-sidebar-logo"></div>
+          <div class="workspace-sidebar-brand">
+            <div class="workspace-sidebar-brand-name">Shannon</div>
+            <div class="workspace-sidebar-brand-version">v0.0.1</div>
           </div>
+        </header>
+        <div class="workspace-sidebar-content">
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
+            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
+          </section>
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Recent</h3>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
+          </section>
         </div>
-        <div class="ws-dashboard-sec-label">프로젝트</div>
-        <div class="ws-dashboard-nav-item active">
-          <div class="ws-dashboard-nav-icon lav"></div>
-          <div class="ws-dashboard-nav-name">포트폴리오 사이트 만들기</div>
-        </div>
-        <div class="ws-dashboard-nav-item">
-          <div class="ws-dashboard-nav-icon"></div>
-          <div class="ws-dashboard-nav-name">관리자 대시보드 리팩토링</div>
-        </div>
-        <div class="ws-dashboard-nav-item">
-          <div class="ws-dashboard-nav-icon"></div>
-          <div class="ws-dashboard-nav-name">웹 기초 강의 PPT</div>
-        </div>
-        <div class="ws-dashboard-sec-label">최근</div>
-        <div class="ws-dashboard-nav-item">
-          <div class="ws-dashboard-nav-icon"></div>
-          <div class="ws-dashboard-nav-name">SaaS 랜딩 페이지</div>
-        </div>
-        <div class="ws-dashboard-nav-item">
-          <div class="ws-dashboard-nav-icon"></div>
-          <div class="ws-dashboard-nav-name">이커머스 백오피스</div>
-        </div>
-        <div class="ws-dashboard-sidebar-footer">
-          <button class="btn-shannon-primary">Create Project</button>
-        </div>
-      </div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
 
       <!-- Dashboard main content -->
       <div class="ws-dashboard-main">
@@ -756,8 +745,8 @@ Archive.add({
     </div>
   `,
     spec: {
-        colors: { background: "#0c0a18", sidebar: "rgba(20,22,36,0.3)" },
-        size: { frame: "1080px", sidebar: "192px" },
+        colors: { background: "var(--bg-main)", sidebar: "var(--c-glass)" },
+        size: { frame: "1440x900", sidebar: "192px" },
         spacing: { padding: "22px 26px" }
     },
     note: "Shannon MVP 대시보드 홈 화면 스펙."
@@ -769,99 +758,34 @@ Archive.add({
     name: "Project Workspace",
     route: "/projects/:id",
     status: "draft",
-    uses: ["btn-shannon-primary", "status-badge", "workflow-step-card", "section-card"],
+    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge", "workflow-step-card", "section-card"],
     css: `
     .ws-pw-root {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-modal: rgba(31, 26, 35, 0.6);
+      --c-modal-sub: #E5E7EB;
+      --c-purple: #490080;
+      --bg-main: url("../../client/public/main-bg.png");
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: blur(16px);
       display: flex;
       width: 100%;
-      height: 540px;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(73, 0, 128, 0.25) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(88, 28, 135, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 80%, rgba(49, 10, 100, 0.3) 0%, transparent 55%),
-        linear-gradient(135deg, #0c0a18 0%, #12082a 50%, #0a0a1a 100%);
-      color: #F1F5F9;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      height: 900px;
+      padding: 20px;
+      gap: 16px;
+      box-sizing: border-box;
+      background: var(--bg-main) no-repeat center center;
+      background-size: cover;
+      color: var(--c-white);
+      font-family: var(--font-sans);
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-    }
-    .ws-pw-sidebar {
-      width: 192px;
-      flex-shrink: 0;
-      background: rgba(20, 22, 36, 0.3);
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 20px 14px;
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-    }
-    .ws-pw-logo-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 20px;
-      flex-shrink: 0;
-    }
-    .ws-pw-logo-box {
-      width: 28px;
-      height: 28px;
-      background: #564B60;
-      border-radius: 7px;
-      flex-shrink: 0;
-    }
-    .ws-pw-logo-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: #c084fc;
-    }
-    .ws-pw-logo-ver {
-      font-size: 9px;
-      color: #a855f7;
-      opacity: 0.6;
-    }
-    .ws-pw-sec-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      color: rgba(255, 255, 255, 0.3);
-      margin: 12px 0 5px;
-    }
-    .ws-pw-nav-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 7px 9px;
-      border-radius: 7px;
-      margin-bottom: 2px;
-      color: rgba(255, 255, 255, 0.5);
-      font-size: 11px;
-      cursor: pointer;
-    }
-    .ws-pw-nav-item.active {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #F1F5F9;
-    }
-    .ws-pw-nav-icon {
-      width: 14px;
-      height: 14px;
-      border-radius: 3px;
-      background: rgba(255, 255, 255, 0.12);
-      flex-shrink: 0;
-    }
-    .ws-pw-nav-icon.lav {
-      background: rgba(221, 183, 255, 0.35);
-    }
-    .ws-pw-nav-name {
-      font-size: 10.5px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .ws-pw-sidebar-footer {
-      margin-top: auto;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 12px;
     }
     .ws-pw-main {
       flex: 1;
@@ -870,7 +794,7 @@ Archive.add({
       min-width: 0;
     }
     .ws-pw-proj-bar {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--glass-border);
       padding: 0 18px;
       display: flex;
       align-items: center;
@@ -881,13 +805,13 @@ Archive.add({
     }
     .ws-pw-back-btn {
       font-size: 10px;
-      color: #475569;
+      color: var(--c-gray);
       cursor: pointer;
     }
     .ws-pw-bar-div {
       width: 1px;
       height: 13px;
-      background: rgba(255, 255, 255, 0.08);
+      background: var(--glass-border);
     }
     .ws-pw-type-chip {
       font-size: 9px;
@@ -895,17 +819,17 @@ Archive.add({
       padding: 2px 8px;
       border-radius: 20px;
       background: rgba(221, 183, 255, 0.1);
-      color: #DDB7FF;
+      color: var(--c-lav);
       border: 1px solid rgba(221, 183, 255, 0.2);
     }
     .ws-pw-proj-name {
       font-size: 12px;
       font-weight: 700;
-      color: #E2E8F0;
+      color: var(--c-modal-sub);
     }
     .ws-pw-step-count {
       font-size: 10px;
-      color: #475569;
+      color: var(--c-gray);
       margin-left: auto;
     }
     .ws-pw-body {
@@ -916,7 +840,7 @@ Archive.add({
     .ws-pw-flow {
       width: 248px;
       flex-shrink: 0;
-      border-right: 1px solid rgba(255, 255, 255, 0.08);
+      border-right: 1px solid var(--glass-border);
       padding: 16px 13px;
       display: flex;
       flex-direction: column;
@@ -927,7 +851,7 @@ Archive.add({
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #334155;
+      color: var(--c-gray);
       margin-bottom: 14px;
       text-align: left;
     }
@@ -942,7 +866,7 @@ Archive.add({
     .ws-pw-det-eye {
       font-size: 9px;
       font-weight: 700;
-      color: #DDB7FF;
+      color: var(--c-lav);
       text-transform: uppercase;
       letter-spacing: 0.08em;
       text-align: left;
@@ -950,13 +874,13 @@ Archive.add({
     .ws-pw-det-title {
       font-size: 15px;
       font-weight: 800;
-      color: #F1F5F9;
+      color: var(--c-white);
       margin-bottom: 3px;
       text-align: left;
     }
     .ws-pw-det-desc {
       font-size: 10px;
-      color: #475569;
+      color: var(--c-gray);
       line-height: 1.6;
       text-align: left;
     }
@@ -967,37 +891,29 @@ Archive.add({
   `,
     html: `
     <div class="ws-pw-root">
-      <!-- Sidebar -->
-      <div class="ws-pw-sidebar">
-        <div class="ws-pw-logo-row">
-          <div class="ws-pw-logo-box"></div>
-          <div>
-            <div class="ws-pw-logo-name">Shannon</div>
-            <div class="ws-pw-logo-ver">v0.0.1</div>
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header">
+          <div class="workspace-sidebar-logo"></div>
+          <div class="workspace-sidebar-brand">
+            <div class="workspace-sidebar-brand-name">Shannon</div>
+            <div class="workspace-sidebar-brand-version">v0.0.1</div>
           </div>
+        </header>
+        <div class="workspace-sidebar-content">
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
+            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
+          </section>
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Recent</h3>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
+          </section>
         </div>
-        <div class="ws-pw-sec-label">프로젝트</div>
-        <div class="ws-pw-nav-item active">
-          <div class="ws-pw-nav-icon lav"></div>
-          <div class="ws-pw-nav-name">포트폴리오 사이트 만들기</div>
-        </div>
-        <div class="ws-pw-nav-item">
-          <div class="ws-pw-nav-icon"></div>
-          <div class="ws-pw-nav-name">관리자 대시보드 리팩토링</div>
-        </div>
-        <div class="ws-pw-nav-item">
-          <div class="ws-pw-nav-icon"></div>
-          <div class="ws-pw-nav-name">웹 기초 강의 PPT</div>
-        </div>
-        <div class="ws-pw-sec-label">최근</div>
-        <div class="ws-pw-nav-item">
-          <div class="ws-pw-nav-icon"></div>
-          <div class="ws-pw-nav-name">SaaS 랜딩 페이지</div>
-        </div>
-        <div class="ws-pw-sidebar-footer">
-          <button class="btn-shannon-primary">Create Project</button>
-        </div>
-      </div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
 
       <!-- Main Workspace Area -->
       <div class="ws-pw-main">
@@ -1140,9 +1056,457 @@ Archive.add({
     </div>
   `,
     spec: {
-        colors: { background: "#0c0a18", sidebar: "rgba(20,22,36,0.3)" },
-        size: { frame: "1080px", sidebar: "192px", waterfallWidth: "248px" },
+        colors: { background: "var(--bg-main)", sidebar: "var(--c-glass)" },
+        size: { frame: "1440x900", sidebar: "192px", waterfallWidth: "248px" },
         spacing: { padding: "18px 20px" }
     },
     note: "특정 프로젝트 선택 시 워크플로우 시각화 및 가이드라인 상세 화면."
+});
+
+Archive.add({
+    type: "workspace",
+    id: "ws-dashboard-home-workflow",
+    name: "Dashboard Home Workflow",
+    route: "/dashboard/home-workflow",
+    status: "draft",
+    uses: ["cmp-workspace-sidebar"],
+    css: `
+    .ws-dhw-root {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-modal: rgba(31, 26, 35, 0.6);
+      --c-modal-sub: #E5E7EB;
+      --c-purple: #490080;
+      --bg-main: url("../../client/public/main-bg.png");
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: blur(16px);
+      display: flex;
+      width: 100%;
+      height: 900px;
+      padding: 20px;
+      gap: 16px;
+      box-sizing: border-box;
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      background: var(--bg-main) no-repeat center center;
+      background-size: cover;
+      overflow: hidden;
+    }
+    .ws-dhw-main,
+    .ws-dhw-detail {
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      background: var(--c-glass);
+    }
+    .ws-dhw-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin: 0;
+    }
+    .ws-dhw-card-sub {
+      font-size: 9px;
+      color: var(--c-gray);
+      line-height: 1.45;
+    }
+    .ws-dhw-main {
+      flex: 1;
+      min-width: 0;
+      padding: 18px;
+    }
+    .ws-dhw-main-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .ws-dhw-main-desc {
+      font-size: 11px;
+      color: var(--c-gray);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .ws-dhw-mock {
+      height: 360px;
+      border-radius: 12px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.025);
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      overflow: hidden;
+    }
+    .ws-dhw-mock-side {
+      border-right: 1px solid var(--glass-border);
+      padding: 14px;
+    }
+    .ws-dhw-mock-main {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+    .ws-dhw-line {
+      height: 10px;
+      border-radius: 999px;
+      background: var(--glass-border);
+    }
+    .ws-dhw-line.lav {
+      background: rgba(221,183,255,0.2);
+    }
+    .ws-dhw-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .ws-dhw-tile {
+      height: 72px;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.03);
+    }
+    .ws-dhw-detail {
+      width: 190px;
+      padding: 18px;
+      flex-shrink: 0;
+    }
+    .ws-dhw-chip {
+      display: inline-flex;
+      margin: 0 4px 6px 0;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(221,183,255,0.22);
+      color: var(--c-lav);
+      font-size: 9px;
+      font-weight: 700;
+    }
+  `,
+    html: `
+    <div class="ws-dhw-root">
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header">
+          <div class="workspace-sidebar-logo"></div>
+          <div class="workspace-sidebar-brand">
+            <div class="workspace-sidebar-brand-name">Shannon</div>
+            <div class="workspace-sidebar-brand-version">v0.0.1</div>
+          </div>
+        </header>
+        <div class="workspace-sidebar-content">
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
+            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
+          </section>
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Recent</h3>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
+          </section>
+        </div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
+      <main class="ws-dhw-main">
+        <div class="ws-dhw-main-title">Dashboard Home</div>
+        <div class="ws-dhw-main-desc">Project-first dashboard entry that follows the existing workspace shell conventions. The sidebar matches the app structure: logo, grouped lists, and the primary action footer.</div>
+        <div class="ws-dhw-mock">
+          <div class="ws-dhw-mock-side">
+            <div class="ws-dhw-line lav" style="width:70%;margin-bottom:22px"></div>
+            <div class="ws-dhw-line" style="width:88%;margin-bottom:10px"></div>
+            <div class="ws-dhw-line" style="width:62%;margin-bottom:10px"></div>
+            <div class="ws-dhw-line" style="width:76%"></div>
+          </div>
+          <div class="ws-dhw-mock-main">
+            <div class="ws-dhw-line lav" style="width:34%"></div>
+            <div class="ws-dhw-grid"><div class="ws-dhw-tile"></div><div class="ws-dhw-tile"></div><div class="ws-dhw-tile"></div></div>
+            <div class="ws-dhw-line" style="width:94%"></div>
+            <div class="ws-dhw-line" style="width:82%"></div>
+            <div class="ws-dhw-line" style="width:68%"></div>
+          </div>
+        </div>
+      </main>
+      <aside class="ws-dhw-detail">
+        <div class="ws-dhw-label" style="margin-bottom:10px">Screen Role</div>
+        <span class="ws-dhw-chip">route</span>
+        <span class="ws-dhw-chip">dashboard</span>
+        <span class="ws-dhw-chip">home</span>
+        <div class="ws-dhw-card-sub" style="margin-top:10px">The screen is bound to the project shell conventions rather than inventing a separate sidebar language.</div>
+      </aside>
+    </div>
+  `,
+    spec: {
+        colors: { background: "var(--bg-main)", panel: "var(--c-glass)", accent: "var(--c-lav)" },
+        size: { frame: "1440x900", sidebar: "256px", detail: "190px" },
+        spacing: { padding: "20px", gap: "16px" }
+    },
+    note: "Dashboard Home 화면 목업을 DSS 워크플로우 기준으로 분리한 workspace."
+});
+Archive.add({
+    type: "workspace",
+    id: "ws-generation-view",
+    name: "Generation View",
+    route: "/generation-view",
+    status: "draft",
+    uses: ["cmp-workspace-sidebar"],
+    phases: [
+        {
+            id: "loading",
+            name: "Loading",
+            route: "/generation-view/loading",
+            html: `
+    <div class="ws-generation-view-frame">
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header">
+          <div class="workspace-sidebar-logo"></div>
+          <div class="workspace-sidebar-brand">
+            <div class="workspace-sidebar-brand-name">Shannon</div>
+            <div class="workspace-sidebar-brand-version">v0.0.1</div>
+          </div>
+        </header>
+        <div class="workspace-sidebar-content">
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
+            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
+          </section>
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Recent</h3>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
+          </section>
+        </div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
+      <div class="f-gen-center">
+        <div class="f-gen-icon-wrap">
+          <div class="f-gen-icon-ring"></div>
+          <div class="f-gen-icon-inner"></div>
+        </div>
+        <div>
+          <div class="f-gen-title">Shannon&#51060; &#47564;&#46308;&#44256; &#51080;&#50612;&#50836;</div>
+          <div class="f-gen-sub" style="margin-top:5px">&#54252;&#53944;&#54260;&#47532;&#50724; &#49324;&#51060;&#53944; &#47564;&#46308;&#44592;&#47484; &#50948;&#54620;<br>&#50892;&#53356;&#54540;&#47196;&#50864;&#47484; &#49444;&#44228;&#54616;&#45716; &#51473;&#51077;&#45768;&#45796;</div>
+        </div>
+        <div class="f-gen-list">
+          <div class="f-gen-item done"><div class="f-gen-dot done">&#10003;</div><div class="f-gen-text done">&#51077;&#47141; &#51221;&#48372; &#48516;&#49437; &#50756;&#47308;</div><div style="font-size:9px;color:var(--c-subtle)">0.3s</div></div>
+          <div class="f-gen-item running"><div class="f-gen-dot running"></div><div class="f-gen-text running">&#50892;&#53356;&#54540;&#47196;&#50864; &#45800;&#44228; &#49444;&#44228; &#51473;...</div></div>
+          <div class="f-gen-item"><div class="f-gen-dot"></div><div class="f-gen-text">&#44033; &#45800;&#44228;&#48324; &#53080;&#53584;&#52768; &#49373;&#49457;</div></div>
+          <div class="f-gen-item"><div class="f-gen-dot"></div><div class="f-gen-text">&#52572;&#51333; &#44160;&#53664; &#48143; &#44396;&#49457;</div></div>
+        </div>
+      </div>
+    </div>
+  `,
+            spec: {
+                size: { phase: "loading", timing: "AI generation loading (0-2s)" },
+                spacing: { "phase padding": "32px" }
+            },
+            note: "Original spec Generation View loading scene."
+        },
+        {
+            id: "skeleton-reveal",
+            name: "Skeleton Reveal",
+            route: "/generation-view/skeleton-reveal",
+            html: `
+    <div class="ws-generation-view-frame">
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header">
+          <div class="workspace-sidebar-logo"></div>
+          <div class="workspace-sidebar-brand">
+            <div class="workspace-sidebar-brand-name">Shannon</div>
+            <div class="workspace-sidebar-brand-version">v0.0.1</div>
+          </div>
+        </header>
+        <div class="workspace-sidebar-content">
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
+            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
+          </section>
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Recent</h3>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
+          </section>
+        </div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
+      <div class="f-main">
+        <div class="f-proj-bar">
+          <div class="sk" style="width:55px;height:9px"></div>
+          <div class="f-bar-div"></div>
+          <div class="sk-lav" style="width:68px;height:16px;border-radius:20px"></div>
+          <div class="sk" style="width:130px;height:10px"></div>
+          <div class="sk" style="width:60px;height:9px;margin-left:auto"></div>
+        </div>
+        <div class="f-body">
+          <div class="f-flow">
+            <div class="sk" style="height:7px;width:65px;margin-bottom:14px"></div>
+            <div class="f-step" style="margin-bottom:6px">
+              <div class="f-step-col"><div class="f-step-num" style="background:rgba(221,183,255,0.08);border-color:rgba(221,183,255,0.22)"></div><div class="f-vline"></div></div>
+              <div class="f-step-card" style="display:flex;flex-direction:column;gap:5px">
+                <div class="sk-lav" style="height:8px;width:65%"></div>
+                <div class="sk" style="height:7px;width:85%"></div>
+                <div class="sk-lav" style="height:13px;width:32px;border-radius:20px;margin-top:2px"></div>
+              </div>
+            </div>
+            <div class="f-step" style="margin-bottom:6px">
+              <div class="f-step-col"><div class="f-step-num"></div><div class="f-vline"></div></div>
+              <div class="f-step-card" style="display:flex;flex-direction:column;gap:5px">
+                <div class="sk" style="height:8px;width:55%"></div>
+                <div class="sk" style="height:7px;width:80%"></div>
+              </div>
+            </div>
+            <div class="f-step">
+              <div class="f-step-col"><div class="f-step-num"></div></div>
+              <div class="f-step-card" style="display:flex;flex-direction:column;gap:5px">
+                <div class="sk" style="height:8px;width:70%"></div>
+                <div class="sk" style="height:7px;width:90%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="f-detail">
+            <div>
+              <div class="sk-lav" style="height:8px;width:90px;margin-bottom:8px"></div>
+              <div class="sk" style="height:13px;width:55%;margin-bottom:6px"></div>
+              <div class="sk" style="height:7px;width:90%;margin-bottom:4px"></div>
+              <div class="sk" style="height:7px;width:72%"></div>
+            </div>
+            <div class="f-hr"></div>
+            <div class="f-sec-card hi" style="display:flex;flex-direction:column;gap:6px">
+              <div class="sk-lav" style="height:7px;width:75px"></div>
+              <div class="sk" style="height:7px;width:100%"></div>
+              <div class="sk" style="height:7px;width:85%"></div>
+              <div class="sk" style="height:7px;width:94%"></div>
+              <div style="display:flex;gap:5px;margin-top:3px">
+                <div class="sk-lav" style="height:16px;width:58px;border-radius:4px"></div>
+                <div class="sk-lav" style="height:16px;width:48px;border-radius:4px"></div>
+              </div>
+            </div>
+            <div class="f-sec-card" style="display:flex;flex-direction:column;gap:6px">
+              <div class="sk" style="height:7px;width:55px"></div>
+              <div class="sk" style="height:7px;width:100%"></div>
+              <div class="sk" style="height:7px;width:68%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+            spec: {
+                size: { phase: "skeleton-reveal", timing: "Skeleton reveal (2-4s)" },
+                spacing: { "phase padding": "0" }
+            },
+            note: "Original spec Generation View skeleton reveal scene."
+        }
+    ],
+    css: `
+    .ws-generation-view-frame {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-modal: rgba(31, 26, 35, 0.6);
+      --c-modal-sub: #E5E7EB;
+      --c-purple: #490080;
+      --bg-main: url("../../client/public/main-bg.png");
+      --c-success: #86EFAC;
+      --c-muted: var(--c-gray);
+      --c-subtle: var(--c-gray);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-blur: blur(16px);
+      display: flex;
+      width: 100%;
+      height: 900px;
+      padding: 20px;
+      gap: 16px;
+      box-sizing: border-box;
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      background: var(--bg-main) no-repeat center center;
+      background-size: cover;
+      overflow: hidden;
+    }
+    .f-main { flex:1; display:flex; flex-direction:column; min-width:0; }
+    .f-proj-bar { border-bottom:1px solid var(--glass-border); padding:0 18px; display:flex; align-items:center; gap:10px; flex-shrink:0; height:42px; background:rgba(12,10,24,0.3); }
+    .f-bar-div { width:1px; height:13px; background:var(--glass-border); }
+    .f-body { flex:1; display:flex; min-height:0; }
+    .f-flow { width:248px; flex-shrink:0; padding:18px 16px; border-right:1px solid var(--glass-border); overflow:hidden; }
+    .f-step { display:flex; align-items:flex-start; gap:9px; }
+    .f-step-col { display:flex; flex-direction:column; align-items:center; width:18px; flex-shrink:0; padding-top:1px; }
+    .f-step-num { width:18px; height:18px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:700; color:var(--c-muted); }
+    .f-vline { width:1px; height:24px; background:rgba(255,255,255,0.07); margin:3px 0; }
+    .f-step-card { flex:1; padding:8px 10px; border-radius:7px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.02); min-width:0; }
+    .f-detail { flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:12px; overflow:hidden; }
+    .f-hr { height:1px; background:var(--glass-border); margin:2px 0; }
+    .f-sec-card { border:1px solid var(--glass-border); border-radius:9px; padding:11px 13px; background:rgba(255,255,255,0.02); }
+    .f-sec-card.hi { border-color:rgba(221,183,255,0.22); background:rgba(221,183,255,0.04); }
+    .f-gen-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; padding:32px; }
+    .f-gen-icon-wrap { position:relative; width:54px; height:54px; border-radius:16px; background:rgba(221,183,255,0.1); border:1px solid rgba(221,183,255,0.22); display:flex; align-items:center; justify-content:center; }
+    .f-gen-icon-ring { position:absolute; inset:-7px; border-radius:22px; border:1px solid rgba(221,183,255,0.14); animation:ring 2s ease-in-out infinite; }
+    @keyframes ring { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.6;transform:scale(1.05)} }
+    .f-gen-icon-inner { width:24px; height:24px; border-radius:6px; background:rgba(221,183,255,0.45); animation:pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.4;transform:scale(.9)} 50%{opacity:1;transform:scale(1.05)} }
+    .f-gen-title { font-size:16px; font-weight:800; text-align:center; color:var(--c-white); }
+    .f-gen-sub { font-size:11px; color:var(--c-muted); text-align:center; line-height:1.6; max-width:250px; }
+    .f-gen-list { width:100%; max-width:290px; display:flex; flex-direction:column; gap:6px; }
+    .f-gen-item { display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:7px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); }
+    .f-gen-item.done { background:rgba(134,239,172,0.04); border-color:rgba(134,239,172,0.16); }
+    .f-gen-item.running { background:rgba(221,183,255,0.05); border-color:rgba(221,183,255,0.22); }
+    .f-gen-dot { width:17px; height:17px; border-radius:50%; flex-shrink:0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:8px; }
+    .f-gen-dot.done { background:rgba(134,239,172,0.15); border-color:rgba(134,239,172,0.35); color:var(--c-success); }
+    .f-gen-dot.running { border-color:var(--c-lav); border-top-color:transparent; animation:spin 0.8s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .f-gen-text { font-size:10px; flex:1; color:var(--c-subtle); }
+    .f-gen-text.done { color:var(--c-success); }
+    .f-gen-text.running { color:var(--c-lav); }
+    @keyframes shimmer { 0%{background-position:-300px 0} 100%{background-position:300px 0} }
+    .sk { background:linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.04) 75%); background-size:600px 100%; animation:shimmer 1.6s infinite; border-radius:4px; }
+    .sk-lav { background:linear-gradient(90deg, rgba(221,183,255,0.05) 25%, rgba(221,183,255,0.13) 50%, rgba(221,183,255,0.05) 75%); background-size:600px 100%; animation:shimmer 1.6s infinite; border-radius:4px; }
+  `,
+    html: `
+    <div class="ws-generation-view-frame">
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header">
+          <div class="workspace-sidebar-logo"></div>
+          <div class="workspace-sidebar-brand">
+            <div class="workspace-sidebar-brand-name">Shannon</div>
+            <div class="workspace-sidebar-brand-version">v0.0.1</div>
+          </div>
+        </header>
+        <div class="workspace-sidebar-content">
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
+            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
+          </section>
+          <section class="workspace-sidebar-group">
+            <h3 class="workspace-sidebar-group-title">Recent</h3>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
+            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
+          </section>
+        </div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
+      <div class="f-gen-center">
+        <div class="f-gen-title">Generation View</div>
+        <div class="f-gen-sub">Select a phase from the workspace list: Loading or Skeleton Reveal.</div>
+      </div>
+    </div>
+  `,
+    spec: {
+        colors: { background: "var(--bg-main)", panel: "var(--c-glass)", accent: "var(--c-lav)", success: "#86EFAC" },
+        size: { frame: "1440x900", sidebar: "248px", "phase model": "loading, skeleton-reveal, success, error" },
+        spacing: { padding: "20px", gap: "16px" }
+    },
+    note: "Generation View uses selectable phases as the archive representation of states."
 });

@@ -1,12 +1,22 @@
 /* ============================================================
-   archive.js — 아카이브 엔진 v2. 수정 불필요.
-   두 스페이스: type "workspace"(화면) | "component"(부품)
-   components.js 에서 Archive.add({...}) 로 등록만 하면 된다.
+   archive.js — Design System Steward archive engine v2. No modification needed.
+   Two spaces: type "workspace" (screen) | "component" (part)
+   Simply register using Archive.add({...}) in components.js.
    ============================================================ */
 (function () {
   "use strict";
   const items = [];
   let current = null;
+  let zoomMode = "fit";
+  let zoomLevel = 1.0;
+  const zoomLevels = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+  let panX = 0;
+  let panY = 0;
+  let isDragging = false;
+  let startX = 0;
+  let startY = 0;
+  const expandedWorkspaces = new Set();
+  let currentPhaseId = null;
 
   window.Archive = { add: function (c) { c.type = c.type || "component"; items.push(c); } };
 
@@ -18,15 +28,76 @@
     const firstWs = items.find(function (x) { return x.type === "workspace"; });
     if (firstWs) select(firstWs.id); else if (items.length) select(items[0].id);
     setupMeasure();
+    const toggleBtn = document.getElementById("theme-toggle");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        const isDark = document.body.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+      });
+    }
+
+
+
+    const canvas = document.getElementById("canvas");
+    if (canvas) {
+      canvas.style.cursor = "grab";
+      canvas.addEventListener("mousedown", function (e) {
+        if (e.button !== 0) return;
+        if (e.target.closest("button, a, input, select, textarea")) return;
+        isDragging = true;
+        startX = e.clientX - panX;
+        startY = e.clientY - panY;
+        canvas.style.cursor = "grabbing";
+      });
+
+      window.addEventListener("mousemove", function (e) {
+        if (!isDragging) return;
+        panX = e.clientX - startX;
+        panY = e.clientY - startY;
+        applyZoom();
+      });
+
+      window.addEventListener("mouseup", function () {
+        if (isDragging) {
+          isDragging = false;
+          canvas.style.cursor = "grab";
+        }
+      });
+
+      canvas.addEventListener("wheel", function (e) {
+        if (!e.ctrlKey) return;
+        e.preventDefault();
+        const zoomFactor = 1.1;
+        if (e.deltaY < 0) {
+          if (zoomMode === "fit") {
+            zoomLevel = getAutoScale();
+            zoomMode = "manual";
+          }
+          zoomLevel = Math.min(2.0, zoomLevel * zoomFactor);
+        } else {
+          if (zoomMode === "fit") {
+            zoomLevel = getAutoScale();
+            zoomMode = "manual";
+          }
+          zoomLevel = Math.max(0.2, zoomLevel / zoomFactor);
+        }
+        applyZoom();
+      }, { passive: false });
+    }
+
     window.addEventListener("resize", function () { if (current && current.type === "workspace") fitFrame(); });
   });
 
-  /* ── 좌측 목록: Workspaces 섹션 → Components 섹션(카테고리 그룹) ── */
+  /* ── Left list: Workspaces section → Components section (grouped by category) ── */
   function renderList(q) {
     const nav = document.getElementById("list");
     nav.innerHTML = "";
     const match = function (c) {
-      return !q || c.name.toLowerCase().includes(q) || (c.category || "").toLowerCase().includes(q) || (c.route || "").toLowerCase().includes(q);
+      const phaseText = (c.phases || []).map(function (p) {
+        return [p.name, p.id, p.route].filter(Boolean).join(" ");
+      }).join(" ");
+      return !q || c.name.toLowerCase().includes(q) || (c.category || "").toLowerCase().includes(q) ||
+        (c.route || "").toLowerCase().includes(q) || phaseText.toLowerCase().includes(q);
     };
     const ws = items.filter(function (c) { return c.type === "workspace" && match(c); });
     const comps = items.filter(function (c) { return c.type === "component" && match(c); });
@@ -50,66 +121,161 @@
   function groupEl(t) { const d = document.createElement("div"); d.className = "group"; d.textContent = t; return d; }
 
   function itemEl(c, sub) {
+    if (c.type === "workspace" && c.phases && c.phases.length) {
+      const box = document.createElement("div");
+      box.className = "phase-workspace";
+      if (expandedWorkspaces.has(c.id) || (current && current.id === c.id)) box.classList.add("open");
+
+      const a = document.createElement("a");
+      a.href = "#" + c.id;
+      a.dataset.id = c.id;
+      a.className = "workspace-parent" + (current && current.id === c.id && !currentPhaseId ? " active" : "");
+      a.innerHTML = '<span class="workspace-title"><span class="phase-caret">▸</span>' + esc(c.name) +
+        (sub ? ' <em class="route">' + esc(sub) + "</em>" : "") +
+        '</span><span class="dot" data-s="' + (c.status || "draft") + '"></span>';
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (expandedWorkspaces.has(c.id)) expandedWorkspaces.delete(c.id); else expandedWorkspaces.add(c.id);
+        renderList(document.getElementById("search").value.trim().toLowerCase());
+      });
+      box.appendChild(a);
+
+      const phases = document.createElement("div");
+      phases.className = "phase-list";
+      c.phases.forEach(function (p) {
+        const pa = document.createElement("a");
+        pa.href = "#" + c.id + ":" + p.id;
+        pa.dataset.id = c.id;
+        pa.dataset.phase = p.id;
+        pa.className = "phase-item" + (current && current.id === c.id && currentPhaseId === p.id ? " active" : "");
+        pa.innerHTML = "<span>" + esc(p.name || p.id) + (p.route ? ' <em class="route">' + esc(p.route) + "</em>" : "") + "</span>";
+        pa.addEventListener("click", function (e) {
+          e.preventDefault();
+          expandedWorkspaces.add(c.id);
+          select(c.id, p.id);
+        });
+        phases.appendChild(pa);
+      });
+      box.appendChild(phases);
+      return box;
+    }
+
     const a = document.createElement("a");
     a.href = "#" + c.id; a.dataset.id = c.id;
-    if (current && current.id === c.id) a.className = "active";
+    if (current && current.id === c.id && !currentPhaseId) a.className = "active";
     a.innerHTML = "<span>" + esc(c.name) + (sub ? ' <em class="route">' + esc(sub) + "</em>" : "") +
       '</span><span class="dot" data-s="' + (c.status || "draft") + '"></span>';
     a.addEventListener("click", function (e) { e.preventDefault(); select(c.id); });
     return a;
   }
 
-  /* ── 선택 → 캔버스 + 스펙 렌더 ── */
-  function select(id) {
+  /* ── Select → Render canvas + spec ── */
+  function select(id, phaseId) {
     const c = items.find(function (x) { return x.id === id; });
     if (!c) return;
+    const phase = phaseId && c.phases ? c.phases.find(function (p) { return p.id === phaseId; }) : null;
     current = c;
-    document.querySelectorAll(".list a").forEach(function (a) { a.classList.toggle("active", a.dataset.id === id); });
-    document.getElementById("comp-name").textContent = c.name + (c.route ? "  ·  " + c.route : "");
+    currentPhaseId = phase ? phase.id : null;
+    if (phase) expandedWorkspaces.add(c.id);
+
+    // Reset panning and zoom level on selecting a new item
+    panX = 0;
+    panY = 0;
+    zoomMode = "fit";
+    const canvas = document.getElementById("canvas");
+    if (canvas) {
+      canvas.style.backgroundPosition = "center center";
+    }
+
+    document.querySelectorAll(".list a").forEach(function (a) {
+      a.classList.toggle("active", a.dataset.id === id && ((a.dataset.phase || null) === currentPhaseId));
+    });
+    document.getElementById("comp-name").textContent = c.name +
+      (phase ? " / " + (phase.name || phase.id) : "") +
+      ((phase && phase.route) || c.route ? "  ·  " + ((phase && phase.route) || c.route) : "");
     const badge = document.getElementById("comp-status");
     badge.textContent = c.status || "draft"; badge.dataset.s = c.status || "draft";
 
-    const canvas = document.getElementById("canvas");
-    canvas.classList.toggle("ws", c.type === "workspace");
+    const canvasEl = document.getElementById("canvas");
+    canvasEl.classList.toggle("ws", c.type === "workspace");
+
+    const canvasInner = document.getElementById("canvas-inner");
+    if (!canvasInner) return;
 
     if (c.type === "workspace") {
-      /* uses에 등록된 컴포넌트들의 CSS를 함께 주입 → 워크스페이스는 부품을 '조립'한다 */
+      /* Inject CSS of components registered in 'uses' → Workspace 'assembles' components */
       const usedCss = (c.uses || []).map(function (uid) {
         const u = items.find(function (x) { return x.id === uid; });
         return u ? u.css : "";
       }).join("\n");
-      canvas.innerHTML = '<div class="ws-frame" id="ws-frame"><style>' + usedCss + (c.css || "") + "</style>" + c.html + "</div>";
+      const viewCss = (c.css || "") + (phase && phase.css ? "\n" + phase.css : "");
+      const viewHtml = phase && phase.html ? phase.html : c.html;
+      canvasInner.innerHTML = '<div class="ws-frame" id="ws-frame"><style>' + usedCss + viewCss + "</style>" + viewHtml + "</div>";
       fitFrame();
     } else {
-      canvas.innerHTML = "<style>" + (c.css || "") + "</style>" + c.html;
+      canvasInner.innerHTML = "<style>" + (c.css || "") + "</style>" + c.html;
+      fitFrame();
     }
-    renderSpec(c, canvas);
+    renderSpec(c, canvasInner, phase);
+  }
+
+  function getAutoScale() {
+    const canvas = document.getElementById("canvas");
+    if (!canvas) return 1.0;
+    const frame = document.getElementById("ws-frame");
+    if (!frame) return 1.0;
+    const frameWidth = frame.offsetWidth;
+    const frameHeight = frame.offsetHeight;
+    const scaleX = (canvas.clientWidth - 64) / frameWidth;
+    const scaleY = (canvas.clientHeight - 64) / frameHeight;
+    return Math.min(1, scaleX, scaleY);
+  }
+
+  function applyZoom() {
+    const canvas = document.getElementById("canvas");
+    const inner = document.getElementById("canvas-inner");
+    if (!inner) return;
+
+    let scale = 1.0;
+    if (zoomMode === "fit") {
+      scale = getAutoScale();
+    } else {
+      scale = zoomLevel;
+    }
+
+    inner.style.transform = "translate(-50%, -50%) translate(" + panX + "px, " + panY + "px) scale(" + scale + ")";
+
+    if (canvas) {
+      canvas.style.backgroundPosition = "calc(50% + " + panX + "px) calc(50% + " + panY + "px)";
+    }
   }
 
   function fitFrame() {
-    const canvas = document.getElementById("canvas");
-    const frame = document.getElementById("ws-frame");
-    if (!frame) return;
-    const scale = Math.min(1, (canvas.clientWidth - 64) / 1080);
-    frame.style.transform = "scale(" + scale + ")";
-    frame.style.marginLeft = (scale < 1 ? -(1 - scale) * 1080 / 2 : 0) + "px";
-    frame.style.marginRight = (scale < 1 ? -(1 - scale) * 1080 / 2 : 0) + "px";
-    frame.style.marginBottom = (scale < 1 ? -(1 - scale) * frame.offsetHeight : 0) + "px";
+    applyZoom();
   }
 
-  /* ── 우측 스펙: (workspace면 Route/Uses 먼저) + Colors/Size/Spacing ── */
-  function renderSpec(c, canvas) {
+  /* ── Right spec: (Route/Uses first for workspace) + Colors/Size/Spacing ── */
+  function renderSpec(c, canvas, phase) {
     const root = firstElement(canvas.querySelector(".ws-frame") || canvas);
     const auto = autoExtract(root);
     const merged = {
-      colors: Object.assign({}, auto.colors, (c.spec || {}).colors),
-      size: Object.assign({}, auto.size, (c.spec || {}).size),
-      spacing: Object.assign({}, auto.spacing, (c.spec || {}).spacing)
+      colors: Object.assign({}, auto.colors, (c.spec || {}).colors, (phase && phase.spec || {}).colors),
+      size: Object.assign({}, auto.size, (c.spec || {}).size, (phase && phase.spec || {}).size),
+      spacing: Object.assign({}, auto.spacing, (c.spec || {}).spacing, (phase && phase.spec || {}).spacing)
     };
     const panel = document.getElementById("inspect");
     let html = "";
     if (c.type === "workspace") {
-      html += '<h3>Route</h3><div class="spec-row"><span class="v">' + esc(c.route || "—") + "</span></div>";
+      html += '<h3>Route</h3><div class="spec-row"><span class="v">' + esc((phase && phase.route) || c.route || "—") + "</span></div>";
+      if (phase) {
+        html += '<h3>Phase</h3><div class="spec-row"><span class="k">' + esc(phase.id) + '</span><span class="v">' + esc(phase.name || phase.id) + "</span></div>";
+      } else if (c.phases && c.phases.length) {
+        html += "<h3>Phases</h3>";
+        c.phases.forEach(function (p) {
+          html += '<div class="spec-row"><a href="#" class="use-link" data-id="' + esc(c.id) + '" data-phase="' + esc(p.id) + '">' +
+            esc(p.name || p.id) + "</a></div>";
+        });
+      }
       html += "<h3>Uses</h3>";
       if (c.uses && c.uses.length) {
         c.uses.forEach(function (uid) {
@@ -126,10 +292,10 @@
     }
     html += section("Colors", merged.colors, true) + section("Size", merged.size, false) +
       section("Padding · Margin", merged.spacing, false) +
-      (c.note ? '<h3>Note</h3><div class="empty" style="color:#6b7280">' + esc(c.note) + "</div>" : "");
+      ((phase && phase.note) || c.note ? '<h3>Note</h3><div class="empty" style="color:#6b7280">' + esc((phase && phase.note) || c.note) + "</div>" : "");
     panel.innerHTML = html;
     panel.querySelectorAll(".use-link").forEach(function (a) {
-      a.addEventListener("click", function (e) { e.preventDefault(); select(a.dataset.id); });
+      a.addEventListener("click", function (e) { e.preventDefault(); select(a.dataset.id, a.dataset.phase); });
     });
   }
 
