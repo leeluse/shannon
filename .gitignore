@@ -6,6 +6,11 @@ node_modules/
 out/
 dist/
 npm-debug.log*
+.vercel
+.superpowers
+.agents
+.claude
 wiki
 raw
 .vercel
+.vscode

@@ -92,7 +92,7 @@ function StepFooter({ steps }: { steps: readonly number[] }) {
                 // 폼 매니저에게 그 칸의 에러 정보(메시지)를 가져와 달라고 해요.
                 const { error } = getFieldState(fieldName);
                 if (error?.message) {
-                    toast.error(error.message);
+                    toast.error(error.message, { position: "top-center" });
                 }
             }
         }

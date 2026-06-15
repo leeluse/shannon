@@ -65,6 +65,12 @@ button {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
+}
+
+[data-sonner-toaster] {
+  font-family: var(--font-sans) !important;
+  z-index: 9999 !important;
 }
