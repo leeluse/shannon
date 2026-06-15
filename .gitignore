@@ -10,3 +10,7 @@ npm-debug.log*
 .superpowers
 .agents
 .claude
+wiki
+raw
+.vercel
+.vscode

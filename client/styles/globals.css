@@ -70,7 +70,6 @@ button {
   display: none;
 }
 
-
 [data-sonner-toaster] {
   font-family: var(--font-sans) !important;
   z-index: 9999 !important;
