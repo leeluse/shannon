@@ -143,8 +143,8 @@ Archive.add({
     status: "draft",
     css: `
     .stat-card {
-      background: rgba(20, 22, 36, 0.5);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(20, 22, 36, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 10px;
       padding: 13px 15px;
       display: flex;
@@ -152,8 +152,8 @@ Archive.add({
       text-align: left;
     }
     .stat-card.hi {
-      border-color: rgba(221, 183, 255, 0.28);
-      background: rgba(221, 183, 255, 0.04);
+      border-color: rgba(221, 183, 255, 0.42);
+      background: rgba(20, 22, 36, 0.3);
     }
     .stat-card-label {
       font-size: 9px;
@@ -171,7 +171,7 @@ Archive.add({
     }
     .stat-card-sub {
       font-size: 9px;
-      color: #334155;
+      color: #94A3B8;
       margin-top: 4px;
     }
     .stat-card-sub .up {
@@ -188,7 +188,7 @@ Archive.add({
     </div>
   `,
     spec: {
-        colors: { border: "rgba(255,255,255,0.08)", background: "rgba(20,22,36,0.5)", highlight: "#DDB7FF" },
+        colors: { border: "rgba(255,255,255,0.16)", background: "rgba(20,22,36,0.3)", highlight: "#DDB7FF" },
         size: { radius: "10px", font: "24px / 800" },
         spacing: { padding: "13px 15px" }
     },
@@ -333,14 +333,14 @@ Archive.add({
       flex: 1;
       padding: 8px 10px;
       border-radius: 7px;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(20,22,36,0.3);
       margin-bottom: 4px;
       cursor: pointer;
     }
     .workflow-step-card.active {
-      border-color: rgba(221,183,255,0.42);
-      background: rgba(221,183,255,0.07);
+      border-color: rgba(221,183,255,0.5);
+      background: rgba(20,22,36,0.3);
     }
     .workflow-step-card-title {
       font-size: 10.5px;
@@ -372,7 +372,7 @@ Archive.add({
     </div>
   `,
     spec: {
-        colors: { activeBorder: "rgba(221,183,255,0.42)", activeBg: "rgba(221,183,255,0.07)", line: "rgba(255,255,255,0.07)" },
+        colors: { activeBorder: "rgba(221,183,255,0.5)", background: "rgba(20,22,36,0.3)", line: "rgba(255,255,255,0.07)" },
         size: { radius: "7px", font: "10.5px / 700" },
         spacing: { padding: "8px 10px", gap: "9px" }
     },
@@ -554,11 +554,10 @@ Archive.add({
       --c-gray: #94A3B8;
       --c-pink: rgba(233, 213, 255, 0.8);
       --c-lav: #DDB7FF;
-      --c-modal: rgba(31, 26, 35, 0.6);
       --c-modal-sub: #E5E7EB;
       --c-purple: #490080;
       --bg-main: url("../../client/public/main-bg.png");
-      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.16);
       --glass-blur: blur(16px);
       display: flex;
       width: 100%;
@@ -573,192 +572,119 @@ Archive.add({
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     }
-    .ws-dashboard-main {
-      flex: 1;
-      padding: 22px 26px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      overflow-y: auto;
-    }
-    .ws-dashboard-greeting {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--c-white);
-      text-align: left;
-    }
-    .ws-dashboard-greeting-sub {
-      font-size: 11px;
-      color: var(--c-gray);
-      margin-top: 2px;
-      text-align: left;
-    }
-    .ws-dashboard-stat-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    .ws-dashboard-sh {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .ws-dashboard-sh-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--c-gray);
-    }
-    .ws-dashboard-sh-link {
-      font-size: 10px;
-      color: var(--c-gray);
-      cursor: pointer;
-    }
-    .ws-dashboard-quick-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-    }
-    .ws-dashboard-quick-card {
-      border: 1px dashed rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
-      padding: 10px 13px;
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.35);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      cursor: pointer;
-      text-align: left;
-    }
-    .ws-dashboard-quick-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 5px;
-      background: rgba(221, 183, 255, 0.08);
-      border: 1px solid rgba(221, 183, 255, 0.14);
-      flex-shrink: 0;
-    }
+    .ws-dashboard-main { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 16px; overflow: hidden; }
+    .ws-dashboard-board, .ws-dashboard-rail { border: 1px solid var(--glass-border); border-radius: 12px; background: var(--c-glass); backdrop-filter: var(--glass-blur); min-height: 0; }
+    .ws-dashboard-board { padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; }
+    .ws-dashboard-rail { padding: 18px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+    .ws-dashboard-hero { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding: 18px; border: 1px solid rgba(221,183,255,0.34); border-radius: 12px; background: rgba(20,22,36,0.3); }
+    .ws-dashboard-greeting { font-size: 24px; font-weight: 900; color: var(--c-white); text-align: left; line-height: 1.15; }
+    .ws-dashboard-greeting-sub { font-size: 12px; color: var(--c-modal-sub); margin-top: 7px; line-height: 1.55; text-align: left; max-width: 520px; }
+    .ws-dashboard-hero-action { min-width: 138px; height: 36px; border: 1px solid rgba(221,183,255,0.42); border-radius: 9px; background: rgba(233,213,255,0.18); color: var(--c-lav); font-size: 11px; font-weight: 900; }
+    .ws-dashboard-stat-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .ws-dashboard-section { border: 1px solid var(--glass-border); border-radius: 12px; background: rgba(20,22,36,0.3); padding: 14px; }
+    .ws-dashboard-sh { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .ws-dashboard-sh-title { font-size: 11px; font-weight: 900; color: var(--c-modal-sub); letter-spacing: .02em; }
+    .ws-dashboard-sh-link { font-size: 10px; color: var(--c-lav); cursor: pointer; font-weight: 800; }
+    .ws-dashboard-quick-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .ws-dashboard-quick-card { border: 1px dashed rgba(221,183,255,0.34); border-radius: 10px; padding: 13px; font-size: 11px; color: var(--c-modal-sub); display: flex; align-items: center; gap: 9px; cursor: pointer; text-align: left; background: rgba(20,22,36,0.3); }
+    .ws-dashboard-quick-dot { width: 24px; height: 24px; border-radius: 7px; background: rgba(221,183,255,0.16); border: 1px solid rgba(221,183,255,0.34); flex-shrink: 0; }
+    .ws-dashboard-rail-card { border: 1px solid rgba(255,255,255,0.16); border-radius: 10px; padding: 13px; background: rgba(20,22,36,0.3); }
+    .ws-dashboard-rail-label { font-size: 9px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--c-lav); margin-bottom: 8px; }
+    .ws-dashboard-rail-title { font-size: 12px; font-weight: 900; color: var(--c-white); margin-bottom: 5px; }
+    .ws-dashboard-rail-copy { font-size: 10px; color: var(--c-gray); line-height: 1.5; }
+    .ws-dashboard-mini-list { display: grid; gap: 8px; }
+    .ws-dashboard-mini-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 10px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.14); background: rgba(20,22,36,0.3); font-size: 10px; color: var(--c-modal-sub); }
+    .ws-dashboard-rsp { --c-glass: rgba(20, 22, 36, 0.3); --c-white: #F1F5F9; --c-gray: #94A3B8; --c-lav: #DDB7FF; --c-pink: rgba(233, 213, 255, 0.8); --c-purple: #490080; --bg-main: url("../../client/public/main-bg.png"); --glass-border: rgba(255,255,255,0.16); width: 100%; height: 100%; box-sizing: border-box; background: var(--bg-main) no-repeat center center; background-size: cover; color: var(--c-white); font-family: var(--font-sans); overflow: hidden; }
+    .ws-dashboard-rsp-shell { height: 100%; display: grid; gap: 14px; box-sizing: border-box; padding: 16px; }
+    .ws-dashboard-rsp-nav, .ws-dashboard-rsp-board, .ws-dashboard-rsp-card { border: 1px solid var(--glass-border); border-radius: 12px; background: var(--c-glass); backdrop-filter: blur(16px); }
+    .ws-dashboard-rsp-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; min-width: 0; }
+    .ws-dashboard-rsp-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .ws-dashboard-rsp-logo { width: 34px; height: 34px; border-radius: 10px; background: var(--c-logo); flex-shrink: 0; }
+    .ws-dashboard-rsp-name { font-size: 16px; font-weight: 900; color: var(--c-white); }
+    .ws-dashboard-rsp-sub { font-size: 10px; color: var(--c-gray); margin-top: 2px; }
+    .ws-dashboard-rsp-action { height: 34px; padding: 0 14px; border: 0; border-radius: 10px; background: var(--c-pink); color: var(--c-purple); font-size: 11px; font-weight: 900; }
+    .ws-dashboard-rsp-board { min-height: 0; overflow: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+    .ws-dashboard-rsp-hero { border: 1px solid rgba(221,183,255,0.34); border-radius: 12px; background: rgba(20,22,36,0.3); padding: 16px; }
+    .ws-dashboard-rsp-title { font-size: 22px; line-height: 1.15; font-weight: 900; }
+    .ws-dashboard-rsp-desc { margin-top: 8px; font-size: 11px; line-height: 1.55; color: var(--c-gray); }
+    .ws-dashboard-rsp-stats { display: grid; gap: 10px; }
+    .ws-dashboard-rsp-card { padding: 13px; }
+    .ws-dashboard-rsp-label { font-size: 9px; font-weight: 900; color: var(--c-gray); text-transform: uppercase; letter-spacing: .06em; }
+    .ws-dashboard-rsp-value { margin-top: 6px; font-size: 22px; font-weight: 900; color: var(--c-white); }
+    .ws-dashboard-rsp-list { display: grid; gap: 8px; }
+    .ws-dashboard-rsp-row { display: grid; grid-template-columns: 26px 1fr auto; gap: 9px; align-items: center; padding: 10px; border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; background: rgba(20,22,36,0.3); }
+    .ws-dashboard-rsp-icon { width: 26px; height: 26px; border-radius: 8px; background: rgba(221,183,255,0.16); border: 1px solid rgba(221,183,255,0.34); }
+    .ws-dashboard-rsp-row-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
+    .ws-dashboard-rsp-row-sub { font-size: 9px; color: var(--c-gray); margin-top: 2px; }
+    .ws-dashboard-rsp-badge { padding: 3px 7px; border-radius: 999px; border: 1px solid rgba(134,239,172,0.28); color: #86EFAC; font-size: 8px; font-weight: 900; }
+    .ws-dashboard-rsp.tablet { width: 834px; height: 1112px; }
+    .ws-dashboard-rsp.tablet .ws-dashboard-rsp-shell { grid-template-rows: 62px minmax(0,1fr); }
+    .ws-dashboard-rsp.tablet .ws-dashboard-rsp-stats { grid-template-columns: repeat(3, 1fr); }
+    .ws-dashboard-rsp.mobile { width: 390px; height: 844px; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-shell { grid-template-rows: 58px minmax(0,1fr); padding: 12px; gap: 10px; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-nav { padding: 10px; border-radius: 11px; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-action { width: 38px; padding: 0; font-size: 0; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-action::after { content: "+"; font-size: 18px; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-board { padding: 12px; gap: 12px; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-title { font-size: 20px; }
+    .ws-dashboard-rsp.mobile .ws-dashboard-rsp-stats { grid-template-columns: 1fr; }
   `,
-    html: `
-    <div class="ws-dashboard-root">
-      <aside class="workspace-sidebar workspace-sidebar--compact">
-        <header class="workspace-sidebar-header">
-          <div class="workspace-sidebar-logo"></div>
-          <div class="workspace-sidebar-brand">
-            <div class="workspace-sidebar-brand-name">Shannon</div>
-            <div class="workspace-sidebar-brand-version">v0.0.1</div>
-          </div>
-        </header>
-        <div class="workspace-sidebar-content">
-          <section class="workspace-sidebar-group">
-            <h3 class="workspace-sidebar-group-title">Current Projects</h3>
-            <button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button>
-            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button>
-            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button>
-          </section>
-          <section class="workspace-sidebar-group">
-            <h3 class="workspace-sidebar-group-title">Recent</h3>
-            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button>
-            <button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button>
-          </section>
-        </div>
-        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
-      </aside>
-
-      <!-- Dashboard main content -->
-      <div class="ws-dashboard-main">
-        <div>
-          <div class="ws-dashboard-greeting">안녕하세요 👋</div>
-          <div class="ws-dashboard-greeting-sub">오늘도 Shannon과 함께 만들어볼까요?</div>
-        </div>
-
-        <!-- Stat Cards -->
-        <div class="ws-dashboard-stat-row">
-          <div class="stat-card hi">
-            <div class="stat-card-label">전체 프로젝트</div>
-            <div class="stat-card-val lav">5</div>
-            <div class="stat-card-sub"><span class="up">+1</span> 이번 주</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-label">완료된 워크플로우</div>
-            <div class="stat-card-val">12</div>
-            <div class="stat-card-sub">총 단계 수</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-card-label">최근 생성일</div>
-            <div class="stat-card-val" style="font-size:15px; margin-top:4px;">6월 11일</div>
-            <div class="stat-card-sub">포트폴리오 사이트</div>
-          </div>
-        </div>
-
-        <!-- Recent Projects -->
-        <div>
-          <div class="ws-dashboard-sh">
-            <div class="ws-dashboard-sh-title">최근 프로젝트</div>
-            <div class="ws-dashboard-sh-link">전체 보기 →</div>
-          </div>
-          <div class="project-row">
-            <div class="project-row-icon"></div>
-            <div class="project-row-meta">
-              <div class="project-row-name">포트폴리오 사이트 만들기</div>
-              <div class="project-row-type">사이드 프로젝트 · 4단계</div>
-            </div>
-            <div class="status-badge done">완료</div>
-            <div class="project-row-arrow">›</div>
-          </div>
-          <div class="project-row">
-            <div class="project-row-icon"></div>
-            <div class="project-row-meta">
-              <div class="project-row-name">관리자 대시보드 리팩토링</div>
-              <div class="project-row-type">UI / UX 설계 · 6단계</div>
-            </div>
-            <div class="status-badge wip">진행 중</div>
-            <div class="project-row-arrow">›</div>
-          </div>
-          <div class="project-row">
-            <div class="project-row-icon"></div>
-            <div class="project-row-meta">
-              <div class="project-row-name">웹 기초 강의 PPT</div>
-              <div class="project-row-type">발표 자료 · 5단계</div>
-            </div>
-            <div class="status-badge done">완료</div>
-            <div class="project-row-arrow">›</div>
-          </div>
-        </div>
-
-        <!-- Quick Start -->
-        <div>
-          <div class="ws-dashboard-sh-title" style="margin-bottom: 8px; text-align: left;">빠른 시작</div>
-          <div class="ws-dashboard-quick-row">
-            <div class="ws-dashboard-quick-card">
-              <div class="ws-dashboard-quick-dot"></div>
-              새 사이드 프로젝트 만들기
-            </div>
-            <div class="ws-dashboard-quick-card">
-              <div class="ws-dashboard-quick-dot"></div>
-              UI / UX 설계 시작하기
-            </div>
-          </div>
-        </div>
+    phases: [
+      {
+        id: "tablet",
+        name: "Tablet",
+        route: "/dashboard/tablet",
+        html: `
+    <div class="ws-dashboard-rsp tablet">
+      <div class="ws-dashboard-rsp-shell">
+        <header class="ws-dashboard-rsp-nav"><div class="ws-dashboard-rsp-brand"><div class="ws-dashboard-rsp-logo"></div><div><div class="ws-dashboard-rsp-name">Shannon</div><div class="ws-dashboard-rsp-sub">Dashboard overview</div></div></div><button class="ws-dashboard-rsp-action">Create Project</button></header>
+        <main class="ws-dashboard-rsp-board"><section class="ws-dashboard-rsp-hero"><div class="ws-dashboard-rsp-title">Continue your project flow</div><div class="ws-dashboard-rsp-desc">Review saved structures, reopen recent projects, and start a new AI workflow without losing context.</div></section><section class="ws-dashboard-rsp-stats"><div class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label">Projects</div><div class="ws-dashboard-rsp-value">5</div></div><div class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label">Workflows</div><div class="ws-dashboard-rsp-value">12</div></div><div class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label">Latest</div><div class="ws-dashboard-rsp-value" style="font-size:18px">Jun 11</div></div></section><section class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label" style="margin-bottom:10px">Recent projects</div><div class="ws-dashboard-rsp-list"><div class="ws-dashboard-rsp-row"><div class="ws-dashboard-rsp-icon"></div><div><div class="ws-dashboard-rsp-row-title">Portfolio site</div><div class="ws-dashboard-rsp-row-sub">Side project · 4 steps</div></div><div class="ws-dashboard-rsp-badge">Done</div></div><div class="ws-dashboard-rsp-row"><div class="ws-dashboard-rsp-icon"></div><div><div class="ws-dashboard-rsp-row-title">Admin dashboard</div><div class="ws-dashboard-rsp-row-sub">UI / UX · 6 steps</div></div><div class="ws-dashboard-rsp-badge">WIP</div></div></div></section></main>
       </div>
     </div>
   `,
+        spec: { colors: { panel: "var(--c-glass)", card: "rgba(20,22,36,0.3)" }, size: { frame: "834x1112" }, spacing: { padding: "16px", gap: "14px" } },
+        note: "Tablet dashboard variant with top navigation and stacked board content."
+      },
+      {
+        id: "mobile",
+        name: "Mobile",
+        route: "/dashboard/mobile",
+        html: `
+    <div class="ws-dashboard-rsp mobile">
+      <div class="ws-dashboard-rsp-shell">
+        <header class="ws-dashboard-rsp-nav"><div class="ws-dashboard-rsp-brand"><div class="ws-dashboard-rsp-logo"></div><div><div class="ws-dashboard-rsp-name">Shannon</div><div class="ws-dashboard-rsp-sub">Mobile dashboard</div></div></div><button class="ws-dashboard-rsp-action">Create Project</button></header>
+        <main class="ws-dashboard-rsp-board"><section class="ws-dashboard-rsp-hero"><div class="ws-dashboard-rsp-title">Start from your last idea</div><div class="ws-dashboard-rsp-desc">Recent projects and quick actions are stacked for one-handed scanning.</div></section><section class="ws-dashboard-rsp-stats"><div class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label">Projects</div><div class="ws-dashboard-rsp-value">5</div></div><div class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label">Workflows</div><div class="ws-dashboard-rsp-value">12</div></div></section><section class="ws-dashboard-rsp-card"><div class="ws-dashboard-rsp-label" style="margin-bottom:10px">Recent</div><div class="ws-dashboard-rsp-list"><div class="ws-dashboard-rsp-row"><div class="ws-dashboard-rsp-icon"></div><div><div class="ws-dashboard-rsp-row-title">Portfolio site</div><div class="ws-dashboard-rsp-row-sub">4 steps</div></div><div class="ws-dashboard-rsp-badge">Done</div></div><div class="ws-dashboard-rsp-row"><div class="ws-dashboard-rsp-icon"></div><div><div class="ws-dashboard-rsp-row-title">Admin dashboard</div><div class="ws-dashboard-rsp-row-sub">6 steps</div></div><div class="ws-dashboard-rsp-badge">WIP</div></div></div></section></main>
+      </div>
+    </div>
+  `,
+        spec: { colors: { panel: "var(--c-glass)", card: "rgba(20,22,36,0.3)" }, size: { frame: "390x844" }, spacing: { padding: "12px", gap: "10px" } },
+        note: "Mobile dashboard variant with collapsed action and single-column content."
+      }
+    ],
+    html: `
+    <div class="ws-dashboard-root">
+      <aside class="workspace-sidebar workspace-sidebar--compact">
+        <header class="workspace-sidebar-header"><div class="workspace-sidebar-logo"></div><div class="workspace-sidebar-brand"><div class="workspace-sidebar-brand-name">Shannon</div><div class="workspace-sidebar-brand-version">v0.0.1</div></div></header>
+        <div class="workspace-sidebar-content"><section class="workspace-sidebar-group"><h3 class="workspace-sidebar-group-title">Current Projects</h3><button class="workspace-sidebar-item active" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Portfolio site</span></button><button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Admin dashboard</span></button><button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Lecture deck</span></button></section><section class="workspace-sidebar-group"><h3 class="workspace-sidebar-group-title">Recent</h3><button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">SaaS landing page</span></button><button class="workspace-sidebar-item" type="button"><span class="workspace-sidebar-item-icon"></span><span class="workspace-sidebar-item-name">Commerce backoffice</span></button></section></div>
+        <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
+      </aside>
+      <div class="ws-dashboard-main"><main class="ws-dashboard-board"><section class="ws-dashboard-hero"><div><div class="ws-dashboard-greeting">Hello from Shannon</div><div class="ws-dashboard-greeting-sub">Continue a saved project or turn a new idea into an executable structure.</div></div><button class="ws-dashboard-hero-action" type="button">New Project</button></section><div class="ws-dashboard-stat-row"><div class="stat-card hi"><div class="stat-card-label">Total projects</div><div class="stat-card-val lav">5</div><div class="stat-card-sub"><span class="up">+1</span> this week</div></div><div class="stat-card"><div class="stat-card-label">Completed workflows</div><div class="stat-card-val">12</div><div class="stat-card-sub">Total steps</div></div><div class="stat-card"><div class="stat-card-label">Latest created</div><div class="stat-card-val" style="font-size:15px; margin-top:4px;">Jun 11</div><div class="stat-card-sub">Portfolio site</div></div></div><section class="ws-dashboard-section"><div class="ws-dashboard-sh"><div class="ws-dashboard-sh-title">Recent projects</div><div class="ws-dashboard-sh-link">View all</div></div><div class="project-row"><div class="project-row-icon"></div><div class="project-row-meta"><div class="project-row-name">Portfolio site</div><div class="project-row-type">Side project · 4 steps</div></div><div class="status-badge done">Done</div><div class="project-row-arrow">›</div></div><div class="project-row"><div class="project-row-icon"></div><div class="project-row-meta"><div class="project-row-name">Admin dashboard refactor</div><div class="project-row-type">UI / UX · 6 steps</div></div><div class="status-badge wip">WIP</div><div class="project-row-arrow">›</div></div><div class="project-row"><div class="project-row-icon"></div><div class="project-row-meta"><div class="project-row-name">Web basics deck</div><div class="project-row-type">Slides · 5 steps</div></div><div class="status-badge done">Done</div><div class="project-row-arrow">›</div></div></section><section class="ws-dashboard-section"><div class="ws-dashboard-sh-title" style="margin-bottom: 10px; text-align: left;">Quick start</div><div class="ws-dashboard-quick-row"><div class="ws-dashboard-quick-card"><div class="ws-dashboard-quick-dot"></div>Create side project</div><div class="ws-dashboard-quick-card"><div class="ws-dashboard-quick-dot"></div>Start UI / UX plan</div></div></section></main><aside class="ws-dashboard-rail"><div class="ws-dashboard-rail-card"><div class="ws-dashboard-rail-label">Focus</div><div class="ws-dashboard-rail-title">Next project</div><div class="ws-dashboard-rail-copy">Review the portfolio site's screen list and workflow steps.</div></div><div class="ws-dashboard-rail-card"><div class="ws-dashboard-rail-label">Today</div><div class="ws-dashboard-mini-list"><div class="ws-dashboard-mini-item"><span>Structure checks</span><span>3</span></div><div class="ws-dashboard-mini-item"><span>Pending edits</span><span>2</span></div><div class="ws-dashboard-mini-item"><span>Saved</span><span>5</span></div></div></div><div class="ws-dashboard-rail-card"><div class="ws-dashboard-rail-label">Tip</div><div class="ws-dashboard-rail-copy">Show outputs and next actions before internal data structure.</div></div></aside></div>
+    </div>
+  `,
     spec: {
-        colors: { background: "var(--bg-main)", sidebar: "var(--c-glass)" },
-        size: { frame: "1440x900", sidebar: "192px" },
-        spacing: { padding: "22px 26px" }
+        colors: { background: "var(--bg-main)", sidebar: "var(--c-glass)", panel: "var(--c-glass)", card: "rgba(20,22,36,0.3)", border: "rgba(255,255,255,0.16)", accent: "var(--c-lav)" },
+        size: { frame: "1440x900", sidebar: "192px", rail: "280px", responsive: "tablet 834x1112, mobile 390x844" },
+        spacing: { root: "20px", mainGap: "16px", boardPadding: "24px", sectionGap: "18px" }
     },
-    note: "Shannon MVP 대시보드 홈 화면 스펙."
+    note: "Dashboard home includes desktop plus tablet and mobile responsive phases."
 });
-
 Archive.add({
     type: "workspace",
     id: "ws-project-workspace",
     name: "Project Workspace",
     route: "/projects/:id",
     status: "draft",
-    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge", "workflow-step-card", "section-card"],
+    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge"],
     css: `
     .ws-pw-root {
       --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -787,107 +713,50 @@ Archive.add({
       overflow: hidden;
       box-shadow: 0 8px 32px rgba(0,0,0,0.5);
     }
-    .ws-pw-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-    .ws-pw-proj-bar {
-      border-bottom: 1px solid var(--glass-border);
-      padding: 0 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-      height: 42px;
-      background: rgba(12, 10, 24, 0.3);
-    }
-    .ws-pw-back-btn {
-      font-size: 10px;
-      color: var(--c-gray);
-      cursor: pointer;
-    }
-    .ws-pw-bar-div {
-      width: 1px;
-      height: 13px;
-      background: var(--glass-border);
-    }
-    .ws-pw-type-chip {
-      font-size: 9px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
-      background: rgba(221, 183, 255, 0.1);
-      color: var(--c-lav);
-      border: 1px solid rgba(221, 183, 255, 0.2);
-    }
-    .ws-pw-proj-name {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--c-modal-sub);
-    }
-    .ws-pw-step-count {
-      font-size: 10px;
-      color: var(--c-gray);
-      margin-left: auto;
-    }
-    .ws-pw-body {
-      flex: 1;
-      display: flex;
-      min-height: 0;
-    }
-    .ws-pw-flow {
-      width: 248px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--glass-border);
-      padding: 16px 13px;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-    .ws-pw-flow-lbl {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--c-gray);
-      margin-bottom: 14px;
-      text-align: left;
-    }
-    .ws-pw-detail {
-      flex: 1;
-      padding: 18px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      overflow-y: auto;
-    }
-    .ws-pw-det-eye {
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--c-lav);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      text-align: left;
-    }
-    .ws-pw-det-title {
-      font-size: 15px;
-      font-weight: 800;
-      color: var(--c-white);
-      margin-bottom: 3px;
-      text-align: left;
-    }
-    .ws-pw-det-desc {
-      font-size: 10px;
-      color: var(--c-gray);
-      line-height: 1.6;
-      text-align: left;
-    }
-    .ws-pw-hr {
-      height: 1px;
-      background: rgba(255, 255, 255, 0.06);
-    }
+    .ws-pw-main { flex: 1; display: flex; flex-direction: column; min-width: 0; gap: 16px; overflow: hidden; }
+    .ws-pw-proj-bar { border: 1px solid var(--glass-border); border-radius: 12px; padding: 0 18px 0 20px; display: flex; align-items: center; gap: 10px; flex-shrink: 0; height: 50px; background: var(--c-glass); }
+    .ws-pw-back-btn { font-size: 11px; color: var(--c-gray); cursor: pointer; }
+    .ws-pw-bar-div { width: 1px; height: 16px; background: rgba(255,255,255,0.16); }
+    .ws-pw-type-chip { font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 20px; background: rgba(221,183,255,0.18); color: var(--c-lav); border: 1px solid rgba(221,183,255,0.34); }
+    .ws-pw-proj-name { font-size: 13px; font-weight: 800; color: var(--c-modal-sub); }
+    .ws-pw-step-count { font-size: 10px; color: var(--c-gray); margin-left: auto; }
+    .ws-pw-action { height: 30px; padding: 0 12px; border-radius: 8px; border: 1px solid rgba(221,183,255,0.3); background: rgba(221,183,255,0.12); color: var(--c-lav); font-size: 10px; font-weight: 800; }
+    .ws-pw-body { flex: 1; display: grid; grid-template-columns: 300px minmax(0, 1fr) 280px; gap: 16px; min-height: 0; }
+    .ws-pw-flow { border: 1px solid var(--glass-border); border-radius: 12px; padding: 18px 14px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; background: var(--c-glass); }
+    .ws-pw-flow-lbl { font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--c-gray); margin: 4px 0 2px; text-align: left; }
+    .ws-pw-summary-card { border: 1px solid rgba(221,183,255,0.42); background: var(--c-glass); border-radius: 10px; padding: 14px; }
+    .ws-pw-kicker { font-size: 9px; font-weight: 800; color: var(--c-lav); letter-spacing: .08em; text-transform: uppercase; }
+    .ws-pw-summary-title { margin-top: 8px; font-size: 18px; font-weight: 900; line-height: 1.25; color: var(--c-white); }
+    .ws-pw-summary-copy { margin-top: 8px; font-size: 11px; line-height: 1.55; color: var(--c-modal-sub); }
+    .ws-pw-meta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .ws-pw-meta { border: 1px solid rgba(255,255,255,0.16); background: var(--c-glass); border-radius: 8px; padding: 9px; }
+    .ws-pw-meta-label { font-size: 8px; font-weight: 800; color: rgba(255,255,255,0.42); text-transform: uppercase; letter-spacing: .08em; }
+    .ws-pw-meta-value { margin-top: 5px; font-size: 11px; font-weight: 800; color: var(--c-white); }
+    .ws-pw-section-nav { display: flex; flex-direction: column; gap: 7px; }
+    .ws-pw-nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.16); background: var(--c-glass); }
+    .ws-pw-nav-item.active { border-color: rgba(221,183,255,0.5); background: var(--c-glass); }
+    .ws-pw-nav-num { width: 22px; height: 22px; border-radius: 7px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); color: var(--c-lav); font-size: 10px; font-weight: 900; flex-shrink: 0; }
+    .ws-pw-nav-title { font-size: 11px; font-weight: 800; color: var(--c-white); }
+    .ws-pw-nav-sub { margin-top: 2px; font-size: 9px; color: var(--c-gray); line-height: 1.35; }
+    .ws-pw-detail { border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; background: var(--c-glass); }
+    .ws-pw-panel { background: var(--c-glass); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; padding: 15px; box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+    .ws-pw-panel.hi { background: var(--c-glass); border-color: rgba(221,183,255,0.5); }
+    .ws-pw-panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+    .ws-pw-panel-title { font-size: 13px; font-weight: 900; color: var(--c-white); }
+    .ws-pw-panel-desc { margin-top: 4px; font-size: 10px; line-height: 1.55; color: var(--c-gray); }
+    .ws-pw-pill-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .ws-pw-pill { padding: 6px 9px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.045); color: var(--c-modal-sub); font-size: 10px; font-weight: 700; }
+    .ws-pw-pill.lav { border-color: rgba(221,183,255,0.36); background: rgba(221,183,255,0.1); color: var(--c-lav); }
+    .ws-pw-list { display: grid; gap: 8px; }
+    .ws-pw-list-item { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: flex-start; padding: 10px; border-radius: 9px; background: var(--c-glass); border: 1px solid rgba(255,255,255,0.16); }
+    .ws-pw-list-num { width: 24px; height: 24px; border-radius: 7px; background: rgba(221,183,255,0.13); color: var(--c-lav); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 900; }
+    .ws-pw-list-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
+    .ws-pw-list-copy { margin-top: 3px; font-size: 10px; line-height: 1.45; color: var(--c-gray); }
+    .ws-pw-inspector { border: 1px solid var(--glass-border); border-radius: 12px; padding: 18px 14px; background: var(--c-glass); overflow-y: auto; display: flex; flex-direction: column; gap: 12px; }
+    .ws-pw-task { border: 1px solid rgba(255,255,255,0.16); background: var(--c-glass); border-radius: 9px; padding: 11px; }
+    .ws-pw-task-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+    .ws-pw-task-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
+    .ws-pw-task-copy { margin-top: 6px; font-size: 9px; line-height: 1.45; color: var(--c-gray); }
   `,
     html: `
     <div class="ws-pw-root">
@@ -915,154 +784,85 @@ Archive.add({
         <footer class="workspace-sidebar-footer"><button class="workspace-sidebar-action" type="button">Create Project</button></footer>
       </aside>
 
-      <!-- Main Workspace Area -->
       <div class="ws-pw-main">
         <div class="ws-pw-proj-bar">
-          <div class="ws-pw-back-btn">← 대시보드</div>
+          <div class="ws-pw-back-btn">대시보드</div>
           <div class="ws-pw-bar-div"></div>
-          <div class="ws-pw-type-chip">사이드 프로젝트</div>
-          <div class="ws-pw-proj-name">포트폴리오 사이트 만들기</div>
-          <div class="ws-pw-step-count">5단계 워크플로우</div>
+          <div class="ws-pw-type-chip">saved project</div>
+          <div class="ws-pw-proj-name">취업용 포트폴리오 사이트</div>
+          <div class="ws-pw-step-count">수정됨 2분 전</div>
+          <button class="ws-pw-action" type="button">수정하기</button>
         </div>
 
         <div class="ws-pw-body">
-          <!-- LEFT: waterfall flow list -->
           <div class="ws-pw-flow">
-            <div class="ws-pw-flow-lbl">워크플로우</div>
-            
-            <!-- Step 1 -->
-            <div class="workflow-step-card-container">
-              <div class="workflow-step-card-col">
-                <div class="workflow-step-card-num done">✓</div>
-                <div class="workflow-step-card-vline"></div>
-              </div>
-              <div class="workflow-step-card">
-                <div class="workflow-step-card-title">요구사항 정의</div>
-                <div class="workflow-step-card-sub">프로젝트 목표 및 핵심 기능</div>
-                <div class="status-badge done" style="margin-top: 5px;">완료</div>
+            <div class="ws-pw-summary-card">
+              <div class="ws-pw-kicker">Project Summary</div>
+              <div class="ws-pw-summary-title">채용 담당자가 30초 안에 강점을 이해하는 포트폴리오</div>
+              <div class="ws-pw-summary-copy">AI 인터뷰 결과를 바탕으로 화면, 기능, 작업 흐름, 개발 태스크를 저장한 프로젝트 구조입니다.</div>
+              <div class="ws-pw-meta-row">
+                <div class="ws-pw-meta"><div class="ws-pw-meta-label">Target</div><div class="ws-pw-meta-value">채용 담당자</div></div>
+                <div class="ws-pw-meta"><div class="ws-pw-meta-label">Status</div><div class="ws-pw-meta-value">draft</div></div>
               </div>
             </div>
-
-            <!-- Step 2 -->
-            <div class="workflow-step-card-container">
-              <div class="workflow-step-card-col">
-                <div class="workflow-step-card-num active">2</div>
-                <div class="workflow-step-card-vline active"></div>
-              </div>
-              <div class="workflow-step-card active">
-                <div class="workflow-step-card-title active">기술 스택 선정</div>
-                <div class="workflow-step-card-sub">프레임워크, 배포 환경</div>
-                <div class="status-badge wip" style="margin-top: 5px;">보는 중</div>
-              </div>
-            </div>
-
-            <!-- Step 3 -->
-            <div class="workflow-step-card-container">
-              <div class="workflow-step-card-col">
-                <div class="workflow-step-card-num">3</div>
-                <div class="workflow-step-card-vline"></div>
-              </div>
-              <div class="workflow-step-card">
-                <div class="workflow-step-card-title">화면 구조 설계</div>
-                <div class="workflow-step-card-sub">페이지 목록, 라우팅</div>
-                <div class="status-badge pend" style="margin-top: 5px;">대기</div>
-              </div>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="workflow-step-card-container">
-              <div class="workflow-step-card-col">
-                <div class="workflow-step-card-num">4</div>
-                <div class="workflow-step-card-vline"></div>
-              </div>
-              <div class="workflow-step-card">
-                <div class="workflow-step-card-title">컴포넌트 명세</div>
-                <div class="workflow-step-card-sub">재사용 컴포넌트 & Props</div>
-                <div class="status-badge pend" style="margin-top: 5px;">대기</div>
-              </div>
-            </div>
-
-            <!-- Step 5 -->
-            <div class="workflow-step-card-container">
-              <div class="workflow-step-card-col">
-                <div class="workflow-step-card-num">5</div>
-              </div>
-              <div class="workflow-step-card">
-                <div class="workflow-step-card-title">개발 우선순위</div>
-                <div class="workflow-step-card-sub">MVP 범위 및 구현 순서</div>
-                <div class="status-badge pend" style="margin-top: 5px;">대기</div>
-              </div>
+            <div class="ws-pw-flow-lbl">결과 섹션</div>
+            <div class="ws-pw-section-nav">
+              <div class="ws-pw-nav-item active"><div class="ws-pw-nav-num">1</div><div><div class="ws-pw-nav-title">요약과 목표</div><div class="ws-pw-nav-sub">사용자 언어로 먼저 확인</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">2</div><div><div class="ws-pw-nav-title">결과물</div><div class="ws-pw-nav-sub">만들어야 할 산출물</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">3</div><div><div class="ws-pw-nav-title">화면과 기능</div><div class="ws-pw-nav-sub">개발 범위 확인</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">4</div><div><div class="ws-pw-nav-title">작업 흐름</div><div class="ws-pw-nav-sub">순서와 진행 단위</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">5</div><div><div class="ws-pw-nav-title">개발 태스크</div><div class="ws-pw-nav-sub">바로 실행 가능한 목록</div></div></div>
             </div>
           </div>
 
-          <!-- RIGHT: step detail panel -->
           <div class="ws-pw-detail">
-            <div>
-              <div class="ws-pw-det-eye">Step 2 · 기술 스택 선정</div>
-              <div class="ws-pw-det-title">프레임워크 및 배포 환경 추천</div>
-              <div class="ws-pw-det-desc">취업용 포트폴리오 사이트를 위한 최적 기술 스택입니다. SEO와 성능을 우선했습니다.</div>
+            <div class="ws-pw-panel hi">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">What to build</div>
+                  <div class="ws-pw-panel-title">문제 해결 과정을 선명하게 보여주는 포트폴리오 사이트</div>
+                  <div class="ws-pw-panel-desc">wiki의 AX 원칙에 맞춰 Harness 같은 내부 용어보다 사용자가 바로 이해할 수 있는 결과 언어를 먼저 보여줍니다.</div>
+                </div>
+                <div class="status-badge wip">검토 중</div>
+              </div>
+              <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">프로젝트 요약</div><div class="ws-pw-pill lav">목표</div><div class="ws-pw-pill">대상 사용자</div><div class="ws-pw-pill">저장된 초안</div></div>
             </div>
-            
-            <div class="ws-pw-hr"></div>
-
-            <!-- Section Card 1 -->
-            <div class="section-card hi">
-              <div class="section-card-lbl">
-                <div class="section-card-dot"></div>
-                프론트엔드 프레임워크
-              </div>
-              <div class="section-card-body">
-                <strong>Next.js 15 (App Router)</strong>를 추천합니다. SSG 정적 배포로 SEO와 성능에 유리하고, 최신 React 역량을 보여주기에 좋습니다.
-              </div>
-              <div class="section-card-tag-row">
-                <div class="section-card-tag lav">Next.js 15</div>
-                <div class="section-card-tag lav">TypeScript</div>
-                <div class="section-card-tag lav">App Router</div>
-              </div>
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">만들게 될 결과물</div><div class="ws-pw-panel-desc">결과 화면의 우선순위는 요약, 산출물, 화면, 기능, 작업 흐름, 태스크 순서입니다.</div></div></div>
+              <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">홈 화면</div><div class="ws-pw-pill lav">자기소개 섹션</div><div class="ws-pw-pill lav">프로젝트 목록</div><div class="ws-pw-pill">프로젝트 상세</div><div class="ws-pw-pill">연락처 섹션</div></div>
             </div>
-
-            <!-- Section Card 2 -->
-            <div class="section-card">
-              <div class="section-card-lbl">
-                <div class="section-card-dot"></div>
-                스타일링
-              </div>
-              <div class="section-card-body">
-                <strong>Tailwind CSS v4</strong>로 빠른 개발과 작은 번들 사이즈를 동시에 확보하세요.
-              </div>
-              <div class="section-card-tag-row">
-                <div class="section-card-tag lav">Tailwind CSS v4</div>
-                <div class="section-card-tag">shadcn/ui</div>
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">필요한 화면</div><div class="ws-pw-panel-desc">개발자가 라우팅과 컴포넌트 범위를 바로 잡을 수 있게 화면 단위로 나눕니다.</div></div></div>
+              <div class="ws-pw-list">
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">1</div><div><div class="ws-pw-list-title">홈 화면</div><div class="ws-pw-list-copy">방문자가 포트폴리오의 목적과 대표 강점을 즉시 파악합니다.</div></div></div>
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">2</div><div><div class="ws-pw-list-title">프로젝트 목록</div><div class="ws-pw-list-copy">대표 프로젝트를 문제, 과정, 결과 기준으로 스캔합니다.</div></div></div>
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">3</div><div><div class="ws-pw-list-title">프로젝트 상세</div><div class="ws-pw-list-copy">문제 해결 과정과 기술 선택 근거를 깊게 확인합니다.</div></div></div>
               </div>
             </div>
-
-            <!-- Section Card 3 -->
-            <div class="section-card">
-              <div class="section-card-lbl">
-                <div class="section-card-dot green"></div>
-                배포 환경
-              </div>
-              <div class="section-card-body">
-                <strong>Vercel</strong> 배포를 권장합니다. GitHub 연동 후 자동 배포, 무료 플랜에서 커스텀 도메인이 가능합니다.
-              </div>
-              <div class="section-card-tag-row">
-                <div class="section-card-tag lav">Vercel</div>
-                <div class="section-card-tag">GitHub Actions</div>
-              </div>
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">핵심 기능</div><div class="ws-pw-panel-desc">MVP에서 중요한 것은 저장된 구조를 다시 이해하고 수정할 수 있는 흐름입니다.</div></div></div>
+              <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">섹션 단위 수정</div><div class="ws-pw-pill lav">저장 상태 표시</div><div class="ws-pw-pill">태스크 확인</div><div class="ws-pw-pill">대시보드 복귀</div></div>
             </div>
           </div>
+
+          <aside class="ws-pw-inspector">
+            <div class="ws-pw-flow-lbl">개발 태스크</div>
+            <div class="ws-pw-task"><div class="ws-pw-task-top"><div class="ws-pw-task-title">정보 구조 정의</div><div class="status-badge done">완료</div></div><div class="ws-pw-task-copy">summary, targetUser, outputs, screens, features를 프로젝트 상세에 매핑합니다.</div></div>
+            <div class="ws-pw-task"><div class="ws-pw-task-top"><div class="ws-pw-task-title">상세 화면 구현</div><div class="status-badge wip">진행</div></div><div class="ws-pw-task-copy">사용자 언어의 결과 섹션을 먼저 보여주고 내부 구조는 보조로 둡니다.</div></div>
+            <div class="ws-pw-task"><div class="ws-pw-task-top"><div class="ws-pw-task-title">수정 플로우 연결</div><div class="status-badge pend">대기</div></div><div class="ws-pw-task-copy">프로젝트 수정 화면에서 섹션 단위 편집과 저장 상태를 표시합니다.</div></div>
+            <div class="ws-pw-panel"><div class="ws-pw-kicker">Next action</div><div class="ws-pw-panel-desc">검토가 끝나면 수정하기로 이동하거나 이 구조를 저장된 프로젝트로 유지합니다.</div><div class="ws-pw-pill-row" style="margin-top:10px;"><div class="ws-pw-pill lav">수정하기</div><div class="ws-pw-pill">다시 생성</div></div></div>
+          </aside>
         </div>
       </div>
     </div>
   `,
     spec: {
-        colors: { background: "var(--bg-main)", sidebar: "var(--c-glass)" },
-        size: { frame: "1440x900", sidebar: "192px", waterfallWidth: "248px" },
-        spacing: { padding: "18px 20px" }
+        colors: { background: "var(--bg-main)", sidebar: "var(--c-glass)", workspace: "var(--c-glass)", topbar: "var(--c-glass)", leftRail: "var(--c-glass)", panel: "var(--c-glass)", border: "rgba(255,255,255,0.16)", activeBorder: "rgba(221,183,255,0.5)" },
+        size: { frame: "1440x900", sidebar: "192px", resultRail: "300px", inspector: "280px" },
+        spacing: { root: "20px", columns: "300px 1fr 280px", panel: "15px", gap: "16px" }
     },
-    note: "특정 프로젝트 선택 시 워크플로우 시각화 및 가이드라인 상세 화면."
+    note: "Wiki의 /projects/[id] 정의에 맞춰 저장된 Harness 결과를 사용자 언어로 검토하고 수정으로 이어지는 상세 워크스페이스."
 });
-
 Archive.add({
     type: "workspace",
     id: "ws-dashboard-home-workflow",
@@ -1436,7 +1236,7 @@ Archive.add({
       overflow: hidden;
     }
     .f-main { flex:1; display:flex; flex-direction:column; min-width:0; }
-    .f-proj-bar { border-bottom:1px solid var(--glass-border); padding:0 18px; display:flex; align-items:center; gap:10px; flex-shrink:0; height:42px; background:rgba(12,10,24,0.3); }
+    .f-proj-bar { border-bottom:1px solid var(--glass-border); padding:0 18px; display:flex; align-items:center; gap:10px; flex-shrink:0; height:42px; background:var(--c-glass); }
     .f-bar-div { width:1px; height:13px; background:var(--glass-border); }
     .f-body { flex:1; display:flex; min-height:0; }
     .f-flow { width:248px; flex-shrink:0; padding:18px 16px; border-right:1px solid var(--glass-border); overflow:hidden; }
@@ -1444,33 +1244,33 @@ Archive.add({
     .f-step-col { display:flex; flex-direction:column; align-items:center; width:18px; flex-shrink:0; padding-top:1px; }
     .f-step-num { width:18px; height:18px; border-radius:50%; border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:700; color:var(--c-muted); }
     .f-vline { width:1px; height:24px; background:rgba(255,255,255,0.07); margin:3px 0; }
-    .f-step-card { flex:1; padding:8px 10px; border-radius:7px; border:1px solid rgba(255,255,255,0.07); background:rgba(255,255,255,0.02); min-width:0; }
+    .f-step-card { flex:1; padding:8px 10px; border-radius:7px; border:1px solid rgba(255,255,255,0.16); background:var(--c-glass); min-width:0; }
     .f-detail { flex:1; padding:18px 20px; display:flex; flex-direction:column; gap:12px; overflow:hidden; }
     .f-hr { height:1px; background:var(--glass-border); margin:2px 0; }
-    .f-sec-card { border:1px solid var(--glass-border); border-radius:9px; padding:11px 13px; background:rgba(255,255,255,0.02); }
-    .f-sec-card.hi { border-color:rgba(221,183,255,0.22); background:rgba(221,183,255,0.04); }
+    .f-sec-card { border:1px solid rgba(255,255,255,0.16); border-radius:9px; padding:11px 13px; background:var(--c-glass); }
+    .f-sec-card.hi { border-color:rgba(221,183,255,0.5); background:var(--c-glass); }
     .f-gen-center { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; padding:32px; }
-    .f-gen-icon-wrap { position:relative; width:54px; height:54px; border-radius:16px; background:rgba(221,183,255,0.1); border:1px solid rgba(221,183,255,0.22); display:flex; align-items:center; justify-content:center; }
-    .f-gen-icon-ring { position:absolute; inset:-7px; border-radius:22px; border:1px solid rgba(221,183,255,0.14); animation:ring 2s ease-in-out infinite; }
+    .f-gen-icon-wrap { position:relative; width:54px; height:54px; border-radius:16px; background:var(--c-glass); border:1px solid rgba(221,183,255,0.18); display:flex; align-items:center; justify-content:center; }
+    .f-gen-icon-ring { position:absolute; inset:-7px; border-radius:22px; border:1px solid rgba(221,183,255,0.1); animation:ring 2s ease-in-out infinite; }
     @keyframes ring { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.6;transform:scale(1.05)} }
-    .f-gen-icon-inner { width:24px; height:24px; border-radius:6px; background:rgba(221,183,255,0.45); animation:pulse 1.5s ease-in-out infinite; }
+    .f-gen-icon-inner { width:24px; height:24px; border-radius:6px; background:rgba(221,183,255,0.28); animation:pulse 1.5s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:.4;transform:scale(.9)} 50%{opacity:1;transform:scale(1.05)} }
     .f-gen-title { font-size:16px; font-weight:800; text-align:center; color:var(--c-white); }
     .f-gen-sub { font-size:11px; color:var(--c-muted); text-align:center; line-height:1.6; max-width:250px; }
     .f-gen-list { width:100%; max-width:290px; display:flex; flex-direction:column; gap:6px; }
-    .f-gen-item { display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:7px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); }
-    .f-gen-item.done { background:rgba(134,239,172,0.04); border-color:rgba(134,239,172,0.16); }
-    .f-gen-item.running { background:rgba(221,183,255,0.05); border-color:rgba(221,183,255,0.22); }
-    .f-gen-dot { width:17px; height:17px; border-radius:50%; flex-shrink:0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:8px; }
-    .f-gen-dot.done { background:rgba(134,239,172,0.15); border-color:rgba(134,239,172,0.35); color:var(--c-success); }
+    .f-gen-item { display:flex; align-items:center; gap:9px; padding:8px 11px; border-radius:7px; background:var(--c-glass); border:1px solid rgba(255,255,255,0.12); }
+    .f-gen-item.done { background:var(--c-glass); border-color:rgba(134,239,172,0.18); }
+    .f-gen-item.running { background:var(--c-glass); border-color:rgba(221,183,255,0.24); }
+    .f-gen-dot { width:17px; height:17px; border-radius:50%; flex-shrink:0; background:var(--c-glass); border:1px solid rgba(255,255,255,0.14); display:flex; align-items:center; justify-content:center; font-size:8px; }
+    .f-gen-dot.done { background:var(--c-glass); border-color:rgba(134,239,172,0.32); color:var(--c-success); }
     .f-gen-dot.running { border-color:var(--c-lav); border-top-color:transparent; animation:spin 0.8s linear infinite; }
     @keyframes spin { to { transform:rotate(360deg); } }
     .f-gen-text { font-size:10px; flex:1; color:var(--c-subtle); }
     .f-gen-text.done { color:var(--c-success); }
     .f-gen-text.running { color:var(--c-lav); }
     @keyframes shimmer { 0%{background-position:-300px 0} 100%{background-position:300px 0} }
-    .sk { background:linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 50%, rgba(255,255,255,0.04) 75%); background-size:600px 100%; animation:shimmer 1.6s infinite; border-radius:4px; }
-    .sk-lav { background:linear-gradient(90deg, rgba(221,183,255,0.05) 25%, rgba(221,183,255,0.13) 50%, rgba(221,183,255,0.05) 75%); background-size:600px 100%; animation:shimmer 1.6s infinite; border-radius:4px; }
+    .sk { background:linear-gradient(90deg, rgba(20,22,36,0.24) 25%, rgba(255,255,255,0.055) 50%, rgba(20,22,36,0.24) 75%); background-size:600px 100%; animation:shimmer 1.6s infinite; border-radius:4px; }
+    .sk-lav { background:linear-gradient(90deg, rgba(20,22,36,0.28) 25%, rgba(221,183,255,0.075) 50%, rgba(20,22,36,0.28) 75%); background-size:600px 100%; animation:shimmer 1.6s infinite; border-radius:4px; }
   `,
     html: `
     <div class="ws-generation-view-frame">

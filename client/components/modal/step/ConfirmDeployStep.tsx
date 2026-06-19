@@ -35,7 +35,7 @@ export function getResultSummary(card: ICard) {
         { title: '유형', value: TEMPLATES[card.templateId - 1]?.name },
         { title: '설명', value: card?.details },
         { title: '대상', value: TEMPLATES_FOR[card.templateId - 1]?.name },
-        { title: '범위', value: formatStyle({ styleId: card.styleId }) }
+        { title: '분위기', value: formatStyle({ styleId: card.styleId }) }
     ];
 
     return RESULT_TITLE
