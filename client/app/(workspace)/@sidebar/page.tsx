@@ -5,14 +5,9 @@ import { useRouter } from "next/navigation";
 
 function SideBarHeader() {
     return (
-        <header className='font-bold flex gap-4 items-center min-w-0 shrink-0'>
-            <div className="shrink-0">
-                <Logo />
-            </div>
-            <div className="flex flex-col gap-0 min-w-0">
-                <h1 className='text-2xl text-mauve-600 truncate'>Shannon</h1>
-                <span className='text-sm font-medium text-mauve-300 truncate'>v0.0.1</span>
-            </div>
+        <header
+            className='font-bold flex gap-4 items-center min-w-0 shrink-0'>
+            <Logo />
         </header>
     )
 }
