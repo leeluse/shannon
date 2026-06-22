@@ -22,7 +22,7 @@
     "@vitejs/plugin-react": "^6.0.2",
     "jsdom": "^29.1.1",
     "lucide-react": "^1.14.0",
-    "next": "^15.3.2",
+    "next": "^16.2.9",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-hook-form": "^7.78.0",
@@ -33,17 +33,17 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.6",
-    "@types/node": "^22.15.17",
+    "@types/node": "^26.0.0",
     "@types/react": "^19.1.4",
-    "eslint": "^9.26.0",
-    "eslint-config-next": "^15.3.2",
+    "eslint": "^10.5.0",
+    "eslint-config-next": "^16.2.9",
     "lightningcss": "^1.32.0",
     "tailwindcss": "^4.1.6",
-    "typescript": "^5.8.3"
+    "typescript": "^6.0.3"
   },
   "optionalDependencies": {
-    "@tailwindcss/oxide-linux-x64-gnu": "4.3.0",
-    "@tailwindcss/oxide-win32-x64-msvc": "4.3.0",
+    "@tailwindcss/oxide-linux-x64-gnu": "4.3.1",
+    "@tailwindcss/oxide-win32-x64-msvc": "4.3.1",
     "lightningcss-linux-x64-gnu": "1.32.0",
     "lightningcss-win32-x64-msvc": "1.32.0"
   }
