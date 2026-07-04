@@ -1,17 +1,7 @@
-import React from 'react'
-import { InitPanelIcon, InitPanelBadge } from '@/components'
+import { InitPanelIcon, InitPanelBadge, Dashboard } from '@/components'
 import { INNERPANEL } from '@/constants/inner-panel'
 
-export default function MainPanel() {
-    return (
-        <section className='size-full flex items-center justify-center'>
-            <InitPanel />
-        </section>
-    )
-}
-
-
-export function InitPanel() {
+export default function InitPanel() {
     return (
         <div className='glass w-170 h-120 flex flex-col items-center justify-center gap-4'>
             <InitPanelIcon />
@@ -21,4 +11,3 @@ export function InitPanel() {
         </div>
     )
 }
-

@@ -15,7 +15,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -34,7 +34,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "components/common/panel/MainPanel.tsx",
-    "components/common/btn/InitPanelBadgetsx"
+    "components/common/btn/InitPanelBadgetsx",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

@@ -1,5 +1,8 @@
+// Dashboard Components
+export { default as Dashboard } from './dashboard/DashboardHome';
+
 // Panel Components
-export { default as MainPanel } from "./common/panel/MainPanel";
+export { default as InitPanel } from "./common/panel/InitPanel";
 
 
 // SideBar Components

@@ -7,17 +7,8 @@ import { TEMPLATES, TEMPLATES_FOR, TEMPLATES_STYLE } from '@/constants/step-temp
 import { ICard } from '@/types/modal/card';
 
 export function ConfirmDeployStep() {
-    const { card, resetCard } = useDeployStore();
-    const router = useRouter();
-
+    const { card } = useDeployStore();
     const RESULT_TITLE = getResultSummary(card);
-
-    const DeployHandler = () => {
-        toast.success('배포되었습니다');
-        resetCard();
-        router.back();
-    }
-
     return (
         <div className='size-full flex flex-col px-10 items-center justify-center gap-8'>
             <div className='grid gap-4 grid-cols-2 w-full'>
@@ -25,7 +16,7 @@ export function ConfirmDeployStep() {
                     <ResultCardTemplate key={title} title={title} value={value} />
                 ))}
             </div>
-            <DeployButton type={"submit"} label='배포하기' onClick={DeployHandler} />
+            <DeployButton type={"submit"} label='배포하기' />
         </div>
     )
 }
