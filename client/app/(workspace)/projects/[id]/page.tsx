@@ -1,7 +1,7 @@
 "use client"
+import { Dashboard } from '@/components'
 import { CUR_PROJ_MOCK_ITEMS, RECENTLY_PROJ_MOCK_ITEMS } from '@/mock/sidebar'
 import { notFound, useParams } from 'next/navigation'
-import React from 'react'
 
 export default function ProjectPage() {
     const projectId = useParams().id
@@ -12,9 +12,9 @@ export default function ProjectPage() {
         notFound();
     }
 
-
     return (
-        <div>
-        </div>
+        <Dashboard
+            project={project}
+        />
     )
 }

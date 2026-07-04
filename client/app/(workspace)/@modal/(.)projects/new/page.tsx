@@ -2,16 +2,16 @@
 import { CloseBtn, ProgressDots, ProjectForm, StepButton } from '@/components';
 import { useDeployStore } from '@/store/useDeployStore'
 import { useRouter } from 'next/navigation';
-import React from 'react'
-import { STEP } from '@/constants/step-template';
+import { STEP, TEMPLATES, TEMPLATES_FOR, TEMPLATES_STYLE } from '@/constants/step-template';
 import { FormProvider, useForm, useFormContext } from 'react-hook-form';
 import { ICard } from '@/types/modal/card';
 import { totalProjectSchema } from '@/lib/schemas/project';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
+import router from 'next/router';
 
 export default function NewProjectModal() {
-    const { card } = useDeployStore();
+    const { card, resetCard } = useDeployStore();
     const methods = useForm<ICard>({
         resolver: zodResolver(totalProjectSchema),
         defaultValues: {
@@ -22,13 +22,30 @@ export default function NewProjectModal() {
         }
     });
 
-    const onSubmit = (data: ICard) => {
-        console.log("모든 단계 통과! 최종 데이터:", data);
-    };
+    const DeployHandler = async (data: ICard) => {
+        const { templateId, details, targetId, styleId } = data;
+        const submitData = {
+            templateId: TEMPLATES[templateId - 1].name,
+            details: details,
+            targetId: TEMPLATES_FOR[targetId - 1].name,
+            styleId: styleId.map((style) => {
+                const { id: id, ...rest } = TEMPLATES_STYLE[style - 1];
+                return rest;
+            })
+        }
+
+        // const res = useDeployProject();
+        // console.log(res);
+
+        console.log(submitData);
+        // toast.success('배포되었습니다');
+        // resetCard();
+        // router.back();
+    }
 
     return (
         <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className='fixed inset-0 z-50 bg-gray-900/50 flex
+            <form onSubmit={methods.handleSubmit(DeployHandler)} className='fixed inset-0 z-50 bg-gray-900/50 flex
             items-center justify-center'>
                 <section className='w-210 h-150 rounded-2xl glass-modal flex flex-col'>
                     <StepHeader steps={STEP} />

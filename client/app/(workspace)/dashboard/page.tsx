@@ -1,11 +1,12 @@
 "use client";
 
-import { MainPanel } from "@/components";
+import { Dashboard, InitPanel } from "@/components";
 
 export default function Home() {
   return (
-    <main className="size-full w-full flex gap-4 ">
-      <MainPanel />
+    <main className="size-full flex gap-4 items-center justify-center">
+      <InitPanel />
+      {/* <Dashboard /> */}
     </main>
   );
 }
