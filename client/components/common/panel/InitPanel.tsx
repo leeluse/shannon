@@ -1,4 +1,5 @@
-import { InitPanelIcon, InitPanelBadge, Dashboard } from '@/components'
+"use client"
+import { InitPanelIcon, InitPanelBadge } from '@/components'
 import { INNERPANEL } from '@/constants/inner-panel'
 
 export default function InitPanel() {

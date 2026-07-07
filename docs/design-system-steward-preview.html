@@ -1521,7 +1521,7 @@ Archive.add({
     name: "Project Workspace",
     route: "/projects/:id",
     status: "draft",
-    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge"],
+    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge", "workflow-step-card", "section-card"],
     css: `
     .ws-pw-root {
       --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -1573,10 +1573,10 @@ Archive.add({
     .ws-pw-nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.16); background: var(--c-glass); }
     .ws-pw-nav-item.active { border-color: rgba(221,183,255,0.5); background: var(--c-glass); }
     .ws-pw-nav-num { width: 22px; height: 22px; border-radius: 7px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); color: var(--c-lav); font-size: 10px; font-weight: 900; flex-shrink: 0; }
-    .ws-pw-nav-title { font-size: 11px; font-weight: 800; color: var(--c-white); }
+    .ws-pw-nav-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
     .ws-pw-nav-sub { margin-top: 2px; font-size: 9px; color: var(--c-gray); line-height: 1.35; }
     .ws-pw-detail { border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; background: var(--c-glass); }
-    .ws-pw-panel { background: var(--c-glass); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; padding: 15px; box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+    .ws-pw-panel { background: var(--c-glass); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 10px; padding: 15px; box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
     .ws-pw-panel.hi { background: var(--c-glass); border-color: rgba(221,183,255,0.5); }
     .ws-pw-panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
     .ws-pw-panel-title { font-size: 13px; font-weight: 900; color: var(--c-white); }
@@ -1594,6 +1594,19 @@ Archive.add({
     .ws-pw-task-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
     .ws-pw-task-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
     .ws-pw-task-copy { margin-top: 6px; font-size: 9px; line-height: 1.45; color: var(--c-gray); }
+    .ws-pw-code-block {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 9.5px;
+      color: #DDB7FF;
+      overflow-x: auto;
+      text-align: left;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
   `,
     html: `
     <div class="ws-pw-root">
@@ -1642,21 +1655,24 @@ Archive.add({
                 <div class="ws-pw-meta"><div class="ws-pw-meta-label">Status</div><div class="ws-pw-meta-value">draft</div></div>
               </div>
             </div>
-            <div class="ws-pw-flow-lbl">결과 섹션</div>
+            <div class="ws-pw-flow-lbl">결과 섹션 (AX 우선순위)</div>
             <div class="ws-pw-section-nav">
-              <div class="ws-pw-nav-item active"><div class="ws-pw-nav-num">1</div><div><div class="ws-pw-nav-title">요약과 목표</div><div class="ws-pw-nav-sub">사용자 언어로 먼저 확인</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">2</div><div><div class="ws-pw-nav-title">결과물</div><div class="ws-pw-nav-sub">만들어야 할 산출물</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">3</div><div><div class="ws-pw-nav-title">화면과 기능</div><div class="ws-pw-nav-sub">개발 범위 확인</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">4</div><div><div class="ws-pw-nav-title">작업 흐름</div><div class="ws-pw-nav-sub">순서와 진행 단위</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">5</div><div><div class="ws-pw-nav-title">개발 태스크</div><div class="ws-pw-nav-sub">바로 실행 가능한 목록</div></div></div>
+              <div class="ws-pw-nav-item active"><div class="ws-pw-nav-num">1</div><div><div class="ws-pw-nav-title">프로젝트 요약</div><div class="ws-pw-nav-sub">요약 및 목표 설정</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">2</div><div><div class="ws-pw-nav-title">만들게 될 결과물</div><div class="ws-pw-nav-sub">사용자 밸류 산출물</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">3</div><div><div class="ws-pw-nav-title">필요한 화면</div><div class="ws-pw-nav-sub">라우팅 및 페이지 범위</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">4</div><div><div class="ws-pw-nav-title">필요한 기능</div><div class="ws-pw-nav-sub">사용자 시나리오와 액션</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">5</div><div><div class="ws-pw-nav-title">작업 흐름</div><div class="ws-pw-nav-sub">단계별 실행 태스크 맵</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">6</div><div><div class="ws-pw-nav-title">개발 태스크</div><div class="ws-pw-nav-sub">바로 개발 시작 가능한 일감</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">7</div><div><div class="ws-pw-nav-title">Harness JSON</div><div class="ws-pw-nav-sub">AI 생성 내부 원본 데이터</div></div></div>
             </div>
           </div>
 
           <div class="ws-pw-detail">
+            <!-- 1. 프로젝트 요약 -->
             <div class="ws-pw-panel hi">
               <div class="ws-pw-panel-head">
                 <div>
-                  <div class="ws-pw-kicker">What to build</div>
+                  <div class="ws-pw-kicker">1. Project Summary</div>
                   <div class="ws-pw-panel-title">문제 해결 과정을 선명하게 보여주는 포트폴리오 사이트</div>
                   <div class="ws-pw-panel-desc">wiki의 AX 원칙에 맞춰 Harness 같은 내부 용어보다 사용자가 바로 이해할 수 있는 결과 언어를 먼저 보여줍니다.</div>
                 </div>
@@ -1664,21 +1680,122 @@ Archive.add({
               </div>
               <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">프로젝트 요약</div><div class="ws-pw-pill lav">목표</div><div class="ws-pw-pill">대상 사용자</div><div class="ws-pw-pill">저장된 초안</div></div>
             </div>
+
+            <!-- 2. 만들게 될 결과물 -->
             <div class="ws-pw-panel">
-              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">만들게 될 결과물</div><div class="ws-pw-panel-desc">결과 화면의 우선순위는 요약, 산출물, 화면, 기능, 작업 흐름, 태스크 순서입니다.</div></div></div>
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">2. Expected Outputs</div>
+                  <div class="ws-pw-panel-title">만들게 될 결과물</div>
+                  <div class="ws-pw-panel-desc">결과 화면의 우선순위는 요약, 산출물, 화면, 기능, 작업 흐름, 태스크 순서입니다.</div>
+                </div>
+              </div>
               <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">홈 화면</div><div class="ws-pw-pill lav">자기소개 섹션</div><div class="ws-pw-pill lav">프로젝트 목록</div><div class="ws-pw-pill">프로젝트 상세</div><div class="ws-pw-pill">연락처 섹션</div></div>
             </div>
+
+            <!-- 3. 필요한 화면 -->
             <div class="ws-pw-panel">
-              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">필요한 화면</div><div class="ws-pw-panel-desc">개발자가 라우팅과 컴포넌트 범위를 바로 잡을 수 있게 화면 단위로 나눕니다.</div></div></div>
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">3. Required Screens</div>
+                  <div class="ws-pw-panel-title">필요한 화면</div>
+                  <div class="ws-pw-panel-desc">개발자가 라우팅과 컴포넌트 범위를 바로 잡을 수 있게 화면 단위로 나눕니다.</div>
+                </div>
+              </div>
               <div class="ws-pw-list">
                 <div class="ws-pw-list-item"><div class="ws-pw-list-num">1</div><div><div class="ws-pw-list-title">홈 화면</div><div class="ws-pw-list-copy">방문자가 포트폴리오의 목적과 대표 강점을 즉시 파악합니다.</div></div></div>
                 <div class="ws-pw-list-item"><div class="ws-pw-list-num">2</div><div><div class="ws-pw-list-title">프로젝트 목록</div><div class="ws-pw-list-copy">대표 프로젝트를 문제, 과정, 결과 기준으로 스캔합니다.</div></div></div>
                 <div class="ws-pw-list-item"><div class="ws-pw-list-num">3</div><div><div class="ws-pw-list-title">프로젝트 상세</div><div class="ws-pw-list-copy">문제 해결 과정과 기술 선택 근거를 깊게 확인합니다.</div></div></div>
               </div>
             </div>
+
+            <!-- 4. 필요한 기능 -->
             <div class="ws-pw-panel">
-              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">핵심 기능</div><div class="ws-pw-panel-desc">MVP에서 중요한 것은 저장된 구조를 다시 이해하고 수정할 수 있는 흐름입니다.</div></div></div>
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">4. Core Features</div>
+                  <div class="ws-pw-panel-title">필요한 기능</div>
+                  <div class="ws-pw-panel-desc">MVP에서 중요한 것은 저장된 구조를 다시 이해하고 수정할 수 있는 흐름입니다.</div>
+                </div>
+              </div>
               <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">섹션 단위 수정</div><div class="ws-pw-pill lav">저장 상태 표시</div><div class="ws-pw-pill">태스크 확인</div><div class="ws-pw-pill">대시보드 복귀</div></div>
+            </div>
+
+            <!-- 5. 작업 흐름 -->
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">5. Workflows</div>
+                  <div class="ws-pw-panel-title">작업 흐름</div>
+                  <div class="ws-pw-panel-desc">프로젝트 목표 달성을 위해 차례대로 밟아야 하는 단계별 실천 흐름입니다.</div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                <div class="workflow-step-card-container">
+                  <div class="workflow-step-card-col"><div class="workflow-step-card-num done">1</div><div class="workflow-step-card-vline active"></div></div>
+                  <div class="workflow-step-card"><div class="workflow-step-card-title">정보 구조 설계</div><div class="workflow-step-card-sub">포트폴리오에 필요한 화면과 섹션을 정리한다.</div></div>
+                </div>
+                <div class="workflow-step-card-container">
+                  <div class="workflow-step-card-col"><div class="workflow-step-card-num active">2</div><div class="workflow-step-card-vline"></div></div>
+                  <div class="workflow-step-card active"><div class="workflow-step-card-title active">레이아웃 및 주요 컴포넌트 개발</div><div class="workflow-step-card-sub">사이드바, 프로젝트 카드, 상세 모달 UI를 퍼블리싱한다.</div></div>
+                </div>
+                <div class="workflow-step-card-container">
+                  <div class="workflow-step-card-col"><div class="workflow-step-card-num">3</div></div>
+                  <div class="workflow-step-card"><div class="workflow-step-card-title">데이터 연결 및 Vercel 배포</div><div class="workflow-step-card-sub">로컬 mock 데이터를 연결하고 Vercel을 통해 배포 환경을 세팅한다.</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. 개발 태스크 -->
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">6. Development Tasks</div>
+                  <div class="ws-pw-panel-title">개발 태스크</div>
+                  <div class="ws-pw-panel-desc">바로 착수할 수 있는 세부 개발 일감의 진행 현황입니다.</div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
+                <div class="ws-pw-list-item" style="border-color: rgba(134,239,172,0.22);"><div class="ws-pw-list-num" style="color: #86EFAC;">✓</div><div><div class="ws-pw-list-title" style="color: #86EFAC;">정보 구조 정의 및 매핑</div><div class="ws-pw-list-copy">summary, targetUser, outputs, screens를 프로젝트 상세에 데이터 바인딩</div></div></div>
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">▶</div><div><div class="ws-pw-list-title">상세 화면 퍼블리싱</div><div class="ws-pw-list-copy">사이드바 및 메인 컨텐츠 영역의 Glassmorphism 레이아웃 구현</div></div></div>
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">·</div><div><div class="ws-pw-list-title">수정 및 저장 플로우 구현</div><div class="ws-pw-list-copy">Zustand, React Hook Form 연동을 통해 실시간 임시 저장 기능 추가</div></div></div>
+              </div>
+            </div>
+
+            <!-- 7. Harness JSON -->
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">7. Harness Schema JSON</div>
+                  <div class="ws-pw-panel-title">Harness JSON (내부 구조)</div>
+                  <div class="ws-pw-panel-desc">AI 모델이 설계하여 리턴한 원본 JSON 스키마 데이터입니다.</div>
+                </div>
+              </div>
+              <pre class="ws-pw-code-block"><code>{
+  "title": "프론트엔드 취업용 포트폴리오",
+  "status": "active",
+  "sourcePrompt": "프론트엔드 취업용 포트폴리오 만들고 싶어",
+  "harness": {
+    "summary": "채용담당자가 지원자의 문제 해결력을 빠르게 확인할 수 있는 웹사이트",
+    "targetUser": "채용담당자",
+    "goal": "프론트엔드 개발자로서의 실력을 명확하게 보여준다.",
+    "outputs": [
+      { "id": "out_1", "title": "포트폴리오 웹사이트", "description": "프로젝트 경험 구조화" }
+    ],
+    "screens": [
+      { "id": "sc_1", "name": "홈 화면", "path": "/", "priority": "high" }
+    ],
+    "features": [
+      { "id": "fe_1", "title": "프로젝트 카드 목록", "priority": "high" }
+    ],
+    "workflows": [
+      { "id": "wf_1", "order": 1, "title": "정보 구조 설계" }
+    ],
+    "tasks": [
+      { "id": "tk_1", "title": "ProjectCard 컴포넌트 생성", "status": "todo" }
+    ]
+  }
+}</code></pre>
             </div>
           </div>
 
