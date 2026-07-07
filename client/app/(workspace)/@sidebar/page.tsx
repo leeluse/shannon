@@ -3,11 +3,16 @@ import { PrimaryButton, SideBarTabList, Logo } from "@/components";
 import { CUR_PROJ_MOCK_ITEMS, RECENTLY_PROJ_MOCK_ITEMS } from "@/mock/sidebar";
 import { useRouter } from "next/navigation";
 
-function SideBarHeader() {
+export function SideBarHeader() {
+    const router = useRouter();
+    const onClickHandler = () => {
+        () => router.push('/dashboard')
+    }
+
     return (
         <header
             className='font-bold flex gap-4 items-center min-w-0 shrink-0'>
-            <Logo />
+            <Logo type={'common'} onClick={onClickHandler} />
         </header>
     )
 }

@@ -505,7 +505,7 @@ Archive.add({
       width: 256px;
     }
     .workspace-sidebar-header { display: flex; align-items: center; gap: 16px; min-width: 0; flex-shrink: 0; }
-    .workspace-sidebar-logo { width: 48px; height: 48px; border-radius: 12px; background: var(--c-logo); box-shadow: 0 10px 24px rgba(0,0,0,0.25); flex-shrink: 0; }
+    .workspace-sidebar-logo { width: 48px; height: 48px; border-radius: 12px; background: url("../client/public/logo.png") center/cover no-repeat, var(--c-logo); box-shadow: 0 10px 24px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.12); flex-shrink: 0; overflow: hidden; }
     .workspace-sidebar-brand { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .workspace-sidebar-brand-name { font-size: 20px; font-weight: 800; color: var(--c-lav); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .workspace-sidebar-brand-version { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -1426,4 +1426,483 @@ Archive.add({
         spacing: { padding: "20px", gap: "16px" }
     },
     note: "Generation View uses selectable phases as the archive representation of states."
+});
+
+Archive.add({
+    id: "auth-google-button",
+    name: "구글 로그인 버튼",
+    category: "인증",
+    status: "draft",
+    css: `
+    .auth-google-button-shell {
+      width: 320px;
+      max-width: 100%;
+      margin: 0 auto;
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    }
+    .auth-google-button {
+      width: 100%;
+      min-height: 64px;
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #FFFFFF;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #0F172A;
+      text-align: left;
+      cursor: pointer;
+    }
+    .auth-google-button-mark {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: conic-gradient(#4285F4 0 25%, #34A853 25% 50%, #FBBC05 50% 75%, #EA4335 75% 100%);
+      flex-shrink: 0;
+    }
+    .auth-google-button-mark::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 999px;
+      background: #FFFFFF;
+    }
+    .auth-google-button-mark span {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      color: #4285F4;
+      z-index: 1;
+    }
+    .auth-google-button-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .auth-google-button-title {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #0F172A;
+    }
+    .auth-google-button-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: #64748B;
+      line-height: 1.45;
+    }
+    .auth-google-button-arrow {
+      font-size: 15px;
+      line-height: 1;
+      color: #64748B;
+      flex-shrink: 0;
+    }
+  `,
+    html: `
+    <div class="auth-google-button-shell">
+      <button class="auth-google-button" type="button">
+        <div class="auth-google-button-mark"><span>G</span></div>
+        <div class="auth-google-button-copy">
+          <div class="auth-google-button-title">구글로 계속하기</div>
+          <div class="auth-google-button-sub">저장된 프로젝트와 작업 기록을 동기화해요</div>
+        </div>
+        <div class="auth-google-button-arrow">→</div>
+      </button>
+    </div>
+  `,
+    spec: {
+        colors: { border: "rgba(226,232,240,0.92)", background: "#FFFFFF", text: "#0F172A" },
+        size: { height: "64px", radius: "18px", icon: "24px", title: "14px / 800" },
+        spacing: { padding: "14px 16px", gap: "12px", shellWidth: "320px" }
+    },
+    note: "로그인 화면에서 사용하는 구글 인증 버튼입니다."
+});
+
+Archive.add({
+    id: "auth-kakao-button",
+    name: "카카오 로그인 버튼",
+    category: "인증",
+    status: "draft",
+    css: `
+    .auth-kakao-button-shell {
+      width: 320px;
+      max-width: 100%;
+      margin: 0 auto;
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    }
+    .auth-kakao-button {
+      width: 100%;
+      min-height: 64px;
+      border: 1px solid rgba(254, 229, 0, 0.2);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #FEE500;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #191919;
+      text-align: left;
+      cursor: pointer;
+    }
+    .auth-kakao-button-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(25,25,25,0.92);
+      color: #FEE500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .auth-kakao-button-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .auth-kakao-button-title {
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.2;
+      color: #191919;
+    }
+    .auth-kakao-button-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: rgba(25,25,25,0.72);
+      line-height: 1.45;
+    }
+    .auth-kakao-button-arrow {
+      font-size: 15px;
+      line-height: 1;
+      color: rgba(25,25,25,0.6);
+      flex-shrink: 0;
+    }
+  `,
+    html: `
+    <div class="auth-kakao-button-shell">
+      <button class="auth-kakao-button" type="button">
+        <div class="auth-kakao-button-mark">K</div>
+        <div class="auth-kakao-button-copy">
+          <div class="auth-kakao-button-title">카카오로 계속하기</div>
+          <div class="auth-kakao-button-sub">카카오 계정으로 더 빠르게 시작해요</div>
+        </div>
+        <div class="auth-kakao-button-arrow">→</div>
+      </button>
+    </div>
+  `,
+    spec: {
+        colors: { border: "rgba(254,229,0,0.2)", background: "#FEE500", text: "#191919" },
+        size: { height: "64px", radius: "18px", icon: "24px", title: "14px / 900" },
+        spacing: { padding: "14px 16px", gap: "12px", shellWidth: "320px" }
+    },
+    note: "로그인 화면에서 사용하는 카카오 인증 버튼입니다."
+});
+
+Archive.add({
+    type: "workspace",
+    id: "ws-login",
+    name: "로그인",
+    route: "/login",
+    status: "draft",
+    uses: ["auth-google-button", "auth-kakao-button"],
+    phases: [
+        {
+            id: "mobile",
+            name: "모바일",
+            route: "/login/mobile",
+            html: `
+    <div class="ws-login-mobile">
+      <div class="ws-login-mobile-card">
+        <div class="ws-login-chip">워크스페이스 로그인</div>
+        <div class="ws-login-logo-wrap">
+          <div class="ws-login-logo"></div>
+          <div>
+            <div class="ws-login-wordmark">Shannon</div>
+            <div class="ws-login-version">v0.0.1 워크스페이스</div>
+          </div>
+        </div>
+        <div class="ws-login-title">로그인 방법을 선택해 주세요</div>
+        <div class="ws-login-copy">저장된 프로젝트와 마지막 작업 상태를 바로 이어서 불러와요.</div>
+        <div class="ws-login-auth-grid" style="margin-top: 20px;">
+          <button class="auth-google-button" type="button">
+            <div class="auth-google-button-mark"><span>G</span></div>
+            <div class="auth-google-button-copy">
+              <div class="auth-google-button-title">구글로 로그인</div>
+              <div class="auth-google-button-sub">Google 계정으로 안전하게 시작해요</div>
+            </div>
+            <div class="auth-google-button-arrow">+</div>
+          </button>
+          <button class="auth-kakao-button" type="button">
+            <div class="auth-kakao-button-mark">K</div>
+            <div class="auth-kakao-button-copy">
+              <div class="auth-kakao-button-title">카카오로 로그인</div>
+              <div class="auth-kakao-button-sub">카카오 계정으로 빠르게 들어와요</div>
+            </div>
+            <div class="auth-kakao-button-arrow">+</div>
+          </button>
+        </div>
+        <div class="ws-login-footnote">로그인하면 자동으로 대시보드로 이동해요.</div>
+      </div>
+    </div>
+  `,
+            spec: {
+                colors: { card: "rgba(20,22,36,0.72)", accent: "var(--c-lav)" },
+                size: { frame: "390x844", radius: "26px" },
+                spacing: { padding: "20px", cardPadding: "24px" }
+            },
+            note: "Compact mobile variant with the same single-action auth focus."
+        }
+    ],
+    css: `
+    .ws-login-root {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-purple: #490080;
+      --bg-main: url("../../client/public/main-bg.png");
+      width: 100%;
+      height: 900px;
+      padding: 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-sizing: border-box;
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(221,183,255,0.16), transparent 24%),
+        radial-gradient(circle at 82% 14%, rgba(233,213,255,0.14), transparent 22%),
+        linear-gradient(180deg, rgba(10,13,24,0.38), rgba(10,13,24,0.68)),
+        var(--bg-main) no-repeat center center;
+      background-size: auto, auto, auto, cover;
+    }
+    .ws-login-orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(24px);
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .ws-login-orb.a {
+      width: 180px;
+      height: 180px;
+      top: 90px;
+      left: 120px;
+      background: rgba(221,183,255,0.18);
+    }
+    .ws-login-orb.b {
+      width: 220px;
+      height: 220px;
+      right: 120px;
+      bottom: 90px;
+      background: rgba(86,75,96,0.36);
+    }
+    .ws-login-shell {
+      width: 100%;
+      max-width: 452px;
+      position: relative;
+      z-index: 1;
+    }
+    .ws-login-card {
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 28px;
+      padding: 32px;
+      background: linear-gradient(180deg, rgba(31,26,35,0.72), rgba(20,22,36,0.62));
+      box-shadow: 0 28px 80px rgba(15,23,42,0.36);
+      backdrop-filter: blur(22px);
+    }
+    .ws-login-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(221,183,255,0.24);
+      background: rgba(221,183,255,0.08);
+      color: var(--c-lav);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+    .ws-login-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .ws-login-logo {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: url("../client/public/logo.png") center/cover no-repeat, linear-gradient(135deg, rgba(221,183,255,0.98), rgba(86,75,96,0.94));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 16px 34px rgba(15,23,42,0.3);
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .ws-login-logo::after {
+      display: none;
+    }
+    .ws-login-wordmark {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--c-white);
+    }
+    .ws-login-version {
+      margin-top: 6px;
+      font-size: 11px;
+      color: rgba(241,245,249,0.62);
+    }
+    .ws-login-title {
+      margin-top: 28px;
+      font-size: 30px;
+      line-height: 1.08;
+      font-weight: 900;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+    .ws-login-copy {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.65;
+      color: #CBD5E1;
+      max-width: 320px;
+    }
+    .ws-login-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .ws-login-auth-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .ws-login-pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: rgba(241,245,249,0.72);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .ws-login-footnote {
+      margin-top: 14px;
+      font-size: 10px;
+      line-height: 1.5;
+      color: rgba(241,245,249,0.52);
+    }
+    .ws-login-mobile {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-white: #F1F5F9;
+      --c-lav: #DDB7FF;
+      --c-gray: #94A3B8;
+      --bg-main: url("../../client/public/main-bg.png");
+      width: 390px;
+      height: 844px;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      background:
+        linear-gradient(180deg, rgba(10,13,24,0.42), rgba(10,13,24,0.68)),
+        var(--bg-main) no-repeat center center;
+      background-size: auto, cover;
+    }
+    .ws-login-mobile-card {
+      width: 100%;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(31,26,35,0.78), rgba(20,22,36,0.7));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.32);
+    }
+    .ws-login-mobile .ws-login-title {
+      font-size: 26px;
+      margin-top: 24px;
+    }
+    .ws-login-mobile .ws-login-copy {
+      max-width: none;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .ws-login-mobile .ws-login-auth-grid {
+      gap: 10px;
+      margin-top: 20px;
+    }
+  `,
+    html: `
+    <div class="ws-login-root">
+      <div class="ws-login-orb a"></div>
+      <div class="ws-login-orb b"></div>
+      <div class="ws-login-shell">
+        <div class="ws-login-card">
+          <div class="ws-login-chip">워크스페이스 로그인</div>
+          <div class="ws-login-logo-wrap">
+            <div class="ws-login-logo"></div>
+            <div>
+              <div class="ws-login-wordmark">Shannon</div>
+              <div class="ws-login-version">v0.0.1 워크스페이스</div>
+            </div>
+          </div>
+          <div class="ws-login-title">로그인하고 바로 이어서 시작하세요</div>
+          <div class="ws-login-copy">Shannon에 로그인하면 저장된 프로젝트, 최근 작업 흐름, 정리 중인 초안을 한 번에 이어서 불러올 수 있어요.</div>
+          <div class="ws-login-meta">
+            <div class="ws-login-pill">구글 OAuth</div>
+            <div class="ws-login-pill">카카오 로그인</div>
+            <div class="ws-login-pill">저장된 프로젝트 복원</div>
+          </div>
+          <div class="ws-login-auth-grid">
+            <button class="auth-google-button" type="button">
+              <div class="auth-google-button-mark"><span>G</span></div>
+              <div class="auth-google-button-copy">
+                <div class="auth-google-button-title">구글로 계속하기</div>
+                <div class="auth-google-button-sub">Google 계정으로 동기화하고 여러 기기에서 이어서 작업해요</div>
+              </div>
+              <div class="auth-google-button-arrow">→</div>
+            </button>
+            <button class="auth-kakao-button" type="button">
+              <div class="auth-kakao-button-mark">K</div>
+              <div class="auth-kakao-button-copy">
+                <div class="auth-kakao-button-title">카카오로 계속하기</div>
+                <div class="auth-kakao-button-sub">카카오 계정으로 빠르게 들어오고 모바일에서도 자연스럽게 이어가요</div>
+              </div>
+              <div class="auth-kakao-button-arrow">→</div>
+            </button>
+          </div>
+          <div class="ws-login-footnote">로그인 후에는 자동으로 대시보드로 이동해요.</div>
+        </div>
+      </div>
+    </div>
+  `,
+    spec: {
+        colors: { background: "var(--bg-main)", card: "linear-gradient(180deg, rgba(31,26,35,0.72), rgba(20,22,36,0.62))", accent: "var(--c-lav)", text: "var(--c-white)" },
+        size: { frame: "1440x900", cardWidth: "452px", logo: "68px", buttonHeight: "64px", authColumns: "1" },
+        spacing: { rootPadding: "20px", cardPadding: "32px", contentGap: "12px-28px", authGap: "12px" }
+    },
+    note: "구글과 카카오 로그인 버튼을 세로로 배치한 Shannon 로그인 워크스페이스입니다."
 });
