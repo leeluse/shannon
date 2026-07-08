@@ -13,18 +13,22 @@ export default async function LoginPage() {
   if (user) {
     redirect('/dashboard');
   }
+
+
   return (
     <main className='flex min-h-screen backdrop-brightness-75 items-center justify-center'>
-      <section className='glass-login flex w-full max-w-[452px] flex-col justify-center gap-4'>
+      <section className='py-10 px-5 rounded-3xl glass-login flex w-full max-w-[452px] flex-col justify-between gap-5'>
         <span className='border py-1 px-2.5 font-extrabold text-xs w-fit rounded-full bg-c-lav/10 border-c-lav/30 text-c-lav'>워크스페이스 로그인</span>
         <LoginHeader />
-        <h1 className='text-3xl font-extrabold leading-tight'>로그인하고 이어서 시작하세요</h1>
-        <p className='text-sm leading-6 text-slate-300'>저장된 프로젝트와 작업 흐름을 바로 이어서 시작해 보세요.</p>
-        <div className='mt-2 flex flex-col gap-3'>
+        <div className='flex flex-col gap-2 mx-3'>
+          <h1 className='text-3xl font-extrabold leading-tight'>로그인하고 이어서 시작하세요</h1>
+          <p className='text-sm leading-6 text-slate-300'>저장된 프로젝트와 작업 흐름을 바로 이어서 시작해 보세요.</p>
+        </div>
+        <div className='mt-2 flex flex-col gap-4 mx-5'>
           <GoogleLoginBtn />
           <KakaoLoginBtn />
         </div>
-        <span className='text-sm text-slate-400'>로그인 후에는 자동으로 대시보드로 이동해요.</span>
+        <span className='text-sm text-slate-400 mx-2'>로그인 후에는 자동으로 대시보드로 이동해요.</span>
       </section>
     </main>
   )

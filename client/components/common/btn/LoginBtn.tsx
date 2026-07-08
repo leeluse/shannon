@@ -1,19 +1,11 @@
-import type { ReactNode } from 'react';
-
-type SocialLoginVariant = 'google' | 'kakao';
-
-type SocialLoginContent = {
-    title: string;
-    description: string;
-    buttonClassName: string;
-    titleClassName: string;
-    descriptionClassName: string;
-    arrowClassName: string;
-    renderMark: () => ReactNode;
-};
+"use client"
+import { createClient } from '@/lib/supabase/client';
+import type { SocialLoginVariant, SocialLoginContent } from '@/types/button';
+import { useState } from 'react';
 
 const SOCIAL_LOGIN_CONTENT: Record<SocialLoginVariant, SocialLoginContent> = {
     google: {
+        provider: 'google',
         title: '구글로 계속하기',
         description: '저장된 프로젝트와 작업 기록을 동기화해요',
         buttonClassName: 'border border-slate-200/90 bg-white text-slate-900 shadow-[0_14px_30px_rgba(15,23,42,0.16)]',
@@ -33,6 +25,7 @@ const SOCIAL_LOGIN_CONTENT: Record<SocialLoginVariant, SocialLoginContent> = {
         ),
     },
     kakao: {
+        provider: 'kakao',
         title: '카카오로 계속하기',
         description: '카카오 계정으로 더 빠르게 시작해요',
         buttonClassName: 'border border-[#FEE500]/20 bg-[#FEE500] text-[#191919] shadow-[0_14px_30px_rgba(15,23,42,0.14)]',
@@ -49,10 +42,35 @@ const SOCIAL_LOGIN_CONTENT: Record<SocialLoginVariant, SocialLoginContent> = {
 
 function SocialLoginButton({ variant }: { variant: SocialLoginVariant }) {
     const content = SOCIAL_LOGIN_CONTENT[variant];
+    const [isLoading, setIsLoading] = useState(false)
+
+
+    async function loginHandler() {
+        // 로딩 상태 시작
+        setIsLoading(true)
+        const supabase = createClient();
+
+        const { error } = await supabase.auth.signInWithOAuth({
+            // google / kakao 로그인 provider
+            provider: content.provider,
+            // 소셜 로그인(OAuth)이 성공한 후, 리다이렉트 URL를 지정하는 코드
+            // window.location.origin: 현재 접속하고 있는 서비스의 도메인 기본 주소
+            options: {
+                redirectTo: `${window.location.origin}/auth`,
+            },
+        })
+
+        if (error) {
+            console.error(error.message);
+            setIsLoading(false);
+        }
+    }
+
 
     return (
         <button
             type="button"
+            onClick={loginHandler}
             className={`flex w-full items-center gap-3 rounded-[18px] px-4 py-3 text-left transition-transform duration-150 hover:-translate-y-0.5 ${content.buttonClassName}`}
         >
             {content.renderMark()}
