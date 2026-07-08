@@ -13,6 +13,7 @@ export { default as PrimaryButton } from "./common/btn/PrimaryButton";
 export { default as StepButton } from "./common/btn/StepButton";
 export { default as InitPanelBadge } from "./common/badge/InitPanelBadge";
 export { default as CloseBtn } from "./common/btn/CloseBtn";
+export { GoogleLoginBtn, KakaoLoginBtn } from './common/btn/LoginBtn'
 
 // Badge Components
 

@@ -1,6 +1,4 @@
-import React from 'react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner';
+"use client"
 import DeployButton from '@/components/common/btn/DeployButton';
 import { useDeployStore } from '@/store/useDeployStore';
 import { TEMPLATES, TEMPLATES_FOR, TEMPLATES_STYLE } from '@/constants/step-template';

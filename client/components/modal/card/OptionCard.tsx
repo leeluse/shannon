@@ -1,5 +1,4 @@
 import { IOptionCard } from '@/types/modal/card'
-import { useState } from 'react'
 import { Check } from 'lucide-react'
 
 export default function OptionCard({

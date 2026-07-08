@@ -1,9 +1,10 @@
+"use client"
 import { ConfirmDeployStep } from '@/components/modal/step/ConfirmDeployStep';
 import { SelectTemplateStep } from '@/components/modal/step/SelectTemplateStep';
 import { SelectStyleStep } from '@/components/modal/step/SelectStyleStep';
 import { InputDetailsStep } from '@/components/modal/step/InputDetailsStep';
 import { SelectTargetStep } from '@/components/modal/step/SelectTargetStep';
-import { Rocket, LayoutDashboard, Presentation, UserCog, Users, BriefcaseBusiness, UsersRound, UserRoundPen, UserRoundCog } from 'lucide-react';
+import { Rocket, LayoutDashboard, Presentation, BriefcaseBusiness, UsersRound, UserRoundPen, UserRoundCog } from 'lucide-react';
 
 
 export const STEP = [1, 2, 3, 4, 5];

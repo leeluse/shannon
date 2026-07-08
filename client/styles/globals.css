@@ -24,7 +24,6 @@ body {
   background: var(--bg-main) no-repeat center center;
   background-attachment: fixed;
   background-size: cover;
-  padding: 20px;
 }
 
 
@@ -45,6 +44,30 @@ body {
   border: 1px solid var(--glass-border);
   color: var(--c-lav);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+@utility glass-sub {
+  background: linear-gradient(180deg, rgba(31, 26, 35, 0.72), rgba(20, 22, 36, 0.62));
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+@utility glass-login {
+  background: linear-gradient(180deg, rgba(31, 26, 35, 0.72), rgba(20, 22, 36, 0.62));
+  /* backdrop-filter: var(--glass-blur); */
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px;
+  color: var(--c-white);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-login .accent {
+  color: var(--c-lav);
 }
 
 .glow-primary {

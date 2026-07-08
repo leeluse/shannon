@@ -505,7 +505,7 @@ Archive.add({
       width: 256px;
     }
     .workspace-sidebar-header { display: flex; align-items: center; gap: 16px; min-width: 0; flex-shrink: 0; }
-    .workspace-sidebar-logo { width: 48px; height: 48px; border-radius: 12px; background: var(--c-logo); box-shadow: 0 10px 24px rgba(0,0,0,0.25); flex-shrink: 0; }
+    .workspace-sidebar-logo { width: 48px; height: 48px; border-radius: 12px; background: url("../client/public/logo.png") center/cover no-repeat, var(--c-logo); box-shadow: 0 10px 24px rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.12); flex-shrink: 0; overflow: hidden; }
     .workspace-sidebar-brand { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .workspace-sidebar-brand-name { font-size: 20px; font-weight: 800; color: var(--c-lav); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .workspace-sidebar-brand-version { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.6); line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -684,7 +684,7 @@ Archive.add({
     name: "Project Workspace",
     route: "/projects/:id",
     status: "draft",
-    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge"],
+    uses: ["cmp-workspace-sidebar", "btn-shannon-primary", "status-badge", "workflow-step-card", "section-card"],
     css: `
     .ws-pw-root {
       --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -736,10 +736,10 @@ Archive.add({
     .ws-pw-nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 11px; border-radius: 9px; border: 1px solid rgba(255,255,255,0.16); background: var(--c-glass); }
     .ws-pw-nav-item.active { border-color: rgba(221,183,255,0.5); background: var(--c-glass); }
     .ws-pw-nav-num { width: 22px; height: 22px; border-radius: 7px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.06); color: var(--c-lav); font-size: 10px; font-weight: 900; flex-shrink: 0; }
-    .ws-pw-nav-title { font-size: 11px; font-weight: 800; color: var(--c-white); }
+    .ws-pw-nav-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
     .ws-pw-nav-sub { margin-top: 2px; font-size: 9px; color: var(--c-gray); line-height: 1.35; }
     .ws-pw-detail { border: 1px solid var(--glass-border); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; background: var(--c-glass); }
-    .ws-pw-panel { background: var(--c-glass); border: 1px solid rgba(255,255,255,0.18); border-radius: 10px; padding: 15px; box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
+    .ws-pw-panel { background: var(--c-glass); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 10px; padding: 15px; box-shadow: 0 16px 36px rgba(0,0,0,0.12); }
     .ws-pw-panel.hi { background: var(--c-glass); border-color: rgba(221,183,255,0.5); }
     .ws-pw-panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
     .ws-pw-panel-title { font-size: 13px; font-weight: 900; color: var(--c-white); }
@@ -757,6 +757,19 @@ Archive.add({
     .ws-pw-task-top { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
     .ws-pw-task-title { font-size: 11px; font-weight: 850; color: var(--c-white); }
     .ws-pw-task-copy { margin-top: 6px; font-size: 9px; line-height: 1.45; color: var(--c-gray); }
+    .ws-pw-code-block {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 9.5px;
+      color: #DDB7FF;
+      overflow-x: auto;
+      text-align: left;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
   `,
     html: `
     <div class="ws-pw-root">
@@ -805,21 +818,24 @@ Archive.add({
                 <div class="ws-pw-meta"><div class="ws-pw-meta-label">Status</div><div class="ws-pw-meta-value">draft</div></div>
               </div>
             </div>
-            <div class="ws-pw-flow-lbl">결과 섹션</div>
+            <div class="ws-pw-flow-lbl">결과 섹션 (AX 우선순위)</div>
             <div class="ws-pw-section-nav">
-              <div class="ws-pw-nav-item active"><div class="ws-pw-nav-num">1</div><div><div class="ws-pw-nav-title">요약과 목표</div><div class="ws-pw-nav-sub">사용자 언어로 먼저 확인</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">2</div><div><div class="ws-pw-nav-title">결과물</div><div class="ws-pw-nav-sub">만들어야 할 산출물</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">3</div><div><div class="ws-pw-nav-title">화면과 기능</div><div class="ws-pw-nav-sub">개발 범위 확인</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">4</div><div><div class="ws-pw-nav-title">작업 흐름</div><div class="ws-pw-nav-sub">순서와 진행 단위</div></div></div>
-              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">5</div><div><div class="ws-pw-nav-title">개발 태스크</div><div class="ws-pw-nav-sub">바로 실행 가능한 목록</div></div></div>
+              <div class="ws-pw-nav-item active"><div class="ws-pw-nav-num">1</div><div><div class="ws-pw-nav-title">프로젝트 요약</div><div class="ws-pw-nav-sub">요약 및 목표 설정</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">2</div><div><div class="ws-pw-nav-title">만들게 될 결과물</div><div class="ws-pw-nav-sub">사용자 밸류 산출물</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">3</div><div><div class="ws-pw-nav-title">필요한 화면</div><div class="ws-pw-nav-sub">라우팅 및 페이지 범위</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">4</div><div><div class="ws-pw-nav-title">필요한 기능</div><div class="ws-pw-nav-sub">사용자 시나리오와 액션</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">5</div><div><div class="ws-pw-nav-title">작업 흐름</div><div class="ws-pw-nav-sub">단계별 실행 태스크 맵</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">6</div><div><div class="ws-pw-nav-title">개발 태스크</div><div class="ws-pw-nav-sub">바로 개발 시작 가능한 일감</div></div></div>
+              <div class="ws-pw-nav-item"><div class="ws-pw-nav-num">7</div><div><div class="ws-pw-nav-title">Harness JSON</div><div class="ws-pw-nav-sub">AI 생성 내부 원본 데이터</div></div></div>
             </div>
           </div>
 
           <div class="ws-pw-detail">
+            <!-- 1. 프로젝트 요약 -->
             <div class="ws-pw-panel hi">
               <div class="ws-pw-panel-head">
                 <div>
-                  <div class="ws-pw-kicker">What to build</div>
+                  <div class="ws-pw-kicker">1. Project Summary</div>
                   <div class="ws-pw-panel-title">문제 해결 과정을 선명하게 보여주는 포트폴리오 사이트</div>
                   <div class="ws-pw-panel-desc">wiki의 AX 원칙에 맞춰 Harness 같은 내부 용어보다 사용자가 바로 이해할 수 있는 결과 언어를 먼저 보여줍니다.</div>
                 </div>
@@ -827,21 +843,122 @@ Archive.add({
               </div>
               <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">프로젝트 요약</div><div class="ws-pw-pill lav">목표</div><div class="ws-pw-pill">대상 사용자</div><div class="ws-pw-pill">저장된 초안</div></div>
             </div>
+
+            <!-- 2. 만들게 될 결과물 -->
             <div class="ws-pw-panel">
-              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">만들게 될 결과물</div><div class="ws-pw-panel-desc">결과 화면의 우선순위는 요약, 산출물, 화면, 기능, 작업 흐름, 태스크 순서입니다.</div></div></div>
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">2. Expected Outputs</div>
+                  <div class="ws-pw-panel-title">만들게 될 결과물</div>
+                  <div class="ws-pw-panel-desc">결과 화면의 우선순위는 요약, 산출물, 화면, 기능, 작업 흐름, 태스크 순서입니다.</div>
+                </div>
+              </div>
               <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">홈 화면</div><div class="ws-pw-pill lav">자기소개 섹션</div><div class="ws-pw-pill lav">프로젝트 목록</div><div class="ws-pw-pill">프로젝트 상세</div><div class="ws-pw-pill">연락처 섹션</div></div>
             </div>
+
+            <!-- 3. 필요한 화면 -->
             <div class="ws-pw-panel">
-              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">필요한 화면</div><div class="ws-pw-panel-desc">개발자가 라우팅과 컴포넌트 범위를 바로 잡을 수 있게 화면 단위로 나눕니다.</div></div></div>
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">3. Required Screens</div>
+                  <div class="ws-pw-panel-title">필요한 화면</div>
+                  <div class="ws-pw-panel-desc">개발자가 라우팅과 컴포넌트 범위를 바로 잡을 수 있게 화면 단위로 나눕니다.</div>
+                </div>
+              </div>
               <div class="ws-pw-list">
                 <div class="ws-pw-list-item"><div class="ws-pw-list-num">1</div><div><div class="ws-pw-list-title">홈 화면</div><div class="ws-pw-list-copy">방문자가 포트폴리오의 목적과 대표 강점을 즉시 파악합니다.</div></div></div>
                 <div class="ws-pw-list-item"><div class="ws-pw-list-num">2</div><div><div class="ws-pw-list-title">프로젝트 목록</div><div class="ws-pw-list-copy">대표 프로젝트를 문제, 과정, 결과 기준으로 스캔합니다.</div></div></div>
                 <div class="ws-pw-list-item"><div class="ws-pw-list-num">3</div><div><div class="ws-pw-list-title">프로젝트 상세</div><div class="ws-pw-list-copy">문제 해결 과정과 기술 선택 근거를 깊게 확인합니다.</div></div></div>
               </div>
             </div>
+
+            <!-- 4. 필요한 기능 -->
             <div class="ws-pw-panel">
-              <div class="ws-pw-panel-head"><div><div class="ws-pw-panel-title">핵심 기능</div><div class="ws-pw-panel-desc">MVP에서 중요한 것은 저장된 구조를 다시 이해하고 수정할 수 있는 흐름입니다.</div></div></div>
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">4. Core Features</div>
+                  <div class="ws-pw-panel-title">필요한 기능</div>
+                  <div class="ws-pw-panel-desc">MVP에서 중요한 것은 저장된 구조를 다시 이해하고 수정할 수 있는 흐름입니다.</div>
+                </div>
+              </div>
               <div class="ws-pw-pill-row"><div class="ws-pw-pill lav">섹션 단위 수정</div><div class="ws-pw-pill lav">저장 상태 표시</div><div class="ws-pw-pill">태스크 확인</div><div class="ws-pw-pill">대시보드 복귀</div></div>
+            </div>
+
+            <!-- 5. 작업 흐름 -->
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">5. Workflows</div>
+                  <div class="ws-pw-panel-title">작업 흐름</div>
+                  <div class="ws-pw-panel-desc">프로젝트 목표 달성을 위해 차례대로 밟아야 하는 단계별 실천 흐름입니다.</div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                <div class="workflow-step-card-container">
+                  <div class="workflow-step-card-col"><div class="workflow-step-card-num done">1</div><div class="workflow-step-card-vline active"></div></div>
+                  <div class="workflow-step-card"><div class="workflow-step-card-title">정보 구조 설계</div><div class="workflow-step-card-sub">포트폴리오에 필요한 화면과 섹션을 정리한다.</div></div>
+                </div>
+                <div class="workflow-step-card-container">
+                  <div class="workflow-step-card-col"><div class="workflow-step-card-num active">2</div><div class="workflow-step-card-vline"></div></div>
+                  <div class="workflow-step-card active"><div class="workflow-step-card-title active">레이아웃 및 주요 컴포넌트 개발</div><div class="workflow-step-card-sub">사이드바, 프로젝트 카드, 상세 모달 UI를 퍼블리싱한다.</div></div>
+                </div>
+                <div class="workflow-step-card-container">
+                  <div class="workflow-step-card-col"><div class="workflow-step-card-num">3</div></div>
+                  <div class="workflow-step-card"><div class="workflow-step-card-title">데이터 연결 및 Vercel 배포</div><div class="workflow-step-card-sub">로컬 mock 데이터를 연결하고 Vercel을 통해 배포 환경을 세팅한다.</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. 개발 태스크 -->
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">6. Development Tasks</div>
+                  <div class="ws-pw-panel-title">개발 태스크</div>
+                  <div class="ws-pw-panel-desc">바로 착수할 수 있는 세부 개발 일감의 진행 현황입니다.</div>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 10px;">
+                <div class="ws-pw-list-item" style="border-color: rgba(134,239,172,0.22);"><div class="ws-pw-list-num" style="color: #86EFAC;">✓</div><div><div class="ws-pw-list-title" style="color: #86EFAC;">정보 구조 정의 및 매핑</div><div class="ws-pw-list-copy">summary, targetUser, outputs, screens를 프로젝트 상세에 데이터 바인딩</div></div></div>
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">▶</div><div><div class="ws-pw-list-title">상세 화면 퍼블리싱</div><div class="ws-pw-list-copy">사이드바 및 메인 컨텐츠 영역의 Glassmorphism 레이아웃 구현</div></div></div>
+                <div class="ws-pw-list-item"><div class="ws-pw-list-num">·</div><div><div class="ws-pw-list-title">수정 및 저장 플로우 구현</div><div class="ws-pw-list-copy">Zustand, React Hook Form 연동을 통해 실시간 임시 저장 기능 추가</div></div></div>
+              </div>
+            </div>
+
+            <!-- 7. Harness JSON -->
+            <div class="ws-pw-panel">
+              <div class="ws-pw-panel-head">
+                <div>
+                  <div class="ws-pw-kicker">7. Harness Schema JSON</div>
+                  <div class="ws-pw-panel-title">Harness JSON (내부 구조)</div>
+                  <div class="ws-pw-panel-desc">AI 모델이 설계하여 리턴한 원본 JSON 스키마 데이터입니다.</div>
+                </div>
+              </div>
+              <pre class="ws-pw-code-block"><code>{
+  "title": "프론트엔드 취업용 포트폴리오",
+  "status": "active",
+  "sourcePrompt": "프론트엔드 취업용 포트폴리오 만들고 싶어",
+  "harness": {
+    "summary": "채용담당자가 지원자의 문제 해결력을 빠르게 확인할 수 있는 웹사이트",
+    "targetUser": "채용담당자",
+    "goal": "프론트엔드 개발자로서의 실력을 명확하게 보여준다.",
+    "outputs": [
+      { "id": "out_1", "title": "포트폴리오 웹사이트", "description": "프로젝트 경험 구조화" }
+    ],
+    "screens": [
+      { "id": "sc_1", "name": "홈 화면", "path": "/", "priority": "high" }
+    ],
+    "features": [
+      { "id": "fe_1", "title": "프로젝트 카드 목록", "priority": "high" }
+    ],
+    "workflows": [
+      { "id": "wf_1", "order": 1, "title": "정보 구조 설계" }
+    ],
+    "tasks": [
+      { "id": "tk_1", "title": "ProjectCard 컴포넌트 생성", "status": "todo" }
+    ]
+  }
+}</code></pre>
             </div>
           </div>
 
@@ -862,7 +979,7 @@ Archive.add({
         spacing: { root: "20px", columns: "300px 1fr 280px", panel: "15px", gap: "16px" }
     },
     note: "Wiki의 /projects/[id] 정의에 맞춰 저장된 Harness 결과를 사용자 언어로 검토하고 수정으로 이어지는 상세 워크스페이스."
-});
+})
 Archive.add({
     type: "workspace",
     id: "ws-dashboard-home-workflow",
@@ -1309,4 +1426,483 @@ Archive.add({
         spacing: { padding: "20px", gap: "16px" }
     },
     note: "Generation View uses selectable phases as the archive representation of states."
+});
+
+Archive.add({
+    id: "auth-google-button",
+    name: "구글 로그인 버튼",
+    category: "인증",
+    status: "draft",
+    css: `
+    .auth-google-button-shell {
+      width: 320px;
+      max-width: 100%;
+      margin: 0 auto;
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    }
+    .auth-google-button {
+      width: 100%;
+      min-height: 64px;
+      border: 1px solid rgba(226, 232, 240, 0.92);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #FFFFFF;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #0F172A;
+      text-align: left;
+      cursor: pointer;
+    }
+    .auth-google-button-mark {
+      position: relative;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: conic-gradient(#4285F4 0 25%, #34A853 25% 50%, #FBBC05 50% 75%, #EA4335 75% 100%);
+      flex-shrink: 0;
+    }
+    .auth-google-button-mark::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 999px;
+      background: #FFFFFF;
+    }
+    .auth-google-button-mark span {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+      color: #4285F4;
+      z-index: 1;
+    }
+    .auth-google-button-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .auth-google-button-title {
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #0F172A;
+    }
+    .auth-google-button-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: #64748B;
+      line-height: 1.45;
+    }
+    .auth-google-button-arrow {
+      font-size: 15px;
+      line-height: 1;
+      color: #64748B;
+      flex-shrink: 0;
+    }
+  `,
+    html: `
+    <div class="auth-google-button-shell">
+      <button class="auth-google-button" type="button">
+        <div class="auth-google-button-mark"><span>G</span></div>
+        <div class="auth-google-button-copy">
+          <div class="auth-google-button-title">구글로 계속하기</div>
+          <div class="auth-google-button-sub">저장된 프로젝트와 작업 기록을 동기화해요</div>
+        </div>
+        <div class="auth-google-button-arrow">→</div>
+      </button>
+    </div>
+  `,
+    spec: {
+        colors: { border: "rgba(226,232,240,0.92)", background: "#FFFFFF", text: "#0F172A" },
+        size: { height: "64px", radius: "18px", icon: "24px", title: "14px / 800" },
+        spacing: { padding: "14px 16px", gap: "12px", shellWidth: "320px" }
+    },
+    note: "로그인 화면에서 사용하는 구글 인증 버튼입니다."
+});
+
+Archive.add({
+    id: "auth-kakao-button",
+    name: "카카오 로그인 버튼",
+    category: "인증",
+    status: "draft",
+    css: `
+    .auth-kakao-button-shell {
+      width: 320px;
+      max-width: 100%;
+      margin: 0 auto;
+      font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    }
+    .auth-kakao-button {
+      width: 100%;
+      min-height: 64px;
+      border: 1px solid rgba(254, 229, 0, 0.2);
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #FEE500;
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #191919;
+      text-align: left;
+      cursor: pointer;
+    }
+    .auth-kakao-button-mark {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(25,25,25,0.92);
+      color: #FEE500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .auth-kakao-button-copy {
+      flex: 1;
+      min-width: 0;
+    }
+    .auth-kakao-button-title {
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.2;
+      color: #191919;
+    }
+    .auth-kakao-button-sub {
+      margin-top: 4px;
+      font-size: 10px;
+      color: rgba(25,25,25,0.72);
+      line-height: 1.45;
+    }
+    .auth-kakao-button-arrow {
+      font-size: 15px;
+      line-height: 1;
+      color: rgba(25,25,25,0.6);
+      flex-shrink: 0;
+    }
+  `,
+    html: `
+    <div class="auth-kakao-button-shell">
+      <button class="auth-kakao-button" type="button">
+        <div class="auth-kakao-button-mark">K</div>
+        <div class="auth-kakao-button-copy">
+          <div class="auth-kakao-button-title">카카오로 계속하기</div>
+          <div class="auth-kakao-button-sub">카카오 계정으로 더 빠르게 시작해요</div>
+        </div>
+        <div class="auth-kakao-button-arrow">→</div>
+      </button>
+    </div>
+  `,
+    spec: {
+        colors: { border: "rgba(254,229,0,0.2)", background: "#FEE500", text: "#191919" },
+        size: { height: "64px", radius: "18px", icon: "24px", title: "14px / 900" },
+        spacing: { padding: "14px 16px", gap: "12px", shellWidth: "320px" }
+    },
+    note: "로그인 화면에서 사용하는 카카오 인증 버튼입니다."
+});
+
+Archive.add({
+    type: "workspace",
+    id: "ws-login",
+    name: "로그인",
+    route: "/login",
+    status: "draft",
+    uses: ["auth-google-button", "auth-kakao-button"],
+    phases: [
+        {
+            id: "mobile",
+            name: "모바일",
+            route: "/login/mobile",
+            html: `
+    <div class="ws-login-mobile">
+      <div class="ws-login-mobile-card">
+        <div class="ws-login-chip">워크스페이스 로그인</div>
+        <div class="ws-login-logo-wrap">
+          <div class="ws-login-logo"></div>
+          <div>
+            <div class="ws-login-wordmark">Shannon</div>
+            <div class="ws-login-version">v0.0.1 워크스페이스</div>
+          </div>
+        </div>
+        <div class="ws-login-title">로그인 방법을 선택해 주세요</div>
+        <div class="ws-login-copy">저장된 프로젝트와 마지막 작업 상태를 바로 이어서 불러와요.</div>
+        <div class="ws-login-auth-grid" style="margin-top: 20px;">
+          <button class="auth-google-button" type="button">
+            <div class="auth-google-button-mark"><span>G</span></div>
+            <div class="auth-google-button-copy">
+              <div class="auth-google-button-title">구글로 로그인</div>
+              <div class="auth-google-button-sub">Google 계정으로 안전하게 시작해요</div>
+            </div>
+            <div class="auth-google-button-arrow">+</div>
+          </button>
+          <button class="auth-kakao-button" type="button">
+            <div class="auth-kakao-button-mark">K</div>
+            <div class="auth-kakao-button-copy">
+              <div class="auth-kakao-button-title">카카오로 로그인</div>
+              <div class="auth-kakao-button-sub">카카오 계정으로 빠르게 들어와요</div>
+            </div>
+            <div class="auth-kakao-button-arrow">+</div>
+          </button>
+        </div>
+        <div class="ws-login-footnote">로그인하면 자동으로 대시보드로 이동해요.</div>
+      </div>
+    </div>
+  `,
+            spec: {
+                colors: { card: "rgba(20,22,36,0.72)", accent: "var(--c-lav)" },
+                size: { frame: "390x844", radius: "26px" },
+                spacing: { padding: "20px", cardPadding: "24px" }
+            },
+            note: "Compact mobile variant with the same single-action auth focus."
+        }
+    ],
+    css: `
+    .ws-login-root {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-glass: rgba(20, 22, 36, 0.3);
+      --c-logo: #564B60;
+      --c-white: #F1F5F9;
+      --c-gray: #94A3B8;
+      --c-pink: rgba(233, 213, 255, 0.8);
+      --c-lav: #DDB7FF;
+      --c-purple: #490080;
+      --bg-main: url("../../client/public/main-bg.png");
+      width: 100%;
+      height: 900px;
+      padding: 20px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-sizing: border-box;
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(221,183,255,0.16), transparent 24%),
+        radial-gradient(circle at 82% 14%, rgba(233,213,255,0.14), transparent 22%),
+        linear-gradient(180deg, rgba(10,13,24,0.38), rgba(10,13,24,0.68)),
+        var(--bg-main) no-repeat center center;
+      background-size: auto, auto, auto, cover;
+    }
+    .ws-login-orb {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(24px);
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .ws-login-orb.a {
+      width: 180px;
+      height: 180px;
+      top: 90px;
+      left: 120px;
+      background: rgba(221,183,255,0.18);
+    }
+    .ws-login-orb.b {
+      width: 220px;
+      height: 220px;
+      right: 120px;
+      bottom: 90px;
+      background: rgba(86,75,96,0.36);
+    }
+    .ws-login-shell {
+      width: 100%;
+      max-width: 452px;
+      position: relative;
+      z-index: 1;
+    }
+    .ws-login-card {
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 28px;
+      padding: 32px;
+      background: linear-gradient(180deg, rgba(31,26,35,0.72), rgba(20,22,36,0.62));
+      box-shadow: 0 28px 80px rgba(15,23,42,0.36);
+      backdrop-filter: blur(22px);
+    }
+    .ws-login-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(221,183,255,0.24);
+      background: rgba(221,183,255,0.08);
+      color: var(--c-lav);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+    .ws-login-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .ws-login-logo {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: url("../client/public/logo.png") center/cover no-repeat, linear-gradient(135deg, rgba(221,183,255,0.98), rgba(86,75,96,0.94));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 16px 34px rgba(15,23,42,0.3);
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .ws-login-logo::after {
+      display: none;
+    }
+    .ws-login-wordmark {
+      font-size: 26px;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--c-white);
+    }
+    .ws-login-version {
+      margin-top: 6px;
+      font-size: 11px;
+      color: rgba(241,245,249,0.62);
+    }
+    .ws-login-title {
+      margin-top: 28px;
+      font-size: 30px;
+      line-height: 1.08;
+      font-weight: 900;
+      color: var(--c-white);
+      letter-spacing: -0.02em;
+    }
+    .ws-login-copy {
+      margin-top: 12px;
+      font-size: 12px;
+      line-height: 1.65;
+      color: #CBD5E1;
+      max-width: 320px;
+    }
+    .ws-login-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .ws-login-auth-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .ws-login-pill {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      color: rgba(241,245,249,0.72);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .ws-login-footnote {
+      margin-top: 14px;
+      font-size: 10px;
+      line-height: 1.5;
+      color: rgba(241,245,249,0.52);
+    }
+    .ws-login-mobile {
+      --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+      --c-white: #F1F5F9;
+      --c-lav: #DDB7FF;
+      --c-gray: #94A3B8;
+      --bg-main: url("../../client/public/main-bg.png");
+      width: 390px;
+      height: 844px;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-white);
+      font-family: var(--font-sans);
+      background:
+        linear-gradient(180deg, rgba(10,13,24,0.42), rgba(10,13,24,0.68)),
+        var(--bg-main) no-repeat center center;
+      background-size: auto, cover;
+    }
+    .ws-login-mobile-card {
+      width: 100%;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 24px;
+      background: linear-gradient(180deg, rgba(31,26,35,0.78), rgba(20,22,36,0.7));
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.32);
+    }
+    .ws-login-mobile .ws-login-title {
+      font-size: 26px;
+      margin-top: 24px;
+    }
+    .ws-login-mobile .ws-login-copy {
+      max-width: none;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+    .ws-login-mobile .ws-login-auth-grid {
+      gap: 10px;
+      margin-top: 20px;
+    }
+  `,
+    html: `
+    <div class="ws-login-root">
+      <div class="ws-login-orb a"></div>
+      <div class="ws-login-orb b"></div>
+      <div class="ws-login-shell">
+        <div class="ws-login-card">
+          <div class="ws-login-chip">워크스페이스 로그인</div>
+          <div class="ws-login-logo-wrap">
+            <div class="ws-login-logo"></div>
+            <div>
+              <div class="ws-login-wordmark">Shannon</div>
+              <div class="ws-login-version">v0.0.1 워크스페이스</div>
+            </div>
+          </div>
+          <div class="ws-login-title">로그인하고 바로 이어서 시작하세요</div>
+          <div class="ws-login-copy">Shannon에 로그인하면 저장된 프로젝트, 최근 작업 흐름, 정리 중인 초안을 한 번에 이어서 불러올 수 있어요.</div>
+          <div class="ws-login-meta">
+            <div class="ws-login-pill">구글 OAuth</div>
+            <div class="ws-login-pill">카카오 로그인</div>
+            <div class="ws-login-pill">저장된 프로젝트 복원</div>
+          </div>
+          <div class="ws-login-auth-grid">
+            <button class="auth-google-button" type="button">
+              <div class="auth-google-button-mark"><span>G</span></div>
+              <div class="auth-google-button-copy">
+                <div class="auth-google-button-title">구글로 계속하기</div>
+                <div class="auth-google-button-sub">Google 계정으로 동기화하고 여러 기기에서 이어서 작업해요</div>
+              </div>
+              <div class="auth-google-button-arrow">→</div>
+            </button>
+            <button class="auth-kakao-button" type="button">
+              <div class="auth-kakao-button-mark">K</div>
+              <div class="auth-kakao-button-copy">
+                <div class="auth-kakao-button-title">카카오로 계속하기</div>
+                <div class="auth-kakao-button-sub">카카오 계정으로 빠르게 들어오고 모바일에서도 자연스럽게 이어가요</div>
+              </div>
+              <div class="auth-kakao-button-arrow">→</div>
+            </button>
+          </div>
+          <div class="ws-login-footnote">로그인 후에는 자동으로 대시보드로 이동해요.</div>
+        </div>
+      </div>
+    </div>
+  `,
+    spec: {
+        colors: { background: "var(--bg-main)", card: "linear-gradient(180deg, rgba(31,26,35,0.72), rgba(20,22,36,0.62))", accent: "var(--c-lav)", text: "var(--c-white)" },
+        size: { frame: "1440x900", cardWidth: "452px", logo: "68px", buttonHeight: "64px", authColumns: "1" },
+        spacing: { rootPadding: "20px", cardPadding: "32px", contentGap: "12px-28px", authGap: "12px" }
+    },
+    note: "구글과 카카오 로그인 버튼을 세로로 배치한 Shannon 로그인 워크스페이스입니다."
 });
