@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { GoogleLoginBtn, KakaoLoginBtn, Logo } from '@/components';
 import { X } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function LoginModal() {
   const router = useRouter();
@@ -17,7 +18,7 @@ export default function LoginModal() {
       onClick={handleClose}
     >
       <section 
-        className='relative py-10 px-5 rounded-3xl glass-login flex w-full max-w-[452px] flex-col justify-between gap-5 text-white'
+        className='relative py-10 px-5 rounded-3xl glass-login flex w-full max-w-113 flex-col justify-between gap-5 text-white'
         onClick={(e) => e.stopPropagation()}  //  이벤트 전파 방지
       >
         {/* Close Button */}

@@ -2,14 +2,22 @@
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import LogoutIcon from '../icon/LogoutIcon'
+import { toast } from 'sonner'
 
 export default function LogoutBtn() {
     const router = useRouter()
     const supabase = createClient();
 
     const handleLogout = async () => {
-        await supabase.auth.signOut();
-        router.push('/');
+        const { error } = await supabase.auth.signOut();
+        
+        if (error) {
+            toast.error("로그아웃에 실패했습니다")
+        } else {
+            toast.success("로그아웃 되었습니다")
+        }
+
+        router.refresh(); // 서버 컴포넌트들을 다시 렌더링하여 ProfileMenu가 즉시 사라지도록 처리
     }
     
   return (
