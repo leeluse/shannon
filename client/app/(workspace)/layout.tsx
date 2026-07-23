@@ -1,3 +1,4 @@
+import ProfileMenu from "@/components/dashboard/ProfileMenu";
 
 export default function WorkspaceLayout({
   sidebar,
@@ -18,6 +19,8 @@ export default function WorkspaceLayout({
           {children}
         </div>
       </main>
+      <ProfileMenu />
+      {/* {profile} */}
       {modal}
     </>
   );

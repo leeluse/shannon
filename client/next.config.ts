@@ -9,7 +9,18 @@ const nextConfig: NextConfig = {
                 permanent: true,
             }
         ]
-
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "lh3.googleusercontent.com",
+            },
+            {
+                protocol: "https",
+                hostname: "*.kakaocdn.net",
+            }
+        ]
     }
 
 };

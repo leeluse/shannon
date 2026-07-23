@@ -24,6 +24,7 @@ body {
   background: var(--bg-main) no-repeat center center;
   background-attachment: fixed;
   background-size: cover;
+  padding: 20px;
 }
 
 

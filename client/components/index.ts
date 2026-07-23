@@ -28,4 +28,5 @@ export { default as ProjectForm } from "./modal/form/ProjectForm";
 
 // Icon Components
 export { default as InitPanelIcon } from "./common/icon/InitPanelIcon";
+export { default as LogoutIcon } from "./common/icon/LogoutIcon";
 export { default as Logo } from "./common/Logo";
