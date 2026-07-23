@@ -26,11 +26,17 @@ jobs:
         run: bun install --cwd client --frozen-lockfile
 
       - name: Build app
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://nosgboxwjvsqoqkfnyxr.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_paYBUvqKpI7nCIl3ueM60w_5z9SV-Bx
         run: bun run --cwd client build
 
       - name: Run Lighthouse CI
         id: lighthouse_audit
         uses: treosh/lighthouse-ci-action@v12
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://nosgboxwjvsqoqkfnyxr.supabase.co
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: sb_publishable_paYBUvqKpI7nCIl3ueM60w_5z9SV-Bx
         with:
           configPath: ./.github/lighthouse/lighthouserc.json
           temporaryPublicStorage: true
