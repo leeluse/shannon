@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 export function SideBarHeader() {
     const router = useRouter();
     const onClickHandler = () => {
-        () => router.push('/dashboard')
+        router.push('/dashboard');
     }
 
     return (
@@ -29,7 +29,7 @@ export default function SidebarPage() {
             <div className="flex items-end border-t border-white/10 pt-4 w-full">
                 <PrimaryButton
                     label={'Create Project'}
-                    onClick={() => router.push('/projects/new')} />
+                    onClick={() => router.push('/login')} />
             </div>
         </aside>
     );

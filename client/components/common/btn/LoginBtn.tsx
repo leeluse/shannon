@@ -17,10 +17,9 @@ const SOCIAL_LOGIN_CONTENT: Record<SocialLoginVariant, SocialLoginContent> = {
                 className="relative size-6 shrink-0 rounded-full"
                 style={{ background: 'conic-gradient(#4285F4 0 25%, #34A853 25% 50%, #FBBC05 50% 75%, #EA4335 75% 100%)' }}
             >
-                <div className="absolute inset-1 rounded-full bg-white" />
-                <span className="relative z-10 flex size-full items-center justify-center text-[11px] font-black text-[#4285F4]">
-                    G
-                </span>
+                <div className="absolute inset-1 rounded-full bg-white flex justify-center items-center text-center">
+                    <span className='text-[11px] font-black leading-none text-[#4285F4]'>G</span>
+                </div>
             </div>
         ),
     },
@@ -71,7 +70,7 @@ function SocialLoginButton({ variant }: { variant: SocialLoginVariant }) {
         <button
             type="button"
             onClick={loginHandler}
-            className={`flex w-full items-center gap-3 rounded-[18px] px-4 py-3 text-left transition-transform duration-150 hover:-translate-y-0.5 ${content.buttonClassName}`}
+            className={`flex w-full items-center gap-3 rounded-[18px] px-4 py-3 text-left transition-transform duration-150 hover:-translate-y-0.5 select-none ${content.buttonClassName}`}
         >
             {content.renderMark()}
             <div className="min-w-0 flex-1">

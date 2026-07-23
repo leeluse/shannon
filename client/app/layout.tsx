@@ -4,7 +4,10 @@ import { AppProviders } from "@/lib/app-providers";
 
 export const metadata: Metadata = {
   title: "Shannon",
-  description: "Operational runtime for multi-agent workflows"
+  description: "AI-native thinking workspace",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({
@@ -13,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body>
         <AppProviders>
           {children}
